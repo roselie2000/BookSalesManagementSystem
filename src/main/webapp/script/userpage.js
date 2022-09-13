@@ -1,7 +1,4 @@
-/**
- * 
- */
- 
+
  let slideIndex = 0;
 		
 		showSlides();
@@ -22,8 +19,8 @@
 
 		window.onscroll = function() {myFunction()};
 
-		var navbar = document.getElementById("nav");
-		var sticky = navbar.offsetTop;
+		let navbar = document.getElementById("nav");
+		let sticky = navbar.offsetTop;
 		function myFunction() {
 		  if (window.pageYOffset >= sticky) {
 		    navbar.classList.add("sticky")
@@ -33,7 +30,7 @@
 		}
 		
 		function showFilters(){
-			var filters = document.getElementById("filters");
+			let filters = document.getElementById("filters");
 			if (filters.style.display === "block") {
 				filters.style.display = "none";
 			    } else {
@@ -41,13 +38,13 @@
 			    }
 		}
 		
-		var dropdown = document.getElementsByClassName("dropdown-btn");
-		var i;
+		let dropdown = document.getElementsByClassName("dropdown-btn");
+		let i;
 
 		for (i = 0; i < dropdown.length; i++) {
 		  dropdown[i].addEventListener("click", function() {
 		    this.classList.toggle("active");
-		    var dropdownContent = this.nextElementSibling;
+		    let dropdownContent = this.nextElementSibling;
 		    if (dropdownContent.style.display === "block") {
 		      dropdownContent.style.display = "none";
 		    } else {

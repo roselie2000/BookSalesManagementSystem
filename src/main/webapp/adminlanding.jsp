@@ -27,11 +27,11 @@
 				<li><a href="home.jsp">Home</a></li>
 				<li class="dropdown"><a href="Books" class="dropbtn">Books</a>
 					<div class="dropdown-content">
-    					<a href="Novels">Novels</a>
-    					<a href="Poetry">Poetry</a>
-    					<a href="History">History</a>
-    					<a href="Education">Education</a>
-    					<a href="Biography">Biography</a>
+    					<a href=getBookByCategoryAdmin?category=Novel>Novels</a>
+    					<a href="getBookByCategoryAdmin?category=Poetry">Poetry</a>
+    					<a href="getBookByCategoryAdmin?category=History">History</a>
+    					<a href="getBookByCategoryAdmin?category=Education">Education</a>
+    					<a href="getBookByCategoryAdmin?category=Biography">Biography</a>
     					<a href="Books">All Books</a>
   					</div>
 				</li>

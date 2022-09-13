@@ -2,7 +2,7 @@
  * 
  */
  function showOption(){
-		var option = document.getElementById("option");
+		let option = document.getElementById("option");
 		if (option.style.display === "flex") {
 			option.style.display = "none";
 		    } else {

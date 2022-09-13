@@ -2,7 +2,7 @@
  * 
  */
  function myFunction() {
-	  var x = document.getElementById("pwd");
+	  let x = document.getElementById("pwd");
 	  if (x.type === "password") {
 	    x.type = "text";
 	  } else {

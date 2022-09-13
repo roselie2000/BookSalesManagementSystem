@@ -1,7 +1,7 @@
 @charset "ISO-8859-1";
 
 .dropbtn {
-  color: black;
+  color: white;
   border: none;
 }
 
@@ -11,6 +11,7 @@
 }
 
 .dropdown-content {
+	background-color: rgb(166, 89, 89);
   display: none;
   position: absolute;
   min-width: 160px;

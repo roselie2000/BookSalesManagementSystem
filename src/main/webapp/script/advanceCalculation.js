@@ -2,10 +2,9 @@
  * 
  */
  function calculatePriceAmount(){
-		var price = document.getElementById("price").value;
-		var availableQuantity = document.getElementById("avl_qty").value;
-		var adAmt = document.getElementById("advanceAmount").value;
-		var qty = document.getElementById("qty").value;
+		let price = document.getElementById("price").value;
+		let availableQuantity = document.getElementById("avl_qty").value;
+		let qty = document.getElementById("qty").value;
 		let totalPrice = qty * price;
 		if(availableQuantity > qty){
 			if(totalPrice > 10000){

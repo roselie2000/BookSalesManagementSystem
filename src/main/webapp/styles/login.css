@@ -56,11 +56,6 @@ main {
 	flex-direction: column;
 }
 
-.button {
-	height: 40px;
-	width: 100%;
-}
-
 p {
 	font-size: 13px;
 	color: white;
