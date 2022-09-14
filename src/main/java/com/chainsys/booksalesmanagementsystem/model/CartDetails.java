@@ -3,6 +3,7 @@ package com.chainsys.booksalesmanagementsystem.model;
 public class CartDetails {
 
 	private int cartId;
+	private int cartQuantity;
 	private String bookId;
 	private String bookName;
 	private String authors;
@@ -10,6 +11,7 @@ public class CartDetails {
 	private int edition;
 	private String category;
 	private int price;
+	private int availableQuantity;
 	private byte[] bookImage;
 	private String bookImages;
 
@@ -19,6 +21,14 @@ public class CartDetails {
 
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
+	}
+
+	public int getCartQuantity() {
+		return cartQuantity;
+	}
+
+	public void setCartQuantity(int cartQuantity) {
+		this.cartQuantity = cartQuantity;
 	}
 
 	public String getBookId() {
@@ -91,6 +101,22 @@ public class CartDetails {
 
 	public void setBookImage(byte[] bookImage) {
 		this.bookImage = bookImage;
+	}
+
+	public int getAvailableQuantity() {
+		return availableQuantity;
+	}
+
+	public void setAvailableQuantity(int availableQuantity) {
+		this.availableQuantity = availableQuantity;
+	}
+
+	public String getBookImages() {
+		return bookImages;
+	}
+
+	public void setBookImages(String bookImages) {
+		this.bookImages = bookImages;
 	}
 
 }

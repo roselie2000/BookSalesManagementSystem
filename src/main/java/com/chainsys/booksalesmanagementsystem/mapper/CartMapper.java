@@ -12,29 +12,33 @@ public class CartMapper implements RowMapper<CartDetails>{
 
 	@Override
 	public CartDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-		int cartId = rs.getInt(1);
-		String bookId = rs.getString(2);
-		String bookName = rs.getString(3);
-		String author = rs.getString(4);
-		String publisher = rs.getString(5);
-		int edition = rs.getInt(6);
-		String category = rs.getString(7);
-		int actPrice = rs.getInt(8);
-		byte[] images = rs.getBytes("book_image");
-		String img = Base64.getEncoder().encodeToString(images);
+		int cartId = rs.getInt("cartid");
+		String bookId = rs.getString("booksid");
+		String bookName = rs.getString("booksname");
+		int quantity = rs.getInt("quantity");
+		int price = rs.getInt("price");
+		String author = rs.getString("authors");
+		String publisher = rs.getString("publishers");
+		int edition = rs.getInt("edition");
+		String category = rs.getString("category");
+		int availableQuantity = rs.getInt("avl_quantity");
+		byte[] bookImage = rs.getBytes("book_image");
+		String base64Image = Base64.getEncoder().encodeToString(bookImage);
 		
-		CartDetails cart = new CartDetails();
-		cart.setCartId(cartId);
-		cart.setBookId(bookId);
-		cart.setBookName(bookName);
-		cart.setAuthors(author);
-		cart.setPublishers(publisher);
-		cart.setEdition(edition);
-		cart.setCategory(category);
-		cart.setPrice(actPrice);
-		cart.setBookImage(images);
-		cart.setBkImages(img);
-		return cart;
+		CartDetails cartDetails = new CartDetails();
+		cartDetails.setCartId(cartId);
+		cartDetails.setBookId(bookId);
+		cartDetails.setBookName(bookName);
+		cartDetails.setCartQuantity(quantity);
+		cartDetails.setPrice(price);
+		cartDetails.setAuthors(author);
+		cartDetails.setPublishers(publisher);
+		cartDetails.setEdition(edition);
+		cartDetails.setCategory(category);
+		cartDetails.setAvailableQuantity(availableQuantity);
+		cartDetails.setBookImage(bookImage);
+		cartDetails.setBkImages(base64Image);
+		return cartDetails;
 	}
 
 	

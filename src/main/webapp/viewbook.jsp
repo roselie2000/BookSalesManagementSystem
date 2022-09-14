@@ -96,7 +96,7 @@
 					</div>
 					
 					<div class="btn">
-						<a href="/addtocart?id=${book.bookId }&cat=${book.category}"><button class="cart">Add to cart</button></a>
+						<a href="/addtocart?id=${book.bookId }&cat=${book.category}&price=${book.actualPrice}"><button class="cart">Add to cart</button></a>
 						<a href="/getOrders?id=${book.bookId}"><button class="order">Order</button></a>
 						<a href="#review-panel" class="review">Write Review</a>
 					</div>

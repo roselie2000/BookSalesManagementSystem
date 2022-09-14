@@ -8,7 +8,9 @@ public class Cart {
 	private int cartId;
 	private String userName;
 	private String bookId;
-
+	private int quantity;
+	private int price;
+	private String status;
 	public int getCartId() {
 		return cartId;
 	}
@@ -33,4 +35,28 @@ public class Cart {
 		this.bookId = bookId;
 	}
 
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }

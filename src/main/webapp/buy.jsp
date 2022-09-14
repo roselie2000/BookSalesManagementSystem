@@ -21,7 +21,7 @@
 	</header>
 <main>
 <div class="buy-form-container">
-<form action="/placeOrder">
+<form action="getProfile">
 <input type="hidden" id = "avl_qty" value="${book.availableQuantity }">
 <label>Book ID</label>
 <input type="text" name="bookid" value="${book.bookId }" required readonly>
@@ -39,8 +39,6 @@
 <div id="alert-msg"></div>
 <label>Total Price</label>
 <input type="text" name="total" value="${book.actualPrice }" pattern="[0-9]*" id="totalPrice" required readonly>
-<label>Advance Amount</label>
-<input type="text" name="advanceAmount" value="0" pattern="[0-9]*" id="advanceAmount" readonly>
 <a href="cancel"><button>Cancel</button> </a>
 <input type="submit" name="submit" value="Buy" id="submit">
 </form>

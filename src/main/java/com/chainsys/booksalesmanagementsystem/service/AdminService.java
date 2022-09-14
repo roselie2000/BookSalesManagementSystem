@@ -54,23 +54,7 @@ public class AdminService {
 	}
 	
 	public List<Books> getBookBycategory(String category){
-		List<Books> categoryBook = null;
-		if(category.equals("Novel")) {
-			return bookDoa.getBookByCategory(category);
-		}
-		else if(category.equals("Poetry")) {
-			return bookDoa.getBookByCategory(category);
-		}
-		else if(category.equals("History")) {
-			return bookDoa.getBookByCategory(category);
-		}
-		else if(category.equals("Education")){
-			return bookDoa.getBookByCategory(category);
-		}
-		else if(category.equals("Biography")) {
-			return bookDoa.getBookByCategory(category);
-		}
-		return categoryBook;
+		 return bookDoa.getBookByCategory(category);
 	}
 
 	public boolean updateBook(Books bk) {

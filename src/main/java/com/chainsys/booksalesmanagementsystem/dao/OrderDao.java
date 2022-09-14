@@ -21,31 +21,34 @@ public class OrderDao {
 	JdbcTemplate jdbcTemplate;
 	
 	public int addcart(Cart cart) {
-		String insertCart = "INSERT INTO cartdetails(cart_id, username, booksid)values(cardId.nextval, ?, ?)";
+		String insertCart = "INSERT INTO orders(cartid, username, booksid, quantity, price, status)values(cardId.nextval, ?, ?, ?, ?, ?)";
 		// create the object for execute the query
-		Object[] cartData = {cart.getUserName(), cart.getBookId()};
+		Object[] cartData = {cart.getUserName(), cart.getBookId(), cart.getQuantity(), cart.getPrice(), cart.getStatus()};
 		int noOfRowsAffected = jdbcTemplate.update(insertCart, cartData);// execute the query
 		return noOfRowsAffected;
 	}
 	
-	public List<CartDetails> getCart(String userName){
-		String selectCartList = "select ct.cart_id, bk.booksid, bk.booksname, bk.authors, bk.publishers, bk.edition, bk.category, "
-				+ "bk.act_rate, bk.book_image from cartdetails ct "
-				+ "inner join bookdetails bk on ct.booksid = bk.booksid WHERE ct.username = ?";
+	public List<CartDetails> getHistory(String userName, String status){
+		String selectCartList = "select od.cartid, od.booksid, od.quantity, od.price, bk.booksName, bk.authors, bk.publishers, bk.edition, bk.category,\r\n"
+				+ "bk.book_image, bk.avl_quantity from orders od "
+				+ "inner join bookdetails bk on od.booksid = bk.booksid where od.username = ? and od.status = 'Add to Cart'";
 		List<CartDetails> cartList = null;
 		try {
+//			Object[] values = {userName, status};
 			cartList = jdbcTemplate.query(selectCartList, new CartMapper(), userName);
 			return cartList;
 		}catch (Exception e) {
-			return cartList;
+			e.printStackTrace();
 		}
-		
+		return cartList;
 	}
 	
 	public int deleteCart(int cartId) {
-		String deleteCart = "DELETE FROM cartdetails WHERE cart_id = ?";
+		System.out.println("inseide dao");
+		String deleteCart = "DELETE FROM orders WHERE cartid = ?";
 		try {
 			int noOfRowsAffected = jdbcTemplate.update(deleteCart, cartId);
+			System.out.println(noOfRowsAffected);
 			return noOfRowsAffected;
 		}catch (Exception e) {
 			return 0;
@@ -133,5 +136,17 @@ public class OrderDao {
 		}catch (Exception e) {
 			return orderList;
 		}
+	}
+	
+	public int updateCart(int cartId, int quantity, int price) {
+		String updateCart = "update cartdetails SET quantity = ?, price = ? where cart_id = ?";
+		Object[] values = {quantity, price, cartId};
+		try {
+			int noOfRowsAffected = jdbcTemplate.update(updateCart, values);
+			return noOfRowsAffected;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

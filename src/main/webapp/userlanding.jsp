@@ -170,8 +170,44 @@
 							<h3>${book.bookName }</h3>
 						</div>
 						<div class="details">
-							<h4>Rs.${book.actualPrice }</h4>
-						</div>
+								<h4>Rs.${book.actualPrice }</h4>
+								<c:choose>
+								<c:when test="${book.rate == 1 }">
+									<div><span class="fa fa-star checked"></span></div>
+								</c:when>
+								<c:when test="${book.rate == 2 }">
+									<div>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+									</div>
+								</c:when>
+								<c:when test="${book.rate == 3 }">
+									<div>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+									</div>
+								</c:when>
+								<c:when test="${book.rate == 4 }">
+									<div>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+									</div>
+								</c:when>
+								<c:when test="${book.rate == 5 }">
+									<div>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+										<span class="fa fa-star checked"></span>
+									</div>
+								</c:when>
+								
+							</c:choose>
+							</div>
 						<div class="view-btn">
 							<a href="/getBooks?id=${book.bookId }&cat=${book.category}"><button>View</button></a>
 						</div>

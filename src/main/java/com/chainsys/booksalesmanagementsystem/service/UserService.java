@@ -38,23 +38,7 @@ public class UserService {
 	}
 	
 	public List<Books> getBookBycategory(String category){
-		List<Books> categoryBook = null;
-		if(category.equals("Novel")) {
-			return bookDao.getBookByCategory(category);
-		}
-		else if(category.equals("Poetry")) {
-			return bookDao.getBookByCategory(category);
-		}
-		else if(category.equals("History")) {
-			return bookDao.getBookByCategory(category);
-		}
-		else if(category.equals("Education")){
-			return bookDao.getBookByCategory(category);
-		}
-		else if(category.equals("Biography")) {
-			return bookDao.getBookByCategory(category);
-		}
-		return categoryBook;
+		return bookDao.getBookByCategory(category);
 	}
 
 	public boolean addToCart(Cart cart) {
@@ -67,11 +51,12 @@ public class UserService {
 		}
 	}
 	
-	public List<CartDetails> getCart(String username){
-		return orderDao.getCart(username);
+	public List<CartDetails> getCart(String username, String status){
+		return orderDao.getHistory(username, status);
 	}
 	
 	public boolean deleteCart(int cartId) {
+		System.out.println("Inseide service");
 		int noOfRowsAffected = orderDao.deleteCart(cartId);
 		if(noOfRowsAffected > 0) {
 			return true;

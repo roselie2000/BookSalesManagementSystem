@@ -65,4 +65,13 @@ public class OrderService {
 		return orderDao.getOrdersById(userName);
 	}
 	
+	public boolean updateCart(int cartId, int quantity, int price) {
+		int noOfRowsAffected = orderDao.updateCart(cartId, quantity, price);
+		if(noOfRowsAffected > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }

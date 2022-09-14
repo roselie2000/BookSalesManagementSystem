@@ -177,7 +177,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/addtocart")
-	public String addToCart(@RequestParam("id") String cartId, Model model, HttpServletRequest request) {
+	public String addToCart(@RequestParam("id") String bookId, @RequestParam("price") int price, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		if(userName == null) {
@@ -186,7 +186,10 @@ public class UserController {
 		else {
 			Cart cart = new Cart();
 			cart.setUserName(userName);
-			cart.setBookId(cartId);
+			cart.setBookId(bookId);
+			cart.setPrice(price);
+			cart.setQuantity(1);
+			cart.setStatus("Add to Cart");
 			if(userService.addToCart(cart)) {
 				model.addAttribute("msg", "Added Successfully");
 				return "getBooks";
@@ -202,7 +205,8 @@ public class UserController {
 	public String getCartDetails(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
-		List<CartDetails> carts = userService.getCart(userName);
+		String status = "Add to Catr";
+		List<CartDetails> carts = userService.getCart(userName, status);
 		if(carts == null || carts.isEmpty()) {
 			model.addAttribute("msg", "No Carts");
 			return "cartpage.jsp";
@@ -215,6 +219,7 @@ public class UserController {
 	
 	@GetMapping("/deletecart")
 	public String deleteCart(@RequestParam("id") int cartId, Model model) {
+		System.out.println("inside controller");
 		if(userService.deleteCart(cartId)) {
 			model.addAttribute("msg", "The item is successfully removed from the cart!");
 			return cartPath;
@@ -235,10 +240,9 @@ public class UserController {
 			return loginPath;
 		}
 		else {
-			Users user = userDao.getUserById(uname);
-			model.addAttribute("userdata", user);
-			model.addAttribute("msg", "Please check your personal details");
-			return "profile.jsp";
+			Books book = userService.getBookById(bookId);
+			model.addAttribute("book", book);
+			return "buy.jsp";
 		}
 	}
 	
@@ -385,12 +389,25 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/updateQuantity")
+	public String updateQuantity(Model model, @RequestParam("id") int cartId, @RequestParam("quantity") int quantity, 
+			@RequestParam("price") int price) {
+		if(orderService.updateCart(cartId, quantity, price)) {
+			return "/getMultipleOrders";
+		}
+		else {
+			model.addAttribute("msg", "Some Internal problem may occur. So you can't increase the quantity. Please try again later");
+			return "/getMultipleOrders";
+		}
+	}
+	
 	@GetMapping("/getMultipleOrders")
 	public String getMultipleOrders(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
-		List<CartDetails> cartList = userService.getCart(userName);
-		model.addAttribute("cart", cartList);
-		return null;
+		String status = "Add to Cart";
+		List<CartDetails> cart = userService.getCart(userName, status);
+		model.addAttribute("cart", cart);
+		return "multiorders.jsp";
 	}
 }

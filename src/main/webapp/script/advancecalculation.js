@@ -2,6 +2,7 @@
  * 
  */
  function calculatePriceAmount(){
+	console.log("inside function")
 		let price = document.getElementById("price").value;
 		let availableQuantity = document.getElementById("avl_qty").value;
 		let qty = document.getElementById("qty").value;

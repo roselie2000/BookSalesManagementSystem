@@ -8,7 +8,6 @@
 <title>Cart page</title>
 <link rel="stylesheet" href="styles/navbar.css">
 <link rel="stylesheet" href="styles/views.css">
-<!-- <link rel="stylesheet" href="styles/user.css"> -->
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </head>
@@ -96,7 +95,7 @@
 							<div class="label">Publisher</div>
 							<div>${ct.publishers}</div>
 						</div>
-						<c:if test =  "${ct.edition > 0 }">
+						<c:if test = "${ct.edition > 0 }">
 							<div>
 								<div class="label">Edition</div>
 								<div>${ct.edition }</div>
@@ -106,6 +105,13 @@
 							<div class="label">Category</div>
 							<div>${ct.category}</div>
 						</div>
+						
+						<div>
+							<div class="label">Quantity</div>
+							<div>1</div>
+							
+						</div>
+						
 					</div>
 					
 					<div class="price-container">
@@ -119,7 +125,6 @@
 			</div>
 		</div>
 	</c:forEach>
-	
 	<div class="order-button"><a href="getMultipleOrders"><button>Order</button></a></div>
 	</c:when>
 	</c:choose>
