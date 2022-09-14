@@ -67,7 +67,7 @@
     		<a href="language?lang=Hindi">Hindi</a>
     		<a href="language?lang=Telugu">Telugu</a>
     		<a href="language?lang=Malayalam">Malayalam</a>
-    		<a href="language?lang=Kanadam">Kanadam</a>
+    		<a href="language?lang=Kanadam">Kanada</a>
   		</div>
  	</div>
 
@@ -120,7 +120,7 @@
 		</div>
 	</c:forEach>
 	
-	<div class="order-button"><a href="getBunchOrder"><button>Order</button></a></div>
+	<div class="order-button"><a href="getMultipleOrders"><button>Order</button></a></div>
 	</c:when>
 	</c:choose>
 	</main>

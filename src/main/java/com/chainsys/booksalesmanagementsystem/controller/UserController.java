@@ -286,7 +286,8 @@ public class UserController {
 	}
 	
 	@GetMapping("/placeOrder")
-	public String addOrder(HttpServletRequest request, Model model, @RequestParam("bookid") String bookId, @RequestParam("quantity") int quantity, @RequestParam("total") int totalPrice, @RequestParam("advanceAmount") int advanceAmount) {
+	public String addOrder(HttpServletRequest request, Model model, @RequestParam("bookid") String bookId, @RequestParam("quantity") int quantity, 
+			@RequestParam("total") int totalPrice, @RequestParam("advanceAmount") int advanceAmount) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		
@@ -382,5 +383,14 @@ public class UserController {
 			model.addAttribute("msg", "No Books");
 			return allBookPath;
 		}
+	}
+	
+	@GetMapping("/getMultipleOrders")
+	public String getMultipleOrders(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userName = (String) session.getAttribute("user");
+		List<CartDetails> cartList = userService.getCart(userName);
+		model.addAttribute("cart", cartList);
+		return null;
 	}
 }
