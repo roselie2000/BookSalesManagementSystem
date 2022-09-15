@@ -158,7 +158,7 @@ a{
 }
 
 a > em{
-	color: #220e24;
+	color: rgb(255, 230, 255);
 	font-size: 15px;
 }
 

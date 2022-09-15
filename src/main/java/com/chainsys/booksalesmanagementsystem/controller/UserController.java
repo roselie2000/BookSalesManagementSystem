@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.booksalesmanagementsystem.dao.UserDao;
@@ -25,7 +24,6 @@ import com.chainsys.booksalesmanagementsystem.model.Books;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
 import com.chainsys.booksalesmanagementsystem.model.CartDetails;
 import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
-import com.chainsys.booksalesmanagementsystem.model.OrdersDetails;
 import com.chainsys.booksalesmanagementsystem.model.Rating;
 import com.chainsys.booksalesmanagementsystem.model.Users;
 import com.chainsys.booksalesmanagementsystem.service.OrderService;

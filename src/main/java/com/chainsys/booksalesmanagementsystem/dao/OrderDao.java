@@ -13,7 +13,6 @@ import com.chainsys.booksalesmanagementsystem.mapper.CartMapper;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
 import com.chainsys.booksalesmanagementsystem.model.CartDetails;
 import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
-import com.chainsys.booksalesmanagementsystem.model.OrdersDetails;
 import com.chainsys.booksalesmanagementsystem.model.Rating;
 
 @Repository

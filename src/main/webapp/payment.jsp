@@ -2,23 +2,25 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Payment</title>
+<link rel="stylesheet" href="styles/payment.css">
 </head>
 <body>
+<h3>Summary</h3>
 <c:choose>
 	<c:when test="${not empty book }">
-		<table>
-		<caption>Orders</caption>
-		<tr>
-		<td>${book.bookName }</td>
-		<td>${book.author }</td>
-		<td>${quantity}</td>
-		<td>${price }</td>
-		</table>
-		<form action="addOrder">
+	<div class="order-list">
+		<div><img alt="book cover page" src="data:image/jpg;base64,${book.imagesPath}"></div>
+		<div>
+			<div>${book.bookName }</div>
+			<div>${quantity}</div>
+			<div>${price }</div>
+		</div>
+	</div>
+	<form action="addOrder">
 		<label>
 			Card number
 		</label>

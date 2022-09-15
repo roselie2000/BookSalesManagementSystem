@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Orders</title>
@@ -63,6 +63,10 @@
 							<div class="label">Category</div>
 							<div>${ct.category}</div>
 						</div>
+						<%-- <div>
+							<div class="label">Quantity</div>
+							<div>${ct.cartQuantity}</div>
+						</div> --%>
 					</div>
 
 					<div class="price-container">
@@ -74,9 +78,10 @@
 								<label>Quantity</label>
 								<div>
 									<div class="qty-button" onclick="decreaseQuantity(${ct.cartId})">&#8722;</div>
-									<div><input type="text" name="quantity"  pattern="[0-9]*" class="qty" value="${ct.cartQuantity }" onkeyup="setPrice(${ct.cartId})"></div>
+									<div><input type="text" name="quantity"  pattern="[0-9]*" class="qty" value="${ct.cartQuantity }" 
+										onkeyup="setPrice(${ct.cartId})"></div>
 									<div onclick="increaseQuantity(${ct.cartId})">&plus;</div>
-									<input type="submit" value="OK" class="ok">
+									<input type="submit" value="Save" class="ok">
 								</div>								 
 							</div>
 							<input type="text" name="price" class="price" value="${ct.price }" pattern="[0-9]*" readonly>
@@ -121,16 +126,6 @@
 		document.getElementById('totalPrice').innerHTML = sum;
 	}
 	
-	/* function calculatePriceAmount(trigger){
-		console.log(1)
-		let container = document.getElementById(trigger);
-		let qty = container.querySelector('.qty').value;
-		let price = container.querySelector('.price').value;
-		let total = price * qty;
-		container.querySelector('.price').value = total;
-		sumAllPrice();
-		}
-	  */
 		function increaseQuantity(trigger){
 			let container = document.getElementById(trigger);
 			let qty = parseInt(container.querySelector('.qty').value);

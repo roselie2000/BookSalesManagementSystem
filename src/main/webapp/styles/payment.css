@@ -1,1 +1,27 @@
 @charset "ISO-8859-1";
+
+body{
+	margin: 0;
+	padding: 0;
+}
+
+h3{
+	color: maroon;
+	text-align: center;
+}
+
+.order-list{
+	display: grid;
+	grid-template-columns: 35% 60%;
+	height: 100px;
+	width: 50%;
+}
+
+.order-list>div{
+	height: 100%;
+	width: 100%;
+}
+.order-list>div>img{
+	height: 100px;
+	width: 100px;
+}

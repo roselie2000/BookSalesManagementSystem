@@ -75,12 +75,8 @@ public class BookDao {
 
 	public int deleteBook(String bkId) throws SQLException {
 		String deleteBook = "DELETE FROM bookdetails WHERE booksId = ?";
-		try {
-			int noOfRowsAffected = jdbcTemplate.update(deleteBook, bkId);
-			return noOfRowsAffected;
-		} catch (Exception e) {
-			return 0;
-		}
+		int noOfRowsAffected = jdbcTemplate.update(deleteBook, bkId);
+		return noOfRowsAffected;
 	}
 
 	public List<Books> searchBooks(String keyword) throws SQLException {
