@@ -39,7 +39,7 @@ public class CartDetailsMapper implements RowMapper<CartDetails>{
 		cartDetails.setAvailableQuantity(availableQuantity);
 		cartDetails.setBookPrice(bookPrice);
 		cartDetails.setBookImage(bookImage);
-		cartDetails.setBkImages(base64Image);
+		cartDetails.setBookImages(base64Image);
 		return cartDetails;
 	}
 

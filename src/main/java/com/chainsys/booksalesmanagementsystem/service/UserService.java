@@ -59,7 +59,6 @@ public class UserService {
 	}
 	
 	public boolean deleteCart(int cartId) throws SQLException, DataDeletedException {
-		System.out.println("Inseide service");
 		int noOfRowsAffected = orderDao.deleteCart(cartId);
 		if(noOfRowsAffected > 0) {
 			return true;

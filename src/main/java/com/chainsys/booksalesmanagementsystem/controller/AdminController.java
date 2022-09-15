@@ -30,23 +30,27 @@ public class AdminController {
 	AdminService adminService;
 	
 	String listName = "books";
-	String books = "books.jsp";
+	String booksPage = "books.jsp";
 	String message = "There is no Books are available now";
-	String bookPath = "/Books";
+	String msg = "msg";
+	String login = "login.jsp";
+	String bookPath = "Books";
+	String addBooks = "addbooks.jsp";
+	String orders = "orders.jsp";
 	@GetMapping("/adminlogin")
 	public String adminLogin(@RequestParam("username") String userName, @RequestParam("pwd") String password, Model model) throws InternalException {
 		try {
 			adminService.checkIdentity(userName, password);
 			return "adminHome";
 		}catch (InvalidCredentialException e) {
-			model.addAttribute("msg", "Please enter valid Username and Password");
-			return "login.jsp";
+			model.addAttribute(msg, "Please enter valid Username and Password");
+			return login;
 		}catch (InternalException e) {
-			model.addAttribute("msg", "Some Internal problem! Please try again later!");
-			return "login.jsp";
+			model.addAttribute(msg, "Some Internal problem! Please try again later!");
+			return login;
 		}catch (SQLException e) {
-			model.addAttribute("msg", "Some Internal problem! Please try again later!");
-			return "login.jsp";
+			model.addAttribute(msg, "Some Internal problem! Please try again later!");
+			return login;
 		}
 		
 	}
@@ -57,13 +61,13 @@ public class AdminController {
 				List<Books> topBooks = adminService.getTopSearchedBooks();
 				model.addAttribute("topBooks", topBooks);
 			}catch (SQLException e) {
-				model.addAttribute("msg", "Some Internal problem may occur! Can't get the top searched books!");
+				model.addAttribute(msg, "Some Internal problem may occur! Can't get the top searched books!");
 			}
 			try {
 				List<Books> lowQtyBooks = adminService.getLowQuantityBooks();
 				model.addAttribute("lowQtyBooks", lowQtyBooks);
 			}catch (SQLException e) {
-				model.addAttribute("msg", "Some Internal problem may occur! Can't get the book list which have low quantity");
+				model.addAttribute(msg, "Some Internal problem may occur! Can't get the book list which have low quantity");
 			}
 				
 				List<Users> topUsers = adminService.getTopBuyers();
@@ -104,17 +108,17 @@ public class AdminController {
 			// check whether the data are inserted or not
 			
 				adminService.addBooks(books);
-				model.addAttribute("msg", "Successfully Added!");
-				return "addbooks.jsp";
+				model.addAttribute(msg, "Successfully Added!");
+				return addBooks;
 			} catch (DataAddedException e) {
-				model.addAttribute("msg", "Some internal problem may occur. The data of book is not added!. Please try again later");
-				return "addbooks.jsp";
+				model.addAttribute(msg, "Some internal problem may occur. The data of book is not added!. Please try again later");
+				return addBooks;
 			} catch (SQLException e) {
-				model.addAttribute("msg", "Some internal problem may occur. The data of book is not added!. Please try again later");
-				return "addbooks.jsp";
+				model.addAttribute(msg, "Some internal problem may occur. The data of book is not added!. Please try again later");
+				return addBooks;
 			}catch (IOException e) {
-				model.addAttribute("msg", "The file name of the Image is invalid. Please give valid filename");
-				return "addbooks.jsp";
+				model.addAttribute(msg, "The file name of the Image is invalid. Please give valid filename");
+				return addBooks;
 			}
 	}	
 	
@@ -131,16 +135,16 @@ public class AdminController {
 		try {
 			bookList = adminService.getBooks();
 			if(bookList != null) {
-				model.addAttribute("books", bookList);
-				return books;
+				model.addAttribute(listName, bookList);
+				return booksPage;
 			}
 			else {
 				model.addAttribute("msg", message);
-				return books;
+				return booksPage;
 			}
 		} catch (SQLException e) {
-			model.addAttribute("msg", "Some internal problem may occur. Can't get the Book list!");
-			return books;
+			model.addAttribute(msg, "Some internal problem may occur. Can't get the Book list!");
+			return booksPage;
 		}
 		
 	}
@@ -151,16 +155,16 @@ public class AdminController {
 		try {
 			bookList = adminService.getBookBycategory(category);
 			if(bookList != null) {
-				model.addAttribute("books", bookList);
-				return books;
+				model.addAttribute(listName, bookList);
+				return booksPage;
 			}
 			else {
-				model.addAttribute("msg", "There is no Books are available now");
-				return books;
+				model.addAttribute(msg, "There is no Books are available now");
+				return booksPage;
 			}
 		} catch (SQLException e) {
-			model.addAttribute("msg", "Some internal problem may occur! can't get the book list!");
-			return books;
+			model.addAttribute(msg, "Some internal problem may occur! can't get the book list!");
+			return booksPage;
 		}
 	}
 	
@@ -168,13 +172,13 @@ public class AdminController {
 	public String deleteBook(@RequestParam("id") String bookId, Model model) {
 		try {
 			adminService.deleteBooks(bookId);
-			model.addAttribute("msg", "The book is deleted successfully!");
+			model.addAttribute(msg, "The book is deleted successfully!");
 			return bookPath;
 		} catch (DataDeletedException e) {
-			model.addAttribute("msg", "Some internal problem may occur. The book is not deleted! Please try again later!");
+			model.addAttribute(msg, "Some internal problem may occur. The book is not deleted! Please try again later!");
 			return bookPath;
 		} catch (SQLException e) {
-			model.addAttribute("msg", "Some internal problem may occur. The book is not deleted! Please try again later!");
+			model.addAttribute(msg, "Some internal problem may occur. The book is not deleted! Please try again later!");
 			return bookPath;
 		}
 	}
@@ -195,13 +199,13 @@ public class AdminController {
 		books.setMrp(mrp);
 		try {
 			adminService.updateBook(books);
-			model.addAttribute("msg", "The book Details are Successfully Updated!");
+			model.addAttribute(msg, "The book Details are Successfully Updated!");
 			return bookPath;
 		} catch (DataAddedException e) {
-			model.addAttribute("msg", "Some Internal problem may occur. The book details are not updated!. Please try again later!");
+			model.addAttribute(msg, "Some Internal problem may occur. The book details are not updated!. Please try again later!");
 			return bookPath;
 		} catch (SQLException e) {
-			model.addAttribute("msg", "Some Internal problem may occur. The book details are not updated!. Please try again later!");
+			model.addAttribute(msg, "Some Internal problem may occur. The book details are not updated!. Please try again later!");
 			return bookPath;
 		}
 	}
@@ -213,15 +217,15 @@ public class AdminController {
 			orderList = adminService.getOrders();
 			if(orderList != null) {
 				model.addAttribute("orderList", orderList);
-				return "orders.jsp";
+				return orders;
 			}
 			else {
-				model.addAttribute("msg", "No Orders available");
-				return "orders.jsp";
+				model.addAttribute(msg, "No Orders available");
+				return orders;
 			}
 		} catch (SQLException e) {
-			model.addAttribute("msg", "Some internal problem may occur. Can't get the List of Orders!");
-			return "orders.jsp";
+			model.addAttribute(msg, "Some internal problem may occur. Can't get the List of Orders!");
+			return orders;
 		}
 		
 	}

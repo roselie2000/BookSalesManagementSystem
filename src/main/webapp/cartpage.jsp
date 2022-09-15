@@ -81,7 +81,7 @@
 			<c:forEach var="ct" items="${carts}">
 		<div class="viewed-book">
 			<div class="imgdiv">
-				<img alt="book cover page" src="data:image/jpg;base64,${ct.bkImages}">
+				<img alt="book cover page" src="data:image/jpg;base64,${ct.bookImages}">
 			</div>
 			<div>
 				<div class="container">

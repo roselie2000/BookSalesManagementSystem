@@ -31,12 +31,8 @@ public class BookDao {
 	public List<Books> getBookList() throws SQLException {
 		String selectBooks = "select * from bookdetails";
 		List<Books> bookList = null;
-		try {
-			bookList = jdbcTemplate.query(selectBooks, new BookMapper());
-			return bookList;
-		} catch (Exception e) {
-			return bookList;
-		}
+		bookList = jdbcTemplate.query(selectBooks, new BookMapper());
+		return bookList;
 	}
 
 	public List<Books> getTopSaledBooks() throws SQLException {
@@ -44,24 +40,16 @@ public class BookDao {
 				+ "FROM orders GROUP BY booksid ORDER BY booksid) WHERE ROWNUM <= 4";
 		List<String> topBooks = null;
 		List<Books> topBookList = null;
-		try {
-			topBooks = jdbcTemplate.queryForList(selectTopSaledBooks, String.class);
-			topBookList = topBooks.stream().map(bk -> getBookById(bk)).collect(Collectors.toList());
-			return topBookList;
-		} catch (Exception e) {
-			return topBookList;
-		}
+		topBooks = jdbcTemplate.queryForList(selectTopSaledBooks, String.class);
+		topBookList = topBooks.stream().map(bk -> getBookById(bk)).collect(Collectors.toList());
+		return topBookList;
 	}
 
 	public Books getBookById(String bkId) {
 		String selectBookById = "select * from bookdetails where booksid = ?";
 		Books books = null;
-		try {
-			books = jdbcTemplate.queryForObject(selectBookById, new BookMapper(), bkId);
-			return books;
-		} catch (Exception e) {
-			return books;
-		}
+		books = jdbcTemplate.queryForObject(selectBookById, new BookMapper(), bkId);
+		return books;
 	}
 
 	public int updateBookDetails(Books books) throws SQLException {
@@ -111,79 +99,48 @@ public class BookDao {
 		String updatequantity = "update bookdetails set avl_quantity = ? where booksid = ?";
 		int availableQuantity = getQuantityById(bookId);
 		int updatedQuantity = availableQuantity - quantity;
-		System.out.println("inside dao");
-		try {
-			int noOfAffectedRows = jdbcTemplate.update(updatequantity, updatedQuantity, bookId);
-			return noOfAffectedRows;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
+		int noOfAffectedRows = jdbcTemplate.update(updatequantity, updatedQuantity, bookId);
+		return noOfAffectedRows;
 	}
 
 	public int getQuantityById(String bookId) throws SQLException {
 		String selectQuantity = "select avl_quantity from bookdetails where booksid = ?";
-		try {
-			int quantity = jdbcTemplate.queryForObject(selectQuantity, int.class, bookId);
-			return quantity;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
+		int quantity = jdbcTemplate.queryForObject(selectQuantity, int.class, bookId);
+		return quantity;
 	}
 
 	public List<Books> getBookByLanguage(String language) throws SQLException {
 		String selectBookByLang = "select * from bookdetails where language = ?";
 		List<Books> bookList = null;
-		try {
-			bookList = jdbcTemplate.query(selectBookByLang, new BookMapper(), language);
-			return bookList;
-		} catch (Exception e) {
-			return bookList;
-		}
+		bookList = jdbcTemplate.query(selectBookByLang, new BookMapper(), language);
+		return bookList;
 	}
 
 	public List<Books> getBookByAuthor(String author) throws SQLException {
 		String selectBookByAuthor = "slect * from bookdetails where author = ?";
 		List<Books> bookList = null;
-		try {
-			bookList = jdbcTemplate.query(selectBookByAuthor, new BookMapper(), author);
-			return bookList;
-		} catch (Exception e) {
-			return bookList;
-		}
+		bookList = jdbcTemplate.query(selectBookByAuthor, new BookMapper(), author);
+		return bookList;
 	}
 
 	public List<Books> getBookByPrice(int fromRate, int toRate) throws SQLException {
 		String selectBookByPrice = "select * from bookdetails where act_rate BETWEEN ? and ?";
 		List<Books> bookList = null;
-		try {
-			bookList = jdbcTemplate.query(selectBookByPrice, new BookMapper(), fromRate, toRate);
-			return bookList;
-		} catch (Exception e) {
-			return bookList;
-		}
+		bookList = jdbcTemplate.query(selectBookByPrice, new BookMapper(), fromRate, toRate);
+		return bookList;
 	}
 
 	public List<Books> getBookByCategory(String category) throws SQLException {
 		String selectBookByCategory = "select * from bookdetails where category = ?";
 		List<Books> bookList = null;
-		try {
-			bookList = jdbcTemplate.query(selectBookByCategory, new BookMapper(), category);
-			return bookList;
-		} catch (Exception e) {
-			return bookList;
-		}
+		bookList = jdbcTemplate.query(selectBookByCategory, new BookMapper(), category);
+		return bookList;
 	}
 
 	public List<Books> getLowQuantityBooks() throws SQLException {
 		String selectBookByQuantity = "select * from bookdetails where avl_quantity < 15";
 		List<Books> bookList = null;
-		try {
-			bookList = jdbcTemplate.query(selectBookByQuantity, new BookMapper());
-			return bookList;
-		} catch (Exception e) {
-			return bookList;
-		}
+		bookList = jdbcTemplate.query(selectBookByQuantity, new BookMapper());
+		return bookList;
 	}
 }

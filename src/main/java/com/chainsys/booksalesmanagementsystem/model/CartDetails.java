@@ -87,14 +87,6 @@ public class CartDetails {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
-	public String getBkImages() {
-		return bookImages;
-	}
-
-	public void setBkImages(String bookImages) {
-		this.bookImages = bookImages;
-	}
 
 	public byte[] getBookImage() {
 		return bookImage;

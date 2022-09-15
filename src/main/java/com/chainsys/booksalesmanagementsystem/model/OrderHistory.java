@@ -10,7 +10,6 @@ public class OrderHistory {
 	private Date orderDate;
 	private int quantity;
 	private int totalPrice;
-	private int advanceAmount;
 	private String status;
 	private String bookName;
 	private int actualPrice;
@@ -63,14 +62,6 @@ public class OrderHistory {
 
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
-	}
-
-	public int getAdvanceAmount() {
-		return advanceAmount;
-	}
-
-	public void setAdvanceAmount(int advanceAmount) {
-		this.advanceAmount = advanceAmount;
 	}
 
 	public String getStatus() {
