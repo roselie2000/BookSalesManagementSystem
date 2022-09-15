@@ -29,11 +29,11 @@
 				<li><a href="adminHome">Home</a></li>
 				<li class="dropdown"><a href="Books" class="dropbtn">Books</a>
 					<div class="dropdown-content">
-    					<a href="Novels">Novels</a>
-    					<a href="Poetry">Poetry</a>
-    					<a href="History">History</a>
-    					<a href="Education">Education</a>
-    					<a href="Biography">Biography</a>
+    					<a href="getBookByCategoryAdmin?category=Novel">Novels</a>
+    					<a href="getBookByCategoryAdmin?category=Poetry">Poetry</a>
+    					<a href="getBookByCategoryAdmin?category=History">History</a>
+    					<a href="getBookByCategoryAdmin?category=Education">Education</a>
+    					<a href="getBookByCategoryAdmin?category=Biography">Biography</a>
     					<a href="Books">All Books</a>
   					</div>
 				</li>
@@ -107,7 +107,7 @@
 			
 							<div class="input-feild">
 								<label>MRP Rate</label>
-							<input type="text" name="mrpRate" value="${book.mrpRate }" placeholder="Enter the MRP price of the book" 
+							<input type="text" name="mrpRate" value="${book.mrp }" placeholder="Enter the MRP price of the book" 
 								pattern="[0-9]*" required class="inactive">
 							</div>
 

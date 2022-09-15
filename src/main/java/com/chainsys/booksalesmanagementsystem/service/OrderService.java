@@ -1,5 +1,6 @@
 package com.chainsys.booksalesmanagementsystem.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.chainsys.booksalesmanagementsystem.dao.BookDao;
 import com.chainsys.booksalesmanagementsystem.dao.OrderDao;
+import com.chainsys.booksalesmanagementsystem.exception.InternalException;
+import com.chainsys.booksalesmanagementsystem.exception.UpdateRatingException;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
 import com.chainsys.booksalesmanagementsystem.model.CartDetails;
 import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
@@ -22,17 +25,7 @@ public class OrderService {
 	@Autowired
 	BookDao bookDao;
 	
-//	public boolean cancelOrder(int orderId, String Status) {
-//		int noOfRowsAffected = orderDao.updateOrders(orderId, Status);
-//		if(noOfRowsAffected > 0) {
-//			return true;
-//		}
-//		else {
-//			return false;
-//		}
-//	}
-	
-	public boolean addRating(Rating rating) {
+	public boolean addRating(Rating rating) throws InternalException, UpdateRatingException, SQLException {
 		int noOfRowsAffected1 = orderDao.addRating(rating);
 		if(noOfRowsAffected1 > 0) {
 			String bookId = rating.getBookId();
@@ -42,19 +35,19 @@ public class OrderService {
 				return true;
 			}
 			else {
-				return false;
+				throw new UpdateRatingException();
 			}
 		}
 		else {
-			return false;
+			throw new InternalException();
 		}
 	}
 	
-	public List<OrderHistory> getOrderById(String userName){
+	public List<OrderHistory> getOrderById(String userName) throws SQLException{
 		return orderDao.getOrdersById(userName);
 	}
 	
-	public boolean updateCart(int cartId, int quantity, int price) {
+	public boolean updateCart(int cartId, int quantity, int price) throws SQLException {
 		int noOfRowsAffected = orderDao.updateCart(cartId, quantity, price);
 		if(noOfRowsAffected > 0) {
 			return true;
@@ -66,7 +59,7 @@ public class OrderService {
 	
 	
 
-	public boolean addOrders(Cart cart) {
+	public boolean addOrders(Cart cart) throws SQLException {
 		int noOfRowsAffected = orderDao.addOrder(cart);
 		int quantity = cart.getQuantity();
 		String bookId = cart.getBookId();
@@ -80,11 +73,11 @@ public class OrderService {
 		
 	}
 	
-	public List<CartDetails> getCart(String userName, String status){
+	public List<CartDetails> getCart(String userName, String status) throws SQLException{
 		return orderDao.getCart(userName, userName);
 	}
 
-	public boolean updateCartStatus(Cart cart) {
+	public boolean updateCartStatus(Cart cart) throws SQLException {
 		String userName = cart.getUserName();
 		List<Cart> QuantityList = orderDao.getQunatityFromCart(userName);
 		System.out.println(QuantityList.get(0).getBookId());

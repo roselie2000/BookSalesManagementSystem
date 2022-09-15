@@ -36,7 +36,7 @@ public class BookMapper implements RowMapper<Books>{
 		bk.setEdition(edition);
 		bk.setCategory(category);
 		bk.setPrice(price);
-		bk.setMrpRate(mrpRate);
+		bk.setMrp(mrpRate);
 		bk.setActualPrice(actRate);
 		bk.setAvailableQuantity(qty);
 		bk.setLanguage(lang);

@@ -13,7 +13,7 @@ public class Books {
 	private String category;
 	private String language;
 	private int price;
-	private int mrpRate;
+	private int mrp;
 	private int actualPrice;
 	private int availableQuantity;
 	private byte[] bookImage;
@@ -84,12 +84,12 @@ public class Books {
 		this.price = price;
 	}
 
-	public int getMrpRate() {
-		return mrpRate;
+	public int getMrp() {
+		return mrp;
 	}
 
-	public void setMrpRate(int mrpRate) {
-		this.mrpRate = mrpRate;
+	public void setMrp(int mrp) {
+		this.mrp = mrp;
 	}
 
 	public String getImagesPath() {

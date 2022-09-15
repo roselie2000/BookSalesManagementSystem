@@ -1,6 +1,7 @@
 package com.chainsys.booksalesmanagementsystem.controller;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.booksalesmanagementsystem.dao.UserDao;
+import com.chainsys.booksalesmanagementsystem.exception.DataAddedException;
+import com.chainsys.booksalesmanagementsystem.exception.DataDeletedException;
+import com.chainsys.booksalesmanagementsystem.exception.InternalException;
+import com.chainsys.booksalesmanagementsystem.exception.UpdateRatingException;
 import com.chainsys.booksalesmanagementsystem.model.Books;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
 import com.chainsys.booksalesmanagementsystem.model.CartDetails;
@@ -116,53 +121,92 @@ public class UserController {
 
 	@GetMapping("/userBooks")
 	public String getTopBooks(Model model) {
-		List<Books> topBooks = userService.getTopBooks();
-		List<Books> bookList = userService.getBooks();
-		model.addAttribute(books, bookList);
-		model.addAttribute("topBooks", topBooks);
+		try {
+			List<Books> bookList = userService.getBooks();
+			model.addAttribute(books, bookList);
+		}catch (SQLException e) {
+			model.addAttribute("msg", "Some internal problem may occur!. The can't get the list of books!");
+		}
+		try {
+			List<Books> topBooks = userService.getTopBooks();
+			model.addAttribute("topBooks", topBooks);
+		}catch (SQLException e) {
+			model.addAttribute("msg", "Some internal problem may occur!. The can't get the list of top books!");
+		}
 		return "userlanding.jsp";
 	}
 
 	@GetMapping("/getAllBooks")
 	public String getAllBooks(Model model) {
-		List<Books> bookList = userService.getBooks();
-		model.addAttribute(books, bookList);
+		List<Books> bookList;
+		try {
+			bookList = userService.getBooks();
+			model.addAttribute(books, bookList);
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some internal problem may occur!. The can't get the list of top books!");
+		}
 		return allBookPath;
 	}
 
 	@GetMapping("/getBookByCategory")
 	public String getBookBycategory(@RequestParam("category") String category, Model model) {
-		List<Books> bookList = userService.getBookBycategory(category);
-		if (bookList != null) {
-			model.addAttribute(books, bookList);
-			return allBookPath;
-		} else {
-			model.addAttribute("msg", "There is no Books are available now");
+		List<Books> bookList;
+		try {
+			bookList = userService.getBookBycategory(category);
+			if (bookList != null) {
+				model.addAttribute(books, bookList);
+				return allBookPath;
+			} else {
+				model.addAttribute("msg", "There is no Books are available now");
+				return allBookPath;
+			}
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some internal problem may occur. Can't get the list of books!");
 			return allBookPath;
 		}
+		
 	}
 
 	@GetMapping("/getBooks")
 	public String getBuys(@RequestParam("id") String bkId, @RequestParam("cat") String category, Model model) {
 		Books books = userService.getBookById(bkId);
-		List<Books> relatedBooks = userService.getBookBycategory(category);
-		List<Books> topBooks = userService.getTopBooks();
+		List<Books> relatedBooks;
+		try {
+			relatedBooks = userService.getBookBycategory(category);
+			model.addAttribute("relatedBook", relatedBooks);
+		} catch (SQLException e) {
+			
+		}
+		List<Books> topBooks;
+		try {
+			topBooks = userService.getTopBooks();
+			model.addAttribute("topBooks", topBooks);
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some internal problem may occur. Can't get the top searched books list!");
+		}
 		model.addAttribute("book", books);
-		model.addAttribute("topBooks", topBooks);
-		model.addAttribute("relatedBook", relatedBooks);
+		
+		
 		return "viewbook.jsp";
 	}
 
 	@GetMapping("/searchBooks")
 	public String searchBooks(@RequestParam("keyword") String keyword, Model model) {
-		List<Books> searchedBooks = userService.searchBooks(keyword);
-		if (searchedBooks == null || searchedBooks.isEmpty()) {
-			model.addAttribute("msg", "No Books");
-			return allBookPath;
-		} else {
-			model.addAttribute(books, searchedBooks);
+		List<Books> searchedBooks;
+		try {
+			searchedBooks = userService.searchBooks(keyword);
+			if (searchedBooks == null || searchedBooks.isEmpty()) {
+				model.addAttribute("msg", "No Books");
+				return allBookPath;
+			} else {
+				model.addAttribute(books, searchedBooks);
+				return allBookPath;
+			}
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some internal problem may occur. Can't get the top searched books list!");
 			return allBookPath;
 		}
+		
 	}
 
 	@GetMapping("/user")
@@ -176,7 +220,7 @@ public class UserController {
 
 	@GetMapping("/addtocart")
 	public String addToCart(@RequestParam("id") String bookId, @RequestParam("price") int price, Model model,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws SQLException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		if (userName == null) {
@@ -188,13 +232,19 @@ public class UserController {
 			cart.setPrice(price);
 			cart.setQuantity(1);
 			cart.setStatus("Add to Cart");
-			if (userService.addToCart(cart)) {
+			try {
+				userService.addToCart(cart);
 				model.addAttribute("msg", "Added Successfully");
 				return "getBooks";
-			} else {
+			}catch (DataAddedException e) {
+				model.addAttribute("msg", "Some Internal Problem. Please try again later!");
+				return "getBooks";
+			}catch (SQLException e) {
 				model.addAttribute("msg", "Some Internal Problem. Please try again later!");
 				return "getBooks";
 			}
+			
+				
 		}
 	}
 
@@ -203,26 +253,39 @@ public class UserController {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		String status = "Add to Catr";
-		List<CartDetails> carts = userService.getCart(userName, status);
-		if (carts == null || carts.isEmpty()) {
-			model.addAttribute("msg", "No Carts");
-			return "cartpage.jsp";
-		} else {
-			model.addAttribute(cartPath, carts);
+		List<CartDetails> carts;
+		try {
+			carts = userService.getCart(userName, status);
+			if (carts == null || carts.isEmpty()) {
+				model.addAttribute("msg", "No Carts");
+				return "cartpage.jsp";
+			} else {
+				model.addAttribute(cartPath, carts);
+				return "cartpage.jsp";
+			}
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some Internal Problem.Can't get the cart Details! Please try again later!");
 			return "cartpage.jsp";
 		}
+		
 	}
 
 	@GetMapping("/deletecart")
-	public String deleteCart(@RequestParam("id") int cartId, Model model) {
+	public String deleteCart(@RequestParam("id") int cartId, Model model) throws SQLException {
 		System.out.println("inside controller");
-		if (userService.deleteCart(cartId)) {
+		try {
+			userService.deleteCart(cartId);
 			model.addAttribute("msg", "The item is successfully removed from the cart!");
 			return cartPath;
-		} else {
+		}catch (DataDeletedException e) {
+			model.addAttribute("msg", "You can't remove the item now. Please try again later! ");
+			return cartPath;
+		}catch (SQLException e) {
 			model.addAttribute("msg", "You can't remove the item now. Please try again later! ");
 			return cartPath;
 		}
+		
+			
 	}
 
 	@GetMapping("/getOrders")
@@ -304,7 +367,7 @@ public class UserController {
 
 	@GetMapping("/addReview")
 	public String addBookReview(@RequestParam("id") String bookId, @RequestParam("rate") int rate,
-			@RequestParam("review") String review, HttpServletRequest request, Model model) {
+			@RequestParam("review") String review, HttpServletRequest request, Model model) throws SQLException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		if (userName.equals(null)) {
@@ -316,16 +379,21 @@ public class UserController {
 			rating.setRating(rate);
 			rating.setReview(review);
 			rating.setUserName(userName);
-			if (orderService.addRating(rating)) {
+			try {
+				orderService.addRating(rating);
 				return bookPath;
-			} else {
+			} catch (InternalException e) {
+				model.addAttribute("msg", "Some Internal problem may occur. Your rating is not added! Please try again later");
+				return bookPath;
+			} catch (UpdateRatingException e) {
+				e.printStackTrace();
 				return bookPath;
 			}
 		}
 	}
 
 	@GetMapping("/getOrderHistory")
-	public String getOrderById(Model model, HttpServletRequest request) {
+	public String getOrderById(Model model, HttpServletRequest request) throws SQLException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		
@@ -342,31 +410,45 @@ public class UserController {
 
 	@GetMapping("/getBookByPrice")
 	public String getBookByPrice(@RequestParam("from") int from, @RequestParam("to") int to, Model model) {
-		List<Books> booksList = userService.getBooksByPrice(from, to);
-		if (booksList != null) {
-			model.addAttribute(books, booksList);
-			return allBookPath;
-		} else {
-			model.addAttribute("msg", "No books");
+		List<Books> booksList;
+		try {
+			booksList = userService.getBooksByPrice(from, to);
+			if (booksList != null) {
+				model.addAttribute(books, booksList);
+				return allBookPath;
+			} else {
+				model.addAttribute("msg", "No books");
+				return allBookPath;
+			}
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some Internal Problem. Can't get the list of books! Please try again later!");
 			return allBookPath;
 		}
+		
 	}
 
 	@GetMapping("/language")
 	public String getBooksByLanguage(@RequestParam("lang") String language, Model model) {
-		List<Books> booksList = userService.getBooksByLanguage(language);
-		if (booksList != null) {
-			model.addAttribute(books, booksList);
-			return allBookPath;
-		} else {
-			model.addAttribute("msg", "No Books");
+		List<Books> booksList;
+		try {
+			booksList = userService.getBooksByLanguage(language);
+			if (booksList != null) {
+				model.addAttribute(books, booksList);
+				return allBookPath;
+			} else {
+				model.addAttribute("msg", "No Books");
+				return allBookPath;
+			}
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some Internal Problem. Can't get the list of books! Please try again later!");
 			return allBookPath;
 		}
+		
 	}
 
 	@GetMapping("/updateQuantity")
 	public String updateQuantity(Model model, @RequestParam("id") int cartId, @RequestParam("quantity") int quantity,
-			@RequestParam("price") int price) {
+			@RequestParam("price") int price) throws SQLException {
 		if (orderService.updateCart(cartId, quantity, price)) {
 			return "/getMultipleOrders";
 		} else {
@@ -381,9 +463,16 @@ public class UserController {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		String status = "Add to Cart";
-		List<CartDetails> cart = userService.getCart(userName, status);
-		model.addAttribute("cart", cart);
-		return "multiorders.jsp";
+		List<CartDetails> cart;
+		try {
+			cart = userService.getCart(userName, status);
+			model.addAttribute("cart", cart);
+			return "multiorders.jsp";
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some Internal Problem. Can't get the list of Orders! Please try again later!");
+			return "multiorders.jsp";
+		}
+		
 	}
 
 	@GetMapping("/editAddress")
@@ -425,7 +514,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/addOrder")
-	public String addOrder(HttpServletRequest request, Model model) {
+	public String addOrder(HttpServletRequest request, Model model) throws SQLException {
 		HttpSession session = request.getSession();
 		int price = (int) session.getAttribute("price");
 		int quantity = (int) session.getAttribute("quantity");
@@ -497,7 +586,7 @@ public class UserController {
 		}
 	}
 	@GetMapping("/multiplePayment")
-	public String multiplePayment(HttpServletRequest request, Model model) {
+	public String multiplePayment(HttpServletRequest request, Model model) throws SQLException {
 		HttpSession session = request.getSession();
 		String userNmae = (String) session.getAttribute("user");
 		List<CartDetails> cartList = orderService.getCart(userNmae, "Add to Cart");
@@ -505,7 +594,7 @@ public class UserController {
 		return "payment.jsp";
 	}
 	@GetMapping("/addMultipleOrders")
-	public String addMultipleOrders(HttpServletRequest request, Model model) {
+	public String addMultipleOrders(HttpServletRequest request, Model model) throws SQLException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		String address = (String) session.getAttribute("address");

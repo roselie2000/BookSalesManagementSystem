@@ -1,5 +1,6 @@
 package com.chainsys.booksalesmanagementsystem.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,31 +17,22 @@ public class AdminDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	
+
 	@Autowired
 	Admin adm;
-	
-	public Admin adminLogin(String uname, String pwd) {
+
+	public Admin adminLogin(String uname, String pwd) throws SQLException {
 		String q = "select user_name, password from admin";
 		Admin info = null;
-		try {
-			info = jdbcTemplate.queryForObject(q, new AdminMapper());
-		}catch (Exception e) {
-			e.printStackTrace();
-		}		
+		info = jdbcTemplate.queryForObject(q, new AdminMapper());
 		return info;
 	}
-	
-	public List<OrdersDetails> getOrderList(){
+
+	public List<OrdersDetails> getOrderList() throws SQLException {
 		String q = "select od.cartid, od.username, od.booksid, od.quantity, od.price, od.orderid, od.ordereddate, od.status, od.orderedaddress, us.emailid, us.phoneno "
 				+ "from orders od inner join userdetails us on od.username = us.username";
 		List<OrdersDetails> orderList = null;
-		try {
 			orderList = jdbcTemplate.query(q, new OrderMapper());
 			return orderList;
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		return orderList;
 	}
 }

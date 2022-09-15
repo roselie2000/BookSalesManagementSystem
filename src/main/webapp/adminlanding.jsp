@@ -56,7 +56,7 @@
 								<h4>Rs.${book.actualPrice }</h4>
 							</div>
 							<div class="view-btn">
-								<a href="/getBooks?id=${book.bookId }&cat=${book.category}"><button>View</button></a>
+								<a href="Books"><button>View</button></a>
 							</div>
 						</div>
 			</c:forEach>
@@ -76,7 +76,7 @@
 								<h4>Rs.${book.actualPrice }</h4>
 							</div>
 							<div class="view-btn">
-								<a href="/getBooks?id=${book.bookId }&cat=${book.category}"><button>View</button></a>
+								<a href="Books"><button>View</button></a>
 							</div>
 						</div>
 			</c:forEach>
