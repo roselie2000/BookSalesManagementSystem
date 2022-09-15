@@ -39,7 +39,7 @@ public class OrderDao {
 
 	public List<CartDetails> getCart(String userName, String status) throws SQLException {
 		String selectCartList = "select od.cartid, od.booksid, od.quantity, od.price, bk.booksName, bk.authors, bk.publishers, bk.edition, bk.category,\r\n"
-				+ "bk.book_image, bk.avl_quantity from orders od "
+				+ "bk.book_image, bk.avl_quantity, bk.act_rate from orders od "
 				+ "inner join bookdetails bk on od.booksid = bk.booksid where od.username = ? and od.status = 'Add to Cart'";
 		List<CartDetails> cartList = null;
 		cartList = jdbcTemplate.query(selectCartList, new CartDetailsMapper(), userName);

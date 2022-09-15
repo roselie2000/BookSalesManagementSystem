@@ -12,6 +12,7 @@ public class CartDetails {
 	private String category;
 	private int price;
 	private int availableQuantity;
+	private int bookPrice;
 	private byte[] bookImage;
 	private String bookImages;
 
@@ -117,6 +118,14 @@ public class CartDetails {
 
 	public void setBookImages(String bookImages) {
 		this.bookImages = bookImages;
+	}
+
+	public int getBookPrice() {
+		return bookPrice;
+	}
+
+	public void setBookPrice(int bookPrice) {
+		this.bookPrice = bookPrice;
 	}
 
 }

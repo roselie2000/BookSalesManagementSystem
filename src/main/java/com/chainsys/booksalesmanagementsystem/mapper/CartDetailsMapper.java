@@ -22,6 +22,7 @@ public class CartDetailsMapper implements RowMapper<CartDetails>{
 		int edition = rs.getInt("edition");
 		String category = rs.getString("category");
 		int availableQuantity = rs.getInt("avl_quantity");
+		int bookPrice = rs.getInt("act_rate");
 		byte[] bookImage = rs.getBytes("book_image");
 		String base64Image = Base64.getEncoder().encodeToString(bookImage);
 		
@@ -36,6 +37,7 @@ public class CartDetailsMapper implements RowMapper<CartDetails>{
 		cartDetails.setEdition(edition);
 		cartDetails.setCategory(category);
 		cartDetails.setAvailableQuantity(availableQuantity);
+		cartDetails.setBookPrice(bookPrice);
 		cartDetails.setBookImage(bookImage);
 		cartDetails.setBkImages(base64Image);
 		return cartDetails;

@@ -5,9 +5,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Address change</title>
+<link rel="stylesheet" href="styles/addresseditform.css">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
 <body>
-<form action="addDeliveryAddress">
+<header>
+		<img alt="logo" src="images/Mars.png" height="95px" width="150px">
+</header>
+<h3>Edit Address</h3>
+<form action="addDeliveryAddress" class="address">
 	<label>Address</label>
 	<input type="text" value="${userdata.address }" name="addr" required>
 	<label>District</label>
@@ -19,7 +25,9 @@
 	<label>Pin code</label>
 	<input type="text" value="${userdata.pincode }" name="pincode" required pattern="[0-9]{6}"
 		title="Please enter a valid pincode">
+	<div></div>
 	<input type="submit" value="continue">
 </form>
+<script type="text/javascript" src="script/profilemenu.js"></script>
 </body>
 </html>
