@@ -32,7 +32,7 @@
 	<div id="option">
 		<a href="getProfile">Profile</a>
 		<a href="getOrderHistory">My History</a>
-		<a href="Logout"></a>
+		<a href="Logout">Logout</a>
 	</div>
 	<nav id="nav">
 		<div class="catgry">
@@ -79,15 +79,12 @@
 					</div>
 					<div class="order-info">
 						<label class="bookname">${orders.bookName }</label>
-						<div class="info"><label>Price</label><label>${orders.actualPrice }</label></div>
 						<div class="info"><label>Quantity</label><label>${orders.quantity }</label></div>
 					</div>
 				</div>
 				<div class="order-details">
 					<label>Total Price </label>
 					<div>${orders.totalPrice }</div>
-					<label>Advance Amount</label>
-					<div>${orders.advanceAmount }</div>
 					<label>Ordered Date</label>
 					<div>${orders.orderDate }</div>
 					<label>Status</label>

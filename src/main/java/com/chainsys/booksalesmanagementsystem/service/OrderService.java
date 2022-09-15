@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.chainsys.booksalesmanagementsystem.dao.BookDao;
 import com.chainsys.booksalesmanagementsystem.dao.OrderDao;
+import com.chainsys.booksalesmanagementsystem.model.Cart;
+import com.chainsys.booksalesmanagementsystem.model.CartDetails;
 import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
 import com.chainsys.booksalesmanagementsystem.model.OrdersDetails;
 import com.chainsys.booksalesmanagementsystem.model.Rating;
@@ -20,28 +22,15 @@ public class OrderService {
 	@Autowired
 	BookDao bookDao;
 	
-	public boolean addOrder(OrdersDetails orderDetails) {
-		int noOfRowAffected = orderDao.addOrder(orderDetails);
-		if(noOfRowAffected > 0) {
-			int availableQuantity = bookDao.getQuantityById(orderDetails.getBookId());
-			int remainingQuantity = availableQuantity - orderDetails.getQuantity();
-			bookDao.updateQuantity(remainingQuantity, orderDetails.getBookId());
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	public boolean cancelOrder(int orderId, String Status) {
-		int noOfRowsAffected = orderDao.updateOrder(orderId, Status);
-		if(noOfRowsAffected > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+//	public boolean cancelOrder(int orderId, String Status) {
+//		int noOfRowsAffected = orderDao.updateOrders(orderId, Status);
+//		if(noOfRowsAffected > 0) {
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
+//	}
 	
 	public boolean addRating(Rating rating) {
 		int noOfRowsAffected1 = orderDao.addRating(rating);
@@ -73,5 +62,45 @@ public class OrderService {
 		else {
 			return false;
 		}
+	}
+	
+	
+
+	public boolean addOrders(Cart cart) {
+		int noOfRowsAffected = orderDao.addOrder(cart);
+		int quantity = cart.getQuantity();
+		String bookId = cart.getBookId();
+		if(noOfRowsAffected > 0) {
+			bookDao.updateQuantity(quantity, bookId);
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
+	public List<CartDetails> getCart(String userName, String status){
+		return orderDao.getCart(userName, userName);
+	}
+
+	public boolean updateCartStatus(Cart cart) {
+		String userName = cart.getUserName();
+		List<Cart> QuantityList = orderDao.getQunatityFromCart(userName);
+		System.out.println(QuantityList.get(0).getBookId());
+		int noOfRowsafected = orderDao.updateCartStatus(cart);
+		if(noOfRowsafected >0) {
+			for(int i=0; i<QuantityList.size(); i++) {
+				String bookId = QuantityList.get(i).getBookId();
+				int quantity = QuantityList.get(i).getQuantity();
+				System.out.println(bookId);
+				bookDao.updateQuantity(quantity, bookId);
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 }

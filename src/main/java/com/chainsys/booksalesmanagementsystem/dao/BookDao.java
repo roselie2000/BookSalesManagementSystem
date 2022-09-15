@@ -39,7 +39,7 @@ public class BookDao {
 	
 	public List<Books> getTopSaledBooks(){
 		String selectTopSaledBooks = "select booksid from (SELECT booksid, COUNT(*)"
-				+ "FROM orderhistory GROUP BY booksid ORDER BY booksid) WHERE ROWNUM <= 4";
+				+ "FROM orders GROUP BY booksid ORDER BY booksid) WHERE ROWNUM <= 4";
 		List<String> topBooks = null;
 		List<Books> topBookList = null;
 		try {
@@ -114,8 +114,11 @@ public class BookDao {
 	
 	public int updateQuantity(int quantity, String bookId) {
 		String updatequantity = "update bookdetails set avl_quantity = ? where booksid = ?";
+		int availableQuantity = getQuantityById(bookId);
+		int updatedQuantity = availableQuantity - quantity;
+		System.out.println("inside dao");
 		try {
-			int noOfAffectedRows = jdbcTemplate.update(updatequantity, quantity, bookId);
+			int noOfAffectedRows = jdbcTemplate.update(updatequantity, updatedQuantity, bookId);
 			return noOfAffectedRows;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -134,7 +137,6 @@ public class BookDao {
 		return 0;
 	}
 
-	//
 	public List<Books> getBookByLanguage(String language){
 		String selectBookByLang = "select * from bookdetails where language = ?";
 		List<Books> bookList = null;

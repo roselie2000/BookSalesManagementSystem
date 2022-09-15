@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.booksalesmanagementsystem.dao.UserDao;
@@ -27,95 +28,92 @@ import com.chainsys.booksalesmanagementsystem.service.UserService;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	OrderService orderService;
-	
+
 	String bookPath = "userBooks";
 	String loginPath = "login.jsp";
 	String books = "books";
 	String allBookPath = "allbooks.jsp";
 	String cartPath = "carts";
-	
+	Users user = null;
+
 	@GetMapping("/signup")
-	public String signup(@RequestParam("username") String userName, @RequestParam("email") String email, @RequestParam("pwd") String password, Model model, HttpServletRequest request) {
-		
+	public String signup(@RequestParam("username") String userName, @RequestParam("email") String email,
+			@RequestParam("pwd") String password, Model model, HttpServletRequest request) {
+
 		try {
-			
-			if(userDao.checkUserNameAvail(userName)) {
+
+			if (userDao.checkUserNameAvail(userName)) {
 				Users user = new Users();
 				user.setUserName(userName);
 				user.setPassword(password);
 				user.setEmailId(email);
 				int noOfRowsAffected = userDao.signup(user);
-				if(noOfRowsAffected > 0) {
+				if (noOfRowsAffected > 0) {
 					HttpSession session = request.getSession();
 					session.setAttribute("user", userName);
 					return bookPath;
-				}
-				else {
+				} else {
 					model.addAttribute("msg", "Some internal problem Please try again later");
 					return "signup.jsp";
 				}
-			}
-			else {
-				model.addAttribute("msg", "Username is already exists!. Please click login! or Try with another Username");
+			} else {
+				model.addAttribute("msg",
+						"Username is already exists!. Please click login! or Try with another Username");
 				return "signup.jsp";
 			}
-			
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			model.addAttribute("msg", "Some internal problem Please try again later");
 			return "signun.jsp";
 		}
 	}
-	
-	
+
 	@GetMapping("/userlogin")
-	public String login(@RequestParam("username") String uname, @RequestParam("pwd") String pwd, Model model, HttpServletRequest request) {
-		
+	public String login(@RequestParam("username") String uname, @RequestParam("pwd") String pwd, Model model,
+			HttpServletRequest request) {
+
 		try {
-			if(userDao.login(uname, pwd)) {
+			if (userDao.login(uname, pwd)) {
 				HttpSession session = request.getSession();
 				session.setAttribute("user", uname);
 				return bookPath;
-			}
-			else {
+			} else {
 				model.addAttribute("msg", "Invalid username or password. Please check your username and password");
 				return loginPath;
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			model.addAttribute("msg", "Some internal problem! Please try again later!");
 			return loginPath;
 		}
 	}
-	
+
 	@GetMapping("/changepassword")
 	public String updatePassword(@RequestParam("username") String username, @RequestParam("pwd2") String password2,
 			@RequestParam("pwd1") String password1, Model model) {
-		if(password1.equals(password2)) {
-			if(userService.updatePassword(username, password2)) {
+		if (password1.equals(password2)) {
+			if (userService.updatePassword(username, password2)) {
 				model.addAttribute("msg", "Your password is changed! Please login to the system!");
 				return loginPath;
-			}
-			else {
+			} else {
 				model.addAttribute("msg", "Invalid username! Please check your username");
 				return "forgotpassword.jsp";
 			}
-		}
-		else {
+		} else {
 			model.addAttribute("msg", "The Change password and Conform Password should be same!");
 			return "forgotpassword.jsp";
 		}
-		
+
 	}
-	
+
 	@GetMapping("/userBooks")
 	public String getTopBooks(Model model) {
 		List<Books> topBooks = userService.getTopBooks();
@@ -124,27 +122,26 @@ public class UserController {
 		model.addAttribute("topBooks", topBooks);
 		return "userlanding.jsp";
 	}
-	
+
 	@GetMapping("/getAllBooks")
 	public String getAllBooks(Model model) {
 		List<Books> bookList = userService.getBooks();
 		model.addAttribute(books, bookList);
 		return allBookPath;
 	}
-	
+
 	@GetMapping("/getBookByCategory")
 	public String getBookBycategory(@RequestParam("category") String category, Model model) {
 		List<Books> bookList = userService.getBookBycategory(category);
-		if(bookList != null) {
+		if (bookList != null) {
 			model.addAttribute(books, bookList);
 			return allBookPath;
-		}
-		else {
+		} else {
 			model.addAttribute("msg", "There is no Books are available now");
 			return allBookPath;
 		}
 	}
-	
+
 	@GetMapping("/getBooks")
 	public String getBuys(@RequestParam("id") String bkId, @RequestParam("cat") String category, Model model) {
 		Books books = userService.getBookById(bkId);
@@ -155,116 +152,134 @@ public class UserController {
 		model.addAttribute("relatedBook", relatedBooks);
 		return "viewbook.jsp";
 	}
-	
+
 	@GetMapping("/searchBooks")
-		public String searchBooks(@RequestParam("keyword") String keyword, Model model) {
-			List<Books> searchedBooks = userService.searchBooks(keyword);
-			if(searchedBooks == null || searchedBooks.isEmpty()) {
-				model.addAttribute("msg", "No Books");
-				return allBookPath;
-			}
-			else {
-				model.addAttribute(books, searchedBooks);
-				return allBookPath;
-			}
+	public String searchBooks(@RequestParam("keyword") String keyword, Model model) {
+		List<Books> searchedBooks = userService.searchBooks(keyword);
+		if (searchedBooks == null || searchedBooks.isEmpty()) {
+			model.addAttribute("msg", "No Books");
+			return allBookPath;
+		} else {
+			model.addAttribute(books, searchedBooks);
+			return allBookPath;
 		}
-	
+	}
+
 	@GetMapping("/user")
 	public String userPage(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		session.setAttribute("user", null);
-		return bookPath;
+		if(session.getAttribute("user") != null) {
+			session.removeAttribute("user");
+		}
+		return "home.jsp";
 	}
-	
+
 	@GetMapping("/addtocart")
-	public String addToCart(@RequestParam("id") String bookId, @RequestParam("price") int price, Model model, HttpServletRequest request) {
+	public String addToCart(@RequestParam("id") String bookId, @RequestParam("price") int price, Model model,
+			HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
-		if(userName == null) {
+		if (userName == null) {
 			return loginPath;
-		}
-		else {
+		} else {
 			Cart cart = new Cart();
 			cart.setUserName(userName);
 			cart.setBookId(bookId);
 			cart.setPrice(price);
 			cart.setQuantity(1);
 			cart.setStatus("Add to Cart");
-			if(userService.addToCart(cart)) {
+			if (userService.addToCart(cart)) {
 				model.addAttribute("msg", "Added Successfully");
 				return "getBooks";
-			}
-			else {
+			} else {
 				model.addAttribute("msg", "Some Internal Problem. Please try again later!");
 				return "getBooks";
 			}
 		}
 	}
-	
+
 	@GetMapping("/carts")
 	public String getCartDetails(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
 		String status = "Add to Catr";
 		List<CartDetails> carts = userService.getCart(userName, status);
-		if(carts == null || carts.isEmpty()) {
+		if (carts == null || carts.isEmpty()) {
 			model.addAttribute("msg", "No Carts");
 			return "cartpage.jsp";
-		}
-		else {
+		} else {
 			model.addAttribute(cartPath, carts);
 			return "cartpage.jsp";
 		}
 	}
-	
+
 	@GetMapping("/deletecart")
 	public String deleteCart(@RequestParam("id") int cartId, Model model) {
 		System.out.println("inside controller");
-		if(userService.deleteCart(cartId)) {
+		if (userService.deleteCart(cartId)) {
 			model.addAttribute("msg", "The item is successfully removed from the cart!");
 			return cartPath;
-		}
-		else {
+		} else {
 			model.addAttribute("msg", "You can't remove the item now. Please try again later! ");
 			return cartPath;
 		}
 	}
-	
+
 	@GetMapping("/getOrders")
-	public String getOrder(HttpServletResponse response, HttpServletRequest request, Model model, @RequestParam("id") String bookId) {
+	public String getOrder(HttpServletResponse response, HttpServletRequest request, Model model,
+			@RequestParam("id") String bookId) {
 		HttpSession session = request.getSession();
 		String uname = (String) session.getAttribute("user");
 		session.setAttribute("id", bookId);
-		if(uname.equals(null)) {
+		if (uname.equals(null)) {
 			model.addAttribute("msg", "Please login our system to order the books");
 			return loginPath;
-		}
-		else {
+		} else {
 			Books book = userService.getBookById(bookId);
 			model.addAttribute("book", book);
 			return "buy.jsp";
 		}
 	}
-	
+
 	@GetMapping("/getProfile")
 	public String getProfile(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String uname = (String) session.getAttribute("user");
-		if(uname.equals(null)) {
+		if (uname.equals(null)) {
 			model.addAttribute("msg", "Please login our system to order the books");
 			return loginPath;
-		}
-		else {
-			Users user = userDao.getUserById(uname);
+		} else {
+			user = userDao.getUserById(uname);
 			model.addAttribute("userdata", user);
 			return "profile.jsp";
 		}
 	}
+
+	@GetMapping("/getAddress")
+	public String getAddress(Model model, HttpServletRequest request, @RequestParam("price") int price, @RequestParam("quantity") int quantity) {
+		HttpSession session = request.getSession();
+		String uname = (String) session.getAttribute("user");
+		session.setAttribute("price", price);
+		session.setAttribute("quantity", quantity);
+		user = userDao.getUserById(uname);
+		if(user.getAddress() == null) {
+			model.addAttribute("msg", "Please fill your address");
+			model.addAttribute("userdata", user);
+			return "profile.jsp";
+		}
+		else {
+			model.addAttribute("userdata", user);
+			String address = user.getAddress() + ", " + user.getDistrict() + ", " + user.getState() + "- " +user.getPincode();
+			session.setAttribute("address", address);
+			return "address.jsp";
+		}
+	}
+
 	@GetMapping("/updateUser")
-	public String updateUser(@RequestParam("name") String name,@RequestParam("phno") String phno, @RequestParam("addr") String address, 
-			@RequestParam("dist") String district, @RequestParam("state") String state,
-			@RequestParam("pincode") int pincode, HttpServletRequest request) {
-		
+	public String updateUser(@RequestParam("name") String name, @RequestParam("phno") String phno,
+			@RequestParam("addr") String address, @RequestParam("dist") String district,
+			@RequestParam("state") String state, @RequestParam("pincode") int pincode, HttpServletRequest request) {
+
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("user");
 		Users user = new Users();
@@ -275,78 +290,40 @@ public class UserController {
 		user.setDistrict(district);
 		user.setState(state);
 		user.setPincode(pincode);
-		
+
 		userDao.upadteUser(user);
-		return "placeOrders";
+		return bookPath;
 	}
-	
-	@GetMapping("/placeOrders")
-	public String placeOrders(HttpServletRequest request, Model model) {
-    	HttpSession session = request.getSession();
-		String bookId = (String) session.getAttribute("id");
-		Books book = userService.getBookById(bookId);
-		model.addAttribute("book", book);
-		return "buy.jsp";
-	}
-	
-	@GetMapping("/placeOrder")
-	public String addOrder(HttpServletRequest request, Model model, @RequestParam("bookid") String bookId, @RequestParam("quantity") int quantity, 
-			@RequestParam("total") int totalPrice, @RequestParam("advanceAmount") int advanceAmount) {
-		HttpSession session = request.getSession();
-		String userName = (String) session.getAttribute("user");
-		
-		LocalDate localDate = LocalDate.now();
-		Date orderedDate = Date.valueOf(localDate);
-		
-		OrdersDetails order = new OrdersDetails();
-		order.setBookId(bookId);
-		order.setUserName(userName);
-		order.setQuantity(quantity);
-		order.setOrderDate(orderedDate);
-		order.setTotalPrice(totalPrice);
-		order.setAdvanceAmount(advanceAmount);
-		order.setStatus("Ordered");
-		
-		if(orderService.addOrder(order)) {
-			model.addAttribute("msg", "Your Order is Placed Successfully!");
-			return bookPath;
-		}
-		else {
-			model.addAttribute("msg", "Some Internal Problem may occur. Please try again later!");
-			return "buy.jsp";
-		}
-	}
-	
+
 	@GetMapping("/cancel")
 	public String cancelBook(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("id");
 		return bookPath;
 	}
-	
+
 	@GetMapping("/addReview")
-	public String addBookReview(@RequestParam("id") String bookId, @RequestParam("rate") int rate, @RequestParam("review") String review, HttpServletRequest request, Model model) {
+	public String addBookReview(@RequestParam("id") String bookId, @RequestParam("rate") int rate,
+			@RequestParam("review") String review, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
-		if(userName.equals(null)) {
+		if (userName.equals(null)) {
 			model.addAttribute("msg", "Please login into the system for review the book");
 			return loginPath;
-		}
-		else {
+		} else {
 			Rating rating = new Rating();
 			rating.setBookId(bookId);
 			rating.setRating(rate);
 			rating.setReview(review);
 			rating.setUserName(userName);
-			if(orderService.addRating(rating)) {
+			if (orderService.addRating(rating)) {
 				return bookPath;
-			}
-			else {
+			} else {
 				return bookPath;
 			}
 		}
 	}
-	
+
 	@GetMapping("/getOrderHistory")
 	public String getOrderById(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -359,48 +336,46 @@ public class UserController {
 		else {
 			List<OrderHistory> orderHistory = orderService.getOrderById(userName);
 			model.addAttribute("orderHistory", orderHistory);
-			return "orderHistory.jsp";
+			return "orderhistory.jsp";
 		}
 	}
-	
+
 	@GetMapping("/getBookByPrice")
 	public String getBookByPrice(@RequestParam("from") int from, @RequestParam("to") int to, Model model) {
 		List<Books> booksList = userService.getBooksByPrice(from, to);
-		if(booksList != null) {
+		if (booksList != null) {
 			model.addAttribute(books, booksList);
 			return allBookPath;
-		}
-		else {
+		} else {
 			model.addAttribute("msg", "No books");
 			return allBookPath;
 		}
 	}
-	
+
 	@GetMapping("/language")
 	public String getBooksByLanguage(@RequestParam("lang") String language, Model model) {
 		List<Books> booksList = userService.getBooksByLanguage(language);
-		if(booksList != null) {
+		if (booksList != null) {
 			model.addAttribute(books, booksList);
 			return allBookPath;
-		}
-		else {
+		} else {
 			model.addAttribute("msg", "No Books");
 			return allBookPath;
 		}
 	}
-	
+
 	@GetMapping("/updateQuantity")
-	public String updateQuantity(Model model, @RequestParam("id") int cartId, @RequestParam("quantity") int quantity, 
+	public String updateQuantity(Model model, @RequestParam("id") int cartId, @RequestParam("quantity") int quantity,
 			@RequestParam("price") int price) {
-		if(orderService.updateCart(cartId, quantity, price)) {
+		if (orderService.updateCart(cartId, quantity, price)) {
 			return "/getMultipleOrders";
-		}
-		else {
-			model.addAttribute("msg", "Some Internal problem may occur. So you can't increase the quantity. Please try again later");
+		} else {
+			model.addAttribute("msg",
+					"Some Internal problem may occur. So you can't increase the quantity. Please try again later");
 			return "/getMultipleOrders";
 		}
 	}
-	
+
 	@GetMapping("/getMultipleOrders")
 	public String getMultipleOrders(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -409,5 +384,151 @@ public class UserController {
 		List<CartDetails> cart = userService.getCart(userName, status);
 		model.addAttribute("cart", cart);
 		return "multiorders.jsp";
+	}
+
+	@GetMapping("/editAddress")
+	public String editAddress(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userName = (String) session.getAttribute("user");
+		user = userDao.getUserById(userName);
+		model.addAttribute("userdata", user);
+		return "addressedit.jsp";
+	}
+
+	@GetMapping("/addDeliveryAddress")
+	public String updateAddress(Model model, @RequestParam("addr") String address, @RequestParam("dist") String district,
+			@RequestParam("state") String state, @RequestParam("pincode") String pincode, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String deliveryAddress = address+ ", " + district + ", " + state + ", " + pincode;
+		session.removeAttribute("address");
+		session.setAttribute("address", deliveryAddress);
+			return "addressedit.jsp";
+	}
+	
+	@GetMapping("/payment")
+	public String payment(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if((session.getAttribute("price") != null) && (session.getAttribute("quantity") != null) && (session.getAttribute("id") != null)) {
+			int price = (int) session.getAttribute("price");
+			int quantity = (int) session.getAttribute("quantity");
+			String bookId = (String) session.getAttribute("id");
+			Books book = userService.getBookById(bookId);
+			model.addAttribute("book", book);
+			model.addAttribute("price", price);
+			model.addAttribute("quantity", quantity);
+			return "payment.jsp";
+		}
+		else {
+			return "payment.jsp";
+		}
+		
+	}
+	
+	@GetMapping("/addOrder")
+	public String addOrder(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		int price = (int) session.getAttribute("price");
+		int quantity = (int) session.getAttribute("quantity");
+		String bookId = (String) session.getAttribute("id");
+		String userName = (String) session.getAttribute("user");
+		LocalDate todayDate = LocalDate.now();
+		Date orderedDate = Date.valueOf(todayDate);
+		String DeliveryAddress = (String) session.getAttribute("address");
+		String status = "Ordered";
+		Cart cart = new Cart();
+		cart.setBookId(bookId);
+		cart.setUserName(userName);
+		cart.setPrice(price);
+		cart.setQuantity(quantity);
+		cart.setOrderedDate(orderedDate);
+		cart.setStatus(status);
+		cart.setAddress(DeliveryAddress);
+		
+		if(orderService.addOrders(cart)) {
+			session.removeAttribute("price");
+			session.removeAttribute("quantity");
+			session.removeAttribute("id");
+			return bookPath;
+		}
+		else {
+			model.addAttribute("msg", "Some Unexpected error may occur");
+			return "payment";
+		}
+	}
+	
+	@GetMapping("/getAddressFromcart")
+	public String getAddressFromCart(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String uname = (String) session.getAttribute("user");
+		user = userDao.getUserById(uname);
+		if(user.getAddress() == null) {
+			model.addAttribute("msg", "Please fill your address");
+			model.addAttribute("userdata", user);
+			return "userprofile.jsp";
+		}
+		else {
+			model.addAttribute("userdata", user);
+			String address = user.getAddress() + ", " + user.getDistrict() + ", " + user.getState() + "- " +user.getPincode();
+			session.setAttribute("address", address);
+			return "address.jsp";
+		}
+	}
+
+	@GetMapping("/addAddress")
+	public String addAddress(@RequestParam("name") String name, @RequestParam("username") String userName, 
+			@RequestParam("emailid") String email, @RequestParam("phno") String phoneno, @RequestParam("addr") String address,
+			@RequestParam("dist") String district, @RequestParam("state") String state, @RequestParam("pincode") int pincode, Model model) {
+		Users user = new Users();
+		user.setName(name);
+		user.setUserName(userName);
+		user.setEmailId(email);
+		user.setPhoneno(phoneno);
+		user.setAddress(address);
+		user.setDistrict(district);
+		user.setState(state);
+		user.setPincode(pincode);
+		int noOfRowsAffected = userDao.upadteUser(user);
+		if(noOfRowsAffected > 0) {
+			return "getMultipleOrders";
+		}
+		else {
+			model.addAttribute("msg", "Some Internal problem may occur. please try again later");
+			return "userprofile.jsp";
+		}
+	}
+	@GetMapping("/multiplePayment")
+	public String multiplePayment(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String userNmae = (String) session.getAttribute("user");
+		List<CartDetails> cartList = orderService.getCart(userNmae, "Add to Cart");
+		model.addAttribute("cart", cartList);
+		return "payment.jsp";
+	}
+	@GetMapping("/addMultipleOrders")
+	public String addMultipleOrders(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		String userName = (String) session.getAttribute("user");
+		String address = (String) session.getAttribute("address");
+		LocalDate todayDate = LocalDate.now();
+		Date orderedDate = Date.valueOf(todayDate);
+		String status = "Ordered";
+		
+		Cart cart = new Cart();
+		cart.setUserName(userName);
+		cart.setAddress(address);
+		cart.setOrderedDate(orderedDate);
+		cart.setStatus(status);
+		if(orderService.updateCartStatus(cart)) {
+			return bookPath;
+		}
+		else {
+			model.addAttribute("msg", "Some Unexpected error may occur");
+			return "payment";
+		}
+	}
+	
+	@GetMapping("/Logout")
+	public String userLogout(HttpServletRequest request) {
+		return "user";
 	}
 }

@@ -1,5 +1,7 @@
 package com.chainsys.booksalesmanagementsystem.model;
 
+import java.sql.Date;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -10,7 +12,10 @@ public class Cart {
 	private String bookId;
 	private int quantity;
 	private int price;
+	private int orderId;
 	private String status;
+	private String address;
+	private Date orderedDate;
 	public int getCartId() {
 		return cartId;
 	}
@@ -57,6 +62,30 @@ public class Cart {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	public Date getOrderedDate() {
+		return orderedDate;
+	}
+
+	public void setOrderedDate(Date orderedDate) {
+		this.orderedDate = orderedDate;
 	}
 	
 }

@@ -108,7 +108,7 @@
 						
 						<div>
 							<div class="label">Quantity</div>
-							<div>1</div>
+							<div>${ct.cartQuantity }</div>
 							
 						</div>
 						

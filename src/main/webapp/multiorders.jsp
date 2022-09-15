@@ -51,27 +51,12 @@
 								<label>Quantity</label>
 								<div>
 									<div class="qty-button" onclick="decreaseQuantity(${ct.cartId})">&#8722;</div>
-									<c:choose>
-										<c:when test="${ct.cartQuantity != 0 }">
-											<div><input type="text" name="quantity"  pattern="[0-9]*" class="qty" value="${ct.cartQuantity }" oninput="calculatePriceAmount(${ct.cartId})"></div>
-										</c:when>
-										<c:when test="${ct.cartQuantity == 0 }">
-											<div><input type="text" name="quantity"  pattern="[0-9]*" class="qty" value="1" oninput="calculatePriceAmount(${ct.cartId})"></div>
-										</c:when>
-									</c:choose>
-									
+									<div><input type="text" name="quantity"  pattern="[0-9]*" class="qty" value="${ct.cartQuantity }" oninput="calculatePriceAmount(${ct.cartId})"></div>
 									<div onclick="increaseQuantity(${ct.cartId})">&plus;</div>
 									<input type="submit" value="OK" class="ok">
 								</div>								 
 							</div>
-							<c:choose>
-										<c:when test="${ct.cartPrice != 0 }">
-											<input type="text" name="price" class="price" value="${ct.cartPrice }" pattern="[0-9]*" readonly>
-										</c:when>
-										<c:when test="${ct.cartPrice == 0 }">
-											<input type="text" name="price" class="price" value="${ct.price }" pattern="[0-9]*" readonly>
-										</c:when>
-									</c:choose>
+							<input type="text" name="price" class="price" value="${ct.price }" pattern="[0-9]*" readonly>
 							
 							<div id="alert-msg"></div>
 						</form>
@@ -85,7 +70,7 @@
 	</c:forEach>
 	
 	<div id="totalPrice"></div>
-	<div class="order-button"><a href="getProfile"><button>Order</button></a></div>
+	<div class="order-button"><a href="getAddressFromcart"><button>Order</button></a></div>
 	<script type="text/javascript">
 	function sumAllPrice(){
 		let allPrice = document.querySelectorAll('.price');

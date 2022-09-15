@@ -49,16 +49,15 @@
 		<caption>Order List</caption>
         <thead>
           <tr>
-            <th>Order id</th>
+            <th>Cart ID</th>
+            <th>Order ID</th>
             <th>User Name</th>
             <th>Email ID</th>
-            <th>Name</th>
             <th>Phone no</th>
             <th>Address</th>
             <th>Book id</th>
             <th>Quantity</th>
             <th>Total price</th>  
-            <th>Advance Amount</th>         
             <th>Status</th>
          	<th>Ordered Date</th>
           </tr>
@@ -66,16 +65,15 @@
         <tbody>
         <c:forEach var="od" items="${orderList}">
         	<tr>
-            <td>${od.orderId}</td>
+            <td>${od.cartId}</td>
+            <td>${od.orderId }</td>
             <td>${od.userName }</td>
             <td>${od.emailId }</td>
-            <td>${od.name }</td>
             <td>${od.phoneno }</td>
-            <td>${od.address }, ${od.district }, ${od.state } - ${od.pincode }</td>
+            <td>${od.orderedAddress }</td>
             <td>${od.bookId }</td>
             <td class="center_col">${od.quantity }</td>
             <td class="center_col">${od.totalPrice }</td>
-            <td class="center_col">${od.advanceAmount }</td>
             <td>${od.status }</td>
             <td>${od.orderDate }</td>
           </tr>

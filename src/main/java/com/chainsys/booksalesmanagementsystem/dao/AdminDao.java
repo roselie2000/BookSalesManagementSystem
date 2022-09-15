@@ -21,7 +21,7 @@ public class AdminDao {
 	Admin adm;
 	
 	public Admin adminLogin(String uname, String pwd) {
-		String q = "select * from admin";
+		String q = "select user_name, password from admin";
 		Admin info = null;
 		try {
 			info = jdbcTemplate.queryForObject(q, new AdminMapper());
@@ -32,14 +32,15 @@ public class AdminDao {
 	}
 	
 	public List<OrdersDetails> getOrderList(){
-		String q = "select * from orderhistory inner join userdetails on orderhistory.username = userdetails.username";
+		String q = "select od.cartid, od.username, od.booksid, od.quantity, od.price, od.orderid, od.ordereddate, od.status, od.orderedaddress, us.emailid, us.phoneno "
+				+ "from orders od inner join userdetails us on od.username = us.username";
 		List<OrdersDetails> orderList = null;
 		try {
 			orderList = jdbcTemplate.query(q, new OrderMapper());
 			return orderList;
 		}catch (Exception e) {
-			return orderList;
+			e.printStackTrace();
 		}
-		
+		return orderList;
 	}
 }

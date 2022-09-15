@@ -26,7 +26,7 @@
 	<legend>
 		<img alt="profile" src="images/profile.png" width="150px" height="150px">
 	</legend>
-	<form action="updateUser" class="container">
+	<form action="addAddress" class="container">
 		<label>Name</label>
 		<input type="text" value="${userdata.name }" name="name" required pattern="[A-Z]{1}[A-Za-z\s\,]{4,18}"
 		title="Please enter a valid name eg.M Roselie">

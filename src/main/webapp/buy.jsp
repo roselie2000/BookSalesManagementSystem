@@ -21,7 +21,7 @@
 	</header>
 <main>
 <div class="buy-form-container">
-<form action="getProfile">
+<form action="getAddress">
 <input type="hidden" id = "avl_qty" value="${book.availableQuantity }">
 <label>Book ID</label>
 <input type="text" name="bookid" value="${book.bookId }" required readonly>

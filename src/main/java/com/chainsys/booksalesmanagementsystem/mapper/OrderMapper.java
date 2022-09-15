@@ -14,39 +14,31 @@ public class OrderMapper implements RowMapper<OrdersDetails>{
 	@Override
 	public OrdersDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		int ordreId = rs.getInt("orderid");
-		String bkId = rs.getString("booksId");
+		int cartId = rs.getInt("cartid");
 		String usname = rs.getString("username");
-		Date orderDate = rs.getDate("orderDate");
-		int qty = rs.getInt("Quantity");
-		int price = rs.getInt("totalprice");
-		int adAmt = rs.getInt("advanceamt");
+		String bookId = rs.getString("booksid");
+		int qty = rs.getInt("quantity");
+		int price = rs.getInt("price");
+		int orderId = rs.getInt("orderid");
+		Date orderDate = rs.getDate("ordereddate");
 		String status = rs.getString("status");
-		String name = rs.getString("name");
+		String address = rs.getString("orderedaddress");
 		String email = rs.getString("emailid");
 		String phoneno = rs.getString("phoneno");
-		String address = rs.getString("address");
-		String district = rs.getString("district");
-		String state = rs.getString("state");
-		int pincode = rs.getInt("pincode");
 		
-		OrdersDetails od = new OrdersDetails();
-		od.setOrderId(ordreId);
-		od.setBookId(bkId);
-		od.setUserName(usname);
-		od.setOrderDate(orderDate);
-		od.setQuantity(qty);
-		od.setTotalPrice(price);
-		od.setAdvanceAmount(adAmt);
-		od.setStatus(status);
-		od.setName(name);
-		od.setEmailId(email);
-		od.setPhoneno(phoneno);
-		od.setAddress(address);
-		od.setDistrict(district);
-		od.setState(state);
-		od.setPincode(pincode);
-		return od;
+		OrdersDetails oderDetails = new OrdersDetails();
+		oderDetails.setCartId(cartId);
+		oderDetails.setOrderId(orderId);
+		oderDetails.setBookId(bookId);
+		oderDetails.setUserName(usname);
+		oderDetails.setOrderDate(orderDate);
+		oderDetails.setQuantity(qty);
+		oderDetails.setTotalPrice(price);
+		oderDetails.setOrderedAddress(address);
+		oderDetails.setStatus(status);
+		oderDetails.setEmailId(email);
+		oderDetails.setPhoneno(phoneno);
+		return oderDetails;
 	}
 
 	

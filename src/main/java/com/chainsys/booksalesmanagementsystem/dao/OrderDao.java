@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.chainsys.booksalesmanagementsystem.mapper.CartMapper;
+import com.chainsys.booksalesmanagementsystem.mapper.CartDetailsMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.OrderHistoryMapper;
+import com.chainsys.booksalesmanagementsystem.mapper.CartMapper;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
 import com.chainsys.booksalesmanagementsystem.model.CartDetails;
 import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
@@ -20,6 +21,17 @@ public class OrderDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
+	public int getOrderId() {
+		String sqlIdentifier = "select ordersId.NEXTVAL from dual";
+		try {
+			int orderId = jdbcTemplate.queryForObject(sqlIdentifier, int.class);
+			return orderId;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
 	public int addcart(Cart cart) {
 		String insertCart = "INSERT INTO orders(cartid, username, booksid, quantity, price, status)values(cardId.nextval, ?, ?, ?, ?, ?)";
 		// create the object for execute the query
@@ -28,14 +40,13 @@ public class OrderDao {
 		return noOfRowsAffected;
 	}
 	
-	public List<CartDetails> getHistory(String userName, String status){
+	public List<CartDetails> getCart(String userName, String status){
 		String selectCartList = "select od.cartid, od.booksid, od.quantity, od.price, bk.booksName, bk.authors, bk.publishers, bk.edition, bk.category,\r\n"
 				+ "bk.book_image, bk.avl_quantity from orders od "
 				+ "inner join bookdetails bk on od.booksid = bk.booksid where od.username = ? and od.status = 'Add to Cart'";
 		List<CartDetails> cartList = null;
 		try {
-//			Object[] values = {userName, status};
-			cartList = jdbcTemplate.query(selectCartList, new CartMapper(), userName);
+			cartList = jdbcTemplate.query(selectCartList, new CartDetailsMapper(), userName);
 			return cartList;
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -44,11 +55,9 @@ public class OrderDao {
 	}
 	
 	public int deleteCart(int cartId) {
-		System.out.println("inseide dao");
 		String deleteCart = "DELETE FROM orders WHERE cartid = ?";
 		try {
 			int noOfRowsAffected = jdbcTemplate.update(deleteCart, cartId);
-			System.out.println(noOfRowsAffected);
 			return noOfRowsAffected;
 		}catch (Exception e) {
 			return 0;
@@ -56,29 +65,15 @@ public class OrderDao {
 		
 	}
 	
-	public int addOrder(OrdersDetails order) {
-		String insertOrder = "insert into orderhistory(orderid, booksid, username, orderdate, quantity, totalprice, advanceamt, status)"
-				+ "values(orderId.nextval, ?, ?, ?, ?, ?, ?, ?)";
-		try {
-			Object[] orderData = {order.getBookId(), order.getUserName(), order.getOrderDate(), order.getQuantity(), order.getTotalPrice(), 
-					order.getAdvanceAmount(), order.getStatus()};
-			int noOfRowsAffected = jdbcTemplate.update(insertOrder, orderData);
-			return noOfRowsAffected;
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-	
-	public int updateOrder(int orderId, String status) {
-		String updateOrder = "update orderhistory set status = ? where orderId = ?";
-		try {
-			int noOfRowsAffected = jdbcTemplate.update(updateOrder, orderId, status);
-			return noOfRowsAffected;
-		}catch (Exception e) {
-			return 0;
-		}		
-	}
+//	public int updateOrders(int orderId, String status) {
+//		String updateOrder = "update orderhistory set status = ? where orderId = ?";
+//		try {
+//			int noOfRowsAffected = jdbcTemplate.update(updateOrder, orderId, status);
+//			return noOfRowsAffected;
+//		}catch (Exception e) {
+//			return 0;
+//		}		
+//	}
 	
 	public int getNumberOfREviewers(String bookId) {
 		String getReviewerCount = "Select count(username)From bookreviews Where bookid = ? Group by bookid";
@@ -126,20 +121,21 @@ public class OrderDao {
 	}
 	
 	public List<OrderHistory> getOrdersById(String userName){
-		String selectOrders = "select od.orderid, od.booksid, od.username, od.orderdate, od.quantity, od.totalprice, od.advanceamt, od.status,"
-				+ "bk.booksname, bk.act_rate, bk.book_image from orderhistory od inner join bookdetails bk on od.booksid = bk.booksid "
+		String selectOrders = "select od.orderid, od.booksid, od.username, od.ordereddate, od.quantity, od.price, od.status,"
+				+ "bk.booksname, bk.book_image from orders od inner join bookdetails bk on od.booksid = bk.booksid "
 				+ "WHERE od.username = ?";
 		List<OrderHistory> orderList = null;
 		try {
 			orderList = jdbcTemplate.query(selectOrders, new OrderHistoryMapper(), userName);
 			return orderList;
 		}catch (Exception e) {
-			return orderList;
+			e.printStackTrace();
 		}
+		return orderList;
 	}
 	
 	public int updateCart(int cartId, int quantity, int price) {
-		String updateCart = "update cartdetails SET quantity = ?, price = ? where cart_id = ?";
+		String updateCart = "update orders SET quantity = ?, price = ? where cartid = ?";
 		Object[] values = {quantity, price, cartId};
 		try {
 			int noOfRowsAffected = jdbcTemplate.update(updateCart, values);
@@ -148,5 +144,47 @@ public class OrderDao {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+	
+	public int addOrder(Cart cart) {
+		String insertOrder = "insert into orders(cartid, username, booksid, quantity, price, orderid, "
+				+ "ordereddate, status, orderedaddress)values(cardId.nextval, ?, ?, ?, ?, ?, ?, ?, ?)";
+		int orderId = getOrderId();
+		Object[] cartValues = {cart.getUserName(), cart.getBookId(), cart.getQuantity(), cart.getPrice(),
+				orderId, cart.getOrderedDate(), cart.getStatus(), cart.getAddress()};
+		try {
+			int noOfRowsAffected1 = jdbcTemplate.update(insertOrder, cartValues);
+			return noOfRowsAffected1;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public int updateCartStatus(Cart cart) {
+		String updateCartStatus = "update orders set orderid = ?, ordereddate = ?,"
+				+ "status = ?, orderedaddress = ? where username = ? and status = 'Add to Cart'";
+		int orderId = getOrderId();
+		Object[] cartValues = {orderId, cart.getOrderedDate(), cart.getStatus(), cart.getAddress(), 
+				cart.getUserName()};
+		try {
+			int noOfRowsAffected = jdbcTemplate.update(updateCartStatus, cartValues);
+			return noOfRowsAffected;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
+	public List<Cart> getQunatityFromCart(String userName){
+		String selectQuantity = "select booksid, quantity from orders where username = ? and status = 'Add to Cart'";
+		List<Cart> QuantityList = null;
+		try {
+			QuantityList = jdbcTemplate.query(selectQuantity, new CartMapper(), userName);
+			return QuantityList;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return QuantityList;
 	}
 }

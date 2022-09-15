@@ -52,7 +52,7 @@ public class UserService {
 	}
 	
 	public List<CartDetails> getCart(String username, String status){
-		return orderDao.getHistory(username, status);
+		return orderDao.getCart(username, status);
 	}
 	
 	public boolean deleteCart(int cartId) {

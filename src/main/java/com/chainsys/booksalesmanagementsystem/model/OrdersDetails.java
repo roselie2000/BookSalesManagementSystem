@@ -7,21 +7,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class OrdersDetails {
 
+	private int cartId;
 	private int orderId;
 	private String bookId;
 	private String userName;
 	private Date orderDate;
 	private int quantity;
 	private int totalPrice;
-	private int advanceAmount;
 	private String status;
 	private String emailId;
-	private String name;
 	private String phoneno;
-	private String address;
-	private String district;
-	private String state;
-	private int pincode;
+	private String orderedAddress;
+	
+	public int getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
+	}
 
 	public int getOrderId() {
 		return orderId;
@@ -70,15 +74,7 @@ public class OrdersDetails {
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-
-	public int getAdvanceAmount() {
-		return advanceAmount;
-	}
-
-	public void setAdvanceAmount(int advanceAmount) {
-		this.advanceAmount = advanceAmount;
-	}
-
+	
 	public String getStatus() {
 		return status;
 	}
@@ -95,14 +91,6 @@ public class OrdersDetails {
 		this.emailId = emailId;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getPhoneno() {
 		return phoneno;
 	}
@@ -111,36 +99,14 @@ public class OrdersDetails {
 		this.phoneno = phoneno;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getOrderedAddress() {
+		return orderedAddress;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setOrderedAddress(String orderedAddress) {
+		this.orderedAddress = orderedAddress;
 	}
 
-	public String getDistrict() {
-		return district;
-	}
-
-	public void setDistrict(String district) {
-		this.district = district;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public int getPincode() {
-		return pincode;
-	}
-
-	public void setPincode(int pincode) {
-		this.pincode = pincode;
-	}
+	
 
 }
