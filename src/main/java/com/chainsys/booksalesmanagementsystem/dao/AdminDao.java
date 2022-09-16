@@ -30,7 +30,7 @@ public class AdminDao {
 
 	public List<OrdersDetails> getOrderList() throws SQLException {
 		String q = "select od.cartid, od.username, od.booksid, od.quantity, od.price, od.orderid, od.ordereddate, od.status, od.orderedaddress, us.emailid, us.phoneno "
-				+ "from orders od inner join userdetails us on od.username = us.username";
+				+ "from orders od inner join userdetails us on od.username = us.username and od.status = 'Ordered'";
 		List<OrdersDetails> orderList = null;
 		orderList = jdbcTemplate.query(q, new OrderMapper());
 		return orderList;
