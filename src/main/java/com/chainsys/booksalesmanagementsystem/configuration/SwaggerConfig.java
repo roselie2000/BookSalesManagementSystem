@@ -14,7 +14,6 @@ public class SwaggerConfig {
 	@Bean
     public Docket swaggerConfiguration() {
         return new Docket(DocumentationType.SWAGGER_2)
-                // .select().paths(PathSelectors.any()).build();
                 .select().apis(RequestHandlerSelectors.basePackage("com.chainsys.booksalesmanagementsystem.controller"))
                 .paths(PathSelectors.any()).build();
     };
