@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chainsys.booksalesmanagementsystem.exception.DataAddedException;
-import com.chainsys.booksalesmanagementsystem.exception.DataDeletedException;
 import com.chainsys.booksalesmanagementsystem.exception.InternalException;
 import com.chainsys.booksalesmanagementsystem.exception.InvalidCredentialException;
 import com.chainsys.booksalesmanagementsystem.model.Books;
-import com.chainsys.booksalesmanagementsystem.model.CartDetails;
 import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
 import com.chainsys.booksalesmanagementsystem.model.OrdersDetails;
 import com.chainsys.booksalesmanagementsystem.model.Users;

@@ -15,7 +15,6 @@ import com.chainsys.booksalesmanagementsystem.exception.InternalException;
 import com.chainsys.booksalesmanagementsystem.exception.InvalidCredentialException;
 import com.chainsys.booksalesmanagementsystem.model.Admin;
 import com.chainsys.booksalesmanagementsystem.model.Books;
-import com.chainsys.booksalesmanagementsystem.model.CartDetails;
 import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
 import com.chainsys.booksalesmanagementsystem.model.OrdersDetails;
 import com.chainsys.booksalesmanagementsystem.model.Users;
