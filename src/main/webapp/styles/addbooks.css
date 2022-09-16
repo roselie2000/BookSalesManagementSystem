@@ -72,3 +72,30 @@ p{
 	color: blue;
 	text-align: center;
 }
+
+#container {
+   display: none;
+   background-color: #f7c4bb;
+   color: white;
+   position: absolute;
+   width: 350px;
+   border-radius: 5px;
+   left: 50%;
+   margin-left: -160px;
+   padding: 16px 8px 8px;
+   box-sizing: border-box;
+  }
+  #container button {
+   background-color: yellow;
+   display: inline-block;
+   border-radius: 5px;
+   border: 2px solid gray;
+   height: 30px;
+   padding: 5px;
+   text-align: center;
+   width: 60px;
+  }
+  #container .msg {
+   text-align: left;
+   padding: 10px 30px;
+  }

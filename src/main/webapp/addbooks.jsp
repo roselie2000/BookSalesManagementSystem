@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="styles/user.css">
 <link rel="stylesheet" href="styles/addbooks.css">
 <link rel="stylesheet" href="styles/dropdown.css">
+<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+ </script>
 </head>
 <body>
 <header>
@@ -96,9 +99,25 @@
 			<label>Book Cover Page</label>
 			<input type="file" name="file" accept="images/png, images/jpeg">
 			<div></div>
-			<input type="submit" name="submit" value="Add">
+			<div id="container">
+  				<div class="msg"> Click confirm to add the book details</div>
+  				<input class="yes" type="submit" name="submit" value="confirm">
+			</div>
+			<input type="button" value="Add" onclick="member()">
 		</form>
 	</div>
 	</main>
+	<script>
+  function member(msg,clk) {
+   var confirmBox = $("#container");
+   confirmBox.find(".msg").text(msg);
+   confirmBox.find(".yes").unbind().click(function()
+   {
+   confirmBox.hide();
+   });
+   confirmBox.find(".yes").click(clk);
+   confirmBox.show();
+  }
+ </script>
 </body>
 </html>
