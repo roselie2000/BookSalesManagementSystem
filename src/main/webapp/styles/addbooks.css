@@ -34,6 +34,17 @@ input {
 }
 
 input[type="submit"] {
+	background-color: maroon;
+	border: none;
+	border-radius: 3px;
+	color: white;
+	cursor: pointer;
+	font-weight: bold;
+	height: 30px;
+	outline: none;
+}
+
+.submit{
 	background-color: rgb(0, 153, 51);
 	border: none;
 	border-radius: 3px;
@@ -76,7 +87,7 @@ p{
 #container {
    display: none;
    background-color: #f7c4bb;
-   color: white;
+   color: black;
    position: absolute;
    width: 350px;
    border-radius: 5px;

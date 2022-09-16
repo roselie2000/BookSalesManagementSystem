@@ -21,7 +21,7 @@
 		</ul>
 	</header>
 	
-	<nav>
+	<nav id = "nav">
 		<div class="menu">
 			<ul>
 				<li><a href="home.jsp">Home</a></li>
@@ -56,7 +56,7 @@
 								<h4>Rs.${book.actualPrice }</h4>
 							</div>
 							<div class="view-btn">
-								<a href="Books"><button>View</button></a>
+								<a href="Books#${book.bookId }"><button>View</button></a>
 							</div>
 						</div>
 			</c:forEach>
@@ -76,7 +76,7 @@
 								<h4>Rs.${book.actualPrice }</h4>
 							</div>
 							<div class="view-btn">
-								<a href="Books"><button>View</button></a>
+								<a href="Books#${book.bookId }"><button>View</button></a>
 							</div>
 						</div>
 			</c:forEach>
@@ -100,5 +100,17 @@
 		</div>
 		
 	</main>
+	<script type="text/javascript">
+	window.onscroll = function() {myFunction()};
+	let navbar = document.getElementById("nav");
+	let sticky = navbar.offsetTop;
+	function myFunction() {
+	  if (window.pageYOffset >= sticky) {
+	    navbar.classList.add("sticky")
+	  } else {
+	    navbar.classList.remove("sticky");
+	  }
+	}
+	</script>
 </body>
 </html>

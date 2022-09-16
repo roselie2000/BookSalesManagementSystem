@@ -16,7 +16,7 @@
 	<p style="color: red; text-align: center;">${msg}</p>
 	<fieldset class="panel">
 		<legend>Sign in</legend>
-		<form action="/signup">
+		<form action="/signup" method="post">
 			<div class="input-icon">
 				<em class="fa fa-user icon"></em> <input type="text"
 					placeholder="Enter Username" name="username" class="input-field" pattern="[A-Za-z0-9]{5,15}"

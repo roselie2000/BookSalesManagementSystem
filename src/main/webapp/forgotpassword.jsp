@@ -15,7 +15,7 @@
 	<p style="color: red; text-align: center;">${msg}</p>
 	<fieldset class="panel">
 		<legend>Change Password</legend>
-		<form action="changepassword">
+		<form action="changepassword" method="post">
 			<div class="input-icon">
 				<input type="text" placeholder="Enter Username" name="username" class="input-field" pattern="[A-Za-z0-9]{5,15}"
 					title="Please enter a valid username. The username should contain 5 to 10 alpha numeric letters" required>

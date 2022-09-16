@@ -9,14 +9,15 @@
 </head>
 <body>
 <header>
-	<img alt="logo" src="images/Mars.png" height="95px" width="150px">		
+	<a href="userBooks"><span>&#8249;</span></a>
+	<h1>Address</h1>	
 </header>
 	<main>
-	<h3>Address</h3>
+	
 		<div class="address">
 			<h3>${userdata.name }</h3>
 			<p>${userdata.address }, ${userdata.district },<br>${userdata.state }, ${userdata.pincode }</p>
-			<a href="editAddress">Edit</a>
+			<a href="editAddress" class="edit">Edit</a>
 			<a href="payment" class="button"><button>Deliver to this Address</button></a>
 		</div>
 		

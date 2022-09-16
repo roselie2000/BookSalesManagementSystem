@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +21,8 @@ import com.chainsys.booksalesmanagementsystem.exception.DataDeletedException;
 import com.chainsys.booksalesmanagementsystem.exception.InternalException;
 import com.chainsys.booksalesmanagementsystem.exception.InvalidCredentialException;
 import com.chainsys.booksalesmanagementsystem.model.Books;
+import com.chainsys.booksalesmanagementsystem.model.CartDetails;
+import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
 import com.chainsys.booksalesmanagementsystem.model.OrdersDetails;
 import com.chainsys.booksalesmanagementsystem.model.Users;
 import com.chainsys.booksalesmanagementsystem.service.AdminService;
@@ -37,11 +41,12 @@ public class AdminController {
 	String bookPath = "Books";
 	String addBooks = "addbooks.jsp";
 	String orders = "orders.jsp";
-	@GetMapping("/adminlogin")
+	String topUser = "topuser.jsp";
+	@RequestMapping(value = "/adminlogin", method = RequestMethod.POST)
 	public String adminLogin(@RequestParam("username") String userName, @RequestParam("pwd") String password, Model model) throws InternalException {
 		try {
 			adminService.checkIdentity(userName, password);
-			return "adminHome";
+			return "/adminHome";
 		}catch (InvalidCredentialException e) {
 			model.addAttribute(msg, "Please enter valid Username and Password");
 			return login;
@@ -55,7 +60,7 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/adminHome")
+	@RequestMapping("/adminHome")
 		public String adminHome(Model model) {
 			try {
 				List<Books> topBooks = adminService.getTopSearchedBooks();
@@ -168,21 +173,6 @@ public class AdminController {
 		}
 	}
 	
-	@GetMapping("/delete")
-	public String deleteBook(@RequestParam("id") String bookId, Model model) {
-		try {
-			adminService.deleteBooks(bookId);
-			model.addAttribute(msg, "The book is deleted successfully!");
-			return bookPath;
-		} catch (DataDeletedException e) {
-			model.addAttribute(msg, "Some internal problem may occur. The book is not deleted! Please try again later!");
-			return bookPath;
-		} catch (SQLException e) {
-			model.addAttribute(msg, "Some internal problem may occur. The book is not deleted! Please try again later!");
-			return bookPath;
-		}
-	}
-	
 	@GetMapping("/update")
 	public String updateBook(@RequestParam("bookid") String id, @RequestParam("bookname") String name, @RequestParam("author") String author,
 			@RequestParam("publisher") String publisher, @RequestParam("edition") int edition,
@@ -228,5 +218,19 @@ public class AdminController {
 			return orders;
 		}
 		
+	}
+	
+	@GetMapping("getUserDetailsById")
+	public String getTopUserById(@RequestParam("username") String userName, Model model) {
+		Users user = adminService.getUserByUserName(userName);
+		try {
+			List<OrderHistory> orders = adminService.getOrdersByUserName(userName);
+			model.addAttribute("user", user);
+			model.addAttribute("orders", orders);
+			return topUser;
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some internal problem may occur! Can't get the list of orders of this user");
+			return topUser;
+		}
 	}
 }

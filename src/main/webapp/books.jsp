@@ -115,10 +115,6 @@
 								<input type="submit" name="Save" value="Save" onclick="disable(${book.bookId})">
 							</div>
 						</form>
-						<div class="btn">
-							<a href="/delete?id=${book.bookId }"><button class="del">Delete</button></a>
-							<%-- <button class="del" onclick="popup(${bk.bookId})">Delete</button> --%>
-						</div>
 					</div>
 				</div>
 			</c:forEach>

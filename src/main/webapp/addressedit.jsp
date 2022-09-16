@@ -10,9 +10,9 @@
 </head>
 <body>
 <header>
-		<img alt="logo" src="images/Mars.png" height="95px" width="150px">
+	<a href="userBooks"><span>&#8249;</span></a>
+	<h1>Edit Address</h1>	
 </header>
-<h3>Edit Address</h3>
 <form action="addDeliveryAddress" class="address">
 	<label>Address</label>
 	<input type="text" value="${userdata.address }" name="addr" required>

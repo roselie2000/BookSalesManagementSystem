@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.booksalesmanagementsystem.dao.UserDao;
@@ -56,10 +58,9 @@ public class UserController {
 	String payment = "payment.jsp";
 	Users user = null;
 
-	@GetMapping("/signup")
+	@PostMapping("/signup")
 	public String signup(@RequestParam("username") String userName, @RequestParam("email") String email,
 			@RequestParam("pwd") String password, Model model, HttpServletRequest request) {
-
 		try {
 
 			if (userDao.checkUserNameAvail(userName)) {
@@ -67,28 +68,26 @@ public class UserController {
 				users.setUserName(userName);
 				users.setPassword(password);
 				users.setEmailId(email);
-				int noOfRowsAffected = userDao.signup(user);
+				int noOfRowsAffected = userDao.signup(users);
 				if (noOfRowsAffected > 0) {
 					HttpSession session = request.getSession();
 					session.setAttribute("user", userName);
 					return bookPath;
 				} else {
-					model.addAttribute("msg", "Some internal problem Please try again later");
+					model.addAttribute("msg", "Some internal problem Please try again later! you not added");
 					return "signup.jsp";
 				}
 			} else {
-				model.addAttribute("msg",
-						"Username is already exists!. Please click login! or Try with another Username");
+				model.addAttribute("msg", "Username is already exists!. Please click login! or Try with another Username");
 				return "signup.jsp";
 			}
-
-		} catch (Exception e) {
-			model.addAttribute("msg", "Some internal problem Please try again later");
-			return "signun.jsp";
+		}catch (Exception e) {
+			model.addAttribute("msg", "Some internal problem Please try again later! you not added");
+			return "signup.jsp";
 		}
 	}
 
-	@GetMapping("/userlogin")
+	@PostMapping("/userlogin")
 	public String login(@RequestParam("username") String uname, @RequestParam("pwd") String pwd, Model model,
 			HttpServletRequest request) {
 
@@ -107,7 +106,7 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/changepassword")
+	@PostMapping("/changepassword")
 	public String updatePassword(@RequestParam("username") String username, @RequestParam("pwd2") String password2,
 			@RequestParam("pwd1") String password1, Model model) {
 		if (password1.equals(password2)) {
@@ -125,7 +124,7 @@ public class UserController {
 
 	}
 
-	@GetMapping("/userBooks")
+	@RequestMapping("/userBooks")
 	public String getTopBooks(Model model) {
 		try {
 			List<Books> bookList = userService.getBooks();

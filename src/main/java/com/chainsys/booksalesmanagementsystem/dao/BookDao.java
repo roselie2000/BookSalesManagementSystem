@@ -61,38 +61,12 @@ public class BookDao {
 		return noOfRowsAffected;
 	}
 
-	public int deleteBook(String bkId) throws SQLException {
-		String deleteBook = "DELETE FROM bookdetails WHERE booksId = ?";
-		int noOfRowsAffected = jdbcTemplate.update(deleteBook, bkId);
-		return noOfRowsAffected;
-	}
-
 	public List<Books> searchBooks(String keyword) throws SQLException {
-		String selectByName = "select * from bookdetails where booksname = ?";
-		String selectByAuthors = "select * from bookdetails where authors = ?";
-		String selectByPublishers = "select * from bookdetails where publishers = ?";
+		String selectByKeyword = "select * from bookdetails where booksname like ? or authors like ? or publishers like ?";
 		List<Books> searchedBooks = null;
-		try {
-			searchedBooks = jdbcTemplate.query(selectByName, new BookMapper(), keyword);
-			if (searchedBooks.isEmpty()) {
-				searchedBooks = jdbcTemplate.query(selectByAuthors, new BookMapper(), keyword);
-				if (searchedBooks.isEmpty()) {
-					searchedBooks = jdbcTemplate.query(selectByPublishers, new BookMapper(), keyword);
-					if (searchedBooks.isEmpty()) {
-						return searchedBooks;
-					} else {
-						return searchedBooks;
-					}
-				} else {
-					return searchedBooks;
-				}
-			} else {
-				return searchedBooks;
-			}
-
-		} catch (Exception e) {
-			return searchedBooks;
-		}
+		String value = "%" + keyword + "%";
+		searchedBooks = jdbcTemplate.query(selectByKeyword, new BookMapper(), value, value, value);
+		return searchedBooks;
 	}
 
 	public int updateQuantity(int quantity, String bookId) throws SQLException {

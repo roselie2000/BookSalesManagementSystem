@@ -18,7 +18,7 @@
 		<div class="staff">
 			<fieldset class="login-panel">
 				<legend>Admin Login</legend>
-				<form action="/adminlogin">
+				<form action="/adminlogin" method="POST" enctype="multipart/form-data">
 					<div class="input-icon">
 						<em class="fa fa-user icon"></em> <input type="text"
 							placeholder="Enter Username" name="username" class="input-field" required>
@@ -33,7 +33,7 @@
 		<div class="user">
 			<fieldset class="login-panel">
 				<legend>User Login</legend>
-				<form action="/userlogin">
+				<form action="/userlogin" method="post">
 					<div class="input-icon">
 						<em class="fa fa-user icon"></em> <input type="text"
 							placeholder="Enter Username" name="username" class="input-field" required>

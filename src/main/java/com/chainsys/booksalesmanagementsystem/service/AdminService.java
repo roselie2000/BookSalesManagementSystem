@@ -8,13 +8,15 @@ import org.springframework.stereotype.Service;
 
 import com.chainsys.booksalesmanagementsystem.dao.AdminDao;
 import com.chainsys.booksalesmanagementsystem.dao.BookDao;
+import com.chainsys.booksalesmanagementsystem.dao.OrderDao;
 import com.chainsys.booksalesmanagementsystem.dao.UserDao;
 import com.chainsys.booksalesmanagementsystem.exception.DataAddedException;
-import com.chainsys.booksalesmanagementsystem.exception.DataDeletedException;
 import com.chainsys.booksalesmanagementsystem.exception.InternalException;
 import com.chainsys.booksalesmanagementsystem.exception.InvalidCredentialException;
 import com.chainsys.booksalesmanagementsystem.model.Admin;
 import com.chainsys.booksalesmanagementsystem.model.Books;
+import com.chainsys.booksalesmanagementsystem.model.CartDetails;
+import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
 import com.chainsys.booksalesmanagementsystem.model.OrdersDetails;
 import com.chainsys.booksalesmanagementsystem.model.Users;
 
@@ -29,6 +31,9 @@ public class AdminService {
 	
 	@Autowired
 	BookDao bookDoa;
+	
+	@Autowired
+	OrderDao orderDao;
 	
 	public boolean checkIdentity(String uname, String pwd) throws InvalidCredentialException, InternalException, SQLException {
 		Admin admin = adminDoa.adminLogin(uname, pwd);
@@ -75,16 +80,6 @@ public class AdminService {
 		}	
 	}
 	
-	public boolean deleteBooks(String bookId) throws DataDeletedException, SQLException {
-		int noOfRowsAffected = bookDoa.deleteBook(bookId);
-		if(noOfRowsAffected > 0) {
-			return true;
-		}
-		else {
-			throw new DataDeletedException();
-		}
-	}
-	
 	public List<OrdersDetails> getOrders() throws SQLException {
 		return adminDoa.getOrderList();
 	}
@@ -99,5 +94,13 @@ public class AdminService {
 	
 	public List<Users> getTopBuyers(){
 		return userDoa.getTopBuyers();
+	}
+	
+	public Users getUserByUserName(String userName){
+		return userDoa.getUserById(userName);
+	}
+	
+	public List<OrderHistory> getOrdersByUserName(String userName) throws SQLException{
+		return orderDao.getOrdersById(userName);
 	}
 }

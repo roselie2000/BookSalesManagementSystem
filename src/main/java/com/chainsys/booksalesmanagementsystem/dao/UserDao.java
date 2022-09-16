@@ -1,5 +1,6 @@
 package com.chainsys.booksalesmanagementsystem.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,59 +60,53 @@ public class UserDao {
 			return true;
 		}
 	}
-	
+
 	public List<Users> getUserList() {
 		String selectUserList = "select * from userDetails";
 		List<Users> users = null;
 		try {
 			users = jdbcTemplate.query(selectUserList, new UserMapper());
 			return users;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return users;
 		}
-		
+
 	}
 
 	public Users getUserById(String userName) {
 		String selectUserByUserName = "select * from userdetails where username = ?";
 		Users queryObj = null;
-		try {
-			queryObj = jdbcTemplate.queryForObject(selectUserByUserName, new UserMapper(), userName);
-			return queryObj;
-		}
-		catch (Exception e) {
-			return queryObj;
-		}
-		
+		queryObj = jdbcTemplate.queryForObject(selectUserByUserName, new UserMapper(), userName);
+		return queryObj;
 	}
-	
+
 	public int updatePassword(String username, String password) {
 		String updatePassword = "update userdetails set password = ? WHERE username = ?";
-		Object[] userData = {password, username};
+		Object[] userData = { password, username };
 		try {
 			int noOfRowsAffected = jdbcTemplate.update(updatePassword, userData);
 			return noOfRowsAffected;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return 0;
 		}
-		
+
 	}
 
 	public int upadteUser(Users user) {
 		String updateUser = "update userdetails set name = ?, phoneno = ?, address = ?, district = ?, state = ?, pincode = ?"
 				+ "where username = ?";
-		Object[] userData = {user.getName(), user.getPhoneno(), user.getAddress(), user.getDistrict(), user.getState(), user.getPincode(), user.getUserName()};
+		Object[] userData = { user.getName(), user.getPhoneno(), user.getAddress(), user.getDistrict(), user.getState(),
+				user.getPincode(), user.getUserName() };
 		try {
 			int noOfRowsAffected = jdbcTemplate.update(updateUser, userData);
 			return noOfRowsAffected;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return 0;
-		}	
+		}
 	}
-	
-	public List<Users> getTopBuyers(){
-		String selectTopUser = "select username from(select username, sum(quantity) "
+
+	public List<Users> getTopBuyers() {
+		String selectTopUser = "select username from(select username, sum(price) "
 				+ "from orders GROUP BY username ORDER by username desc)where ROWNUM <= 4";
 		List<String> userList = null;
 		List<Users> topUserList = null;
@@ -119,9 +114,9 @@ public class UserDao {
 			userList = jdbcTemplate.queryForList(selectTopUser, String.class);
 			topUserList = userList.stream().map(user -> getUserById(user)).collect(Collectors.toList());
 			return topUserList;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return topUserList;
 		}
-		
+
 	}
 }

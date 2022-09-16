@@ -67,17 +67,24 @@
 	height: 30px;
 }
 
-h1{
+h1 {
 	color: maroon;
 	margin-left: 170px;
 }
 
-.info{
+.info {
 	display: flex;
 	flex-direction: column;
 }
 
-.avatar>img{
+.avatar>img {
 	height: 200px;
 	width: 100%;
+}
+
+.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 2;
 }
