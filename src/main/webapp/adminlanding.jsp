@@ -85,6 +85,7 @@
 		<div><h1>Top Buyers</h1></div>
 		<div class="user-container">
 			<c:forEach var="user" items="${topUsers}" varStatus="loop">
+				
 					<div class="user-info">
 							<div class="avatar">
 								<img alt="avatar image" src="images/avatar.png" width="100%" height="270px">
@@ -95,7 +96,9 @@
 								<div><span>Email ID :</span>${user.emailId }</div>
 								<div><span>Phone no :</span>${user.phoneno }</div>
 							</div>
+							<div><a href="getUserDetailsById?username=${user.userName }">See</a></div>
 						</div>
+					
 			</c:forEach>
 		</div>
 		

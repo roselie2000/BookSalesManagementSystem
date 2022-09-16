@@ -56,6 +56,7 @@ public class UserController {
 	String quantityValue = "quantity";
 	String addressValue = "address";
 	String payment = "payment.jsp";
+	String signup = "signup.jsp";
 	Users user = null;
 
 	@PostMapping("/signup")
@@ -75,15 +76,15 @@ public class UserController {
 					return bookPath;
 				} else {
 					model.addAttribute("msg", "Some internal problem Please try again later! you not added");
-					return "signup.jsp";
+					return signup;
 				}
 			} else {
 				model.addAttribute("msg", "Username is already exists!. Please click login! or Try with another Username");
-				return "signup.jsp";
+				return signup;
 			}
 		}catch (Exception e) {
 			model.addAttribute("msg", "Some internal problem Please try again later! you not added");
-			return "signup.jsp";
+			return signup;
 		}
 	}
 
@@ -346,16 +347,16 @@ public class UserController {
 
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("user");
-		Users user = new Users();
-		user.setUserName(username);
-		user.setName(name);
-		user.setPhoneno(phno);
-		user.setAddress(address);
-		user.setDistrict(district);
-		user.setState(state);
-		user.setPincode(pincode);
+		Users users = new Users();
+		users.setUserName(username);
+		users.setName(name);
+		users.setPhoneno(phno);
+		users.setAddress(address);
+		users.setDistrict(district);
+		users.setState(state);
+		users.setPincode(pincode);
 
-		userDao.upadteUser(user);
+		userDao.upadteUser(users);
 		return bookPath;
 	}
 
@@ -569,15 +570,15 @@ public class UserController {
 			@RequestParam("emailid") String email, @RequestParam("phno") String phoneno,
 			@RequestParam("addr") String address, @RequestParam("dist") String district,
 			@RequestParam("state") String state, @RequestParam("pincode") int pincode, Model model) {
-		Users user = new Users();
-		user.setName(name);
-		user.setUserName(userName);
-		user.setEmailId(email);
-		user.setPhoneno(phoneno);
-		user.setAddress(address);
-		user.setDistrict(district);
-		user.setState(state);
-		user.setPincode(pincode);
+		Users users = new Users();
+		users.setName(name);
+		users.setUserName(userName);
+		users.setEmailId(email);
+		users.setPhoneno(phoneno);
+		users.setAddress(address);
+		users.setDistrict(district);
+		users.setState(state);
+		users.setPincode(pincode);
 		int noOfRowsAffected = userDao.upadteUser(user);
 		if (noOfRowsAffected > 0) {
 			return "getMultipleOrders";

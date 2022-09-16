@@ -5,6 +5,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Top User</title>
+<link rel="stylesheet" href="styles/navbar.css">
+<link rel="stylesheet" href="styles/dropdown.css">
 </head>
 <body>
 	<header>
@@ -37,5 +39,26 @@
 		</div>
 	</nav>
 	
+	<main>
+	<div>
+		<div>
+			<label>User Name</label>
+			<label>${user.userName }</label>
+		</div>
+	</div>
+		
+	</main>
+	<script type="text/javascript">
+	window.onscroll = function() {myFunction()};
+	let navbar = document.getElementById("nav");
+	let sticky = navbar.offsetTop;
+	function myFunction() {
+	  if (window.pageYOffset >= sticky) {
+	    navbar.classList.add("sticky")
+	  } else {
+	    navbar.classList.remove("sticky");
+	  }
+	}
+	</script>
 </body>
 </html>
