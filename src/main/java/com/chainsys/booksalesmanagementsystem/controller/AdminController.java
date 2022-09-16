@@ -221,9 +221,9 @@ public class AdminController {
 	public String getTopUserById(@RequestParam("username") String userName, Model model) {
 		Users user = adminService.getUserByUserName(userName);
 		try {
-			List<OrderHistory> orders = adminService.getOrdersByUserName(userName);
+			List<OrderHistory> orderList = adminService.getOrdersByUserName(userName);
 			model.addAttribute("user", user);
-			model.addAttribute("orders", orders);
+			model.addAttribute("orders", orderList);
 			return topUser;
 		} catch (SQLException e) {
 			model.addAttribute("msg", "Some internal problem may occur! Can't get the list of orders of this user");
