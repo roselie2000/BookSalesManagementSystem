@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<title></title>
 <link rel="stylesheet" href="styles/navbar.css">
 </head>
 <body>
