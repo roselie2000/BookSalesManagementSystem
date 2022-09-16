@@ -63,7 +63,6 @@
 		</div>
 	</c:if>
 	
-	
 	<div><h1>Top Searched Books</h1></div>
 		<div class="books-container">
 			<c:forEach var="book" items="${topBooks}" varStatus="loop">
