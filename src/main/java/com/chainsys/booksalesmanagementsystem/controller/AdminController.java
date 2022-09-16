@@ -40,7 +40,7 @@ public class AdminController {
 	String addBooks = "addbooks.jsp";
 	String orders = "orders.jsp";
 	String topUser = "topuser.jsp";
-	@RequestMapping(value = "/adminlogin", method = RequestMethod.POST)
+	@PostMapping
 	public String adminLogin(@RequestParam("username") String userName, @RequestParam("pwd") String password, Model model) throws InternalException {
 		try {
 			adminService.checkIdentity(userName, password);
