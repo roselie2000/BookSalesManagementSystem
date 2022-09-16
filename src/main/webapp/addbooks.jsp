@@ -13,35 +13,7 @@
  </script>
 </head>
 <body>
-<header>
-		<ul>
-			<li class="left"><img alt="logo" src="images/Mars.png" height="95px"
-				width="150px"></li>
-			<li class="profile"><img alt="profile" src="images/profile.png" width="70px" height="70px"></li>
-			<li class="admin">Administrator</li>
-		</ul>
-	</header>
-	
-	<nav>
-		<div class="menu">
-			<ul>
-				<li><a href="adminHome">Home</a></li>
-				<li class="dropdown"><a href="Books" class="dropbtn">Books</a>
-					<div class="dropdown-content">
-    					<a href="Novels">Novels</a>
-    					<a href="Poetry">Poetry</a>
-    					<a href="History">History</a>
-    					<a href="Education">Education</a>
-    					<a href="Biography">Biography</a>
-    					<a href="Books">All Books</a>
-  					</div>
-				</li>
-				<li><a href="Orders">Orders</a></li>
-				<li><a href="Users">Users</a></li>
-				<li><a href="addbooks.jsp">Add Books</a></li>
-			</ul>
-		</div>
-	</nav>
+<jsp:include page="adminheader.jsp"></jsp:include>
 	<main>
 	<p>${msg}</p>
 	<div class="form-container">

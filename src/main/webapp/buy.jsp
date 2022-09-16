@@ -34,16 +34,38 @@
 <label>Price</label>
 <input type="text" name="price" value="${book.actualPrice }" id="price" required readonly>
 <label>Quantity</label>
-<input type="text" name="quantity" value="1" pattern="[0-9]*" id="qty" required onkeydown="calculatePriceAmount()">
+<input type="text" name="quantity" value="1" pattern="[0-9]*" id="qty" required onkeyup="calculatePriceAmount()">
 <div></div>
 <div id="alert-msg"></div>
 <label>Total Price</label>
-<input type="text" name="total" value="${book.actualPrice }" pattern="[0-9]*" id="totalPrice" required readonly>
+<input type="text" name="total" pattern="[0-9]*" value="${book.actualPrice }" id="totalPrice" required readonly>
 <a href="cancel"><button>Cancel</button> </a>
 <input type="submit" name="submit" value="Buy" id="submit">
 </form>
 </div>
 </main>	
 </body>
-<script type="text/javascript" src="script/advanceCalculation.js"></script>
+<script type="text/javascript">
+function calculatePriceAmount() {
+	console.log("inside function")
+	let price = parseInt(document.getElementById("price").value);
+	let availableQuantity = parseInt(document.getElementById("avl_qty").value);
+	let qty = parseInt(document.getElementById("qty").value);
+	let quantity = document.getElementById("qty").value;
+	if(availableQuantity < qty){
+		console.log(qty + " " + availableQuantity);
+		document.getElementById("qty").value = "";
+		document.getElementById("totalPrice").value = 0;
+		window.alert("We only have" + availableQuantity + "books. Please Order less than" + availableQuantity + "or Order later");
+	}
+	else{
+		if(Number.isNaN(quantity)){
+			document.getElementById("totalPrice").value = 0;
+		}
+		let totalPrice = qty * price;
+		document.getElementById("totalPrice").value = totalPrice;
+	}
+	
+}
+</script>
 </html>

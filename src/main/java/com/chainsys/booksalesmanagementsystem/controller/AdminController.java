@@ -39,7 +39,7 @@ public class AdminController {
 	String addBooks = "addbooks.jsp";
 	String orders = "orders.jsp";
 	String topUser = "topuser.jsp";
-	@PostMapping
+	@PostMapping("/adminlogin")
 	public String adminLogin(@RequestParam("username") String userName, @RequestParam("pwd") String password, Model model) throws InternalException {
 		try {
 			adminService.checkIdentity(userName, password);
@@ -217,17 +217,5 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("getUserDetailsById")
-	public String getTopUserById(@RequestParam("username") String userName, Model model) {
-		Users user = adminService.getUserByUserName(userName);
-		try {
-			List<OrderHistory> orderList = adminService.getOrdersByUserName(userName);
-			model.addAttribute("user", user);
-			model.addAttribute("orders", orderList);
-			return topUser;
-		} catch (SQLException e) {
-			model.addAttribute("msg", "Some internal problem may occur! Can't get the list of orders of this user");
-			return topUser;
-		}
-	}
+	
 }
