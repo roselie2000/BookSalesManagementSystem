@@ -15,6 +15,7 @@
 </head>
 <body>
 	<jsp:include page="userheader.jsp"></jsp:include>
+	<jsp:include page="usernavbar.jsp"></jsp:include>
 	<main>
 		<div class="viewed-book">
 			<div class="imgdiv">
