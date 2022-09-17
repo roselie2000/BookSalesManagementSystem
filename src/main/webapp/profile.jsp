@@ -10,17 +10,7 @@
 <link rel="stylesheet" href="styles/user.css">
 </head>
 <body>
-<header>
-		<ul>
-			<li class="left"><img alt="logo" src="images/Mars.png" height="50px"
-				width="90px"></li>
-			<li class="profile">
-				<a href="user_logout.jsp">
-					<img alt="logout" src="images/logout1.png" title="logout" width="30px" height="30px">
-				</a>
-			</li>
-		</ul>
-	</header>
+<jsp:include page="userheader.jsp"></jsp:include>
 	<div class="msg"><p>${msg }</p></div>
 <fieldset>
 	<legend>
