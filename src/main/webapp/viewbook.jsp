@@ -10,7 +10,6 @@
 <link rel="stylesheet" href="styles/footer.css"> 
 <link rel="stylesheet" href="styles/user.css">
 <link rel="stylesheet" href="styles/views.css">
-<link rel="stylesheet" href="styles/review.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -57,14 +56,14 @@
 		</div>
 		
 		<div class="books-container">
-			<c:forEach var="books" items="${relatedBook}" varStatus="loop">
+			<c:forEach var="relatedBook" items="${relatedBook}" varStatus="loop">
 				<jsp:include page="bookdiv.jsp">
-					<jsp:param value="${book.imagesPath }" name="bookImage"/>
-					<jsp:param value="${book.bookName }" name="bookName"/>
-					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
-					<jsp:param value="${book.rate }" name="rate"/>
-					<jsp:param value="${book.bookId }" name="bookId"/>
-					<jsp:param value="${book.category }" name="category"/>
+					<jsp:param value="${relatedBook.imagesPath }" name="bookImage"/>
+					<jsp:param value="${relatedBook.bookName }" name="bookName"/>
+					<jsp:param value="${relatedBook.actualPrice }" name="actualPrice"/>
+					<jsp:param value="${relatedBook.rate }" name="rate"/>
+					<jsp:param value="${relatedBook.bookId }" name="bookId"/>
+					<jsp:param value="${relatedBook.category }" name="category"/>
 				</jsp:include>
 			</c:forEach>
 		</div>
@@ -74,18 +73,19 @@
 		</div>
 		
 		<div class="books-container">
-			<c:forEach var="books" items="${topBooks}" varStatus="loop">
+			<c:forEach var="topBooks" items="${topBooks}" varStatus="loop">
 				<jsp:include page="bookdiv.jsp">
-					<jsp:param value="${book.imagesPath }" name="bookImage"/>
-					<jsp:param value="${book.bookName }" name="bookName"/>
-					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
-					<jsp:param value="${book.rate }" name="rate"/>
-					<jsp:param value="${book.bookId }" name="bookId"/>
-					<jsp:param value="${book.category }" name="category"/>
+					<jsp:param value="${topBooks.imagesPath }" name="bookImage"/>
+					<jsp:param value="${topBooks.bookName }" name="bookName"/>
+					<jsp:param value="${topBooks.actualPrice }" name="actualPrice"/>
+					<jsp:param value="${topBooks.rate }" name="rate"/>
+					<jsp:param value="${topBooks.bookId }" name="bookId"/>
+					<jsp:param value="${topBooks.category }" name="category"/>
 				</jsp:include>
 			</c:forEach>
 		</div>
 		
+		<c:if test="${not empty reviews}">
 		<h1 class="review-head">Reviews</h1>
 		<div class="reviews">
 			<c:forEach var="review" items="${reviews }">
@@ -95,6 +95,7 @@
 				</div>
 			</c:forEach>
 		</div>
+		</c:if>
 		
 		<div class="review-panel" id="review-panel">
 			<h3>Write Your Reviews</h3>
@@ -103,6 +104,7 @@
 			<div>
 				<label>Rating :</label>
 				<select name="rate">
+					<option disabled selected>Give Rate</option>
 					<option>1</option>
 					<option>2</option>
 					<option>3</option>

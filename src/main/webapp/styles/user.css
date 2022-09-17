@@ -128,7 +128,7 @@ nav {
 }
 
 .dropdown-btn, .dropdown-container, .dropdown-container>a {
-	background-color: rgb(252, 252, 233);
+	background-color: rgb(255, 128, 128);
 	padding: 6px 8px 6px 16px;
 	text-decoration: none;
 	font-size: 20px;

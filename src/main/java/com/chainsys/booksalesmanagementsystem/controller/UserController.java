@@ -496,7 +496,7 @@ public class UserController {
 		String deliveryAddress = address + ", " + district + ", " + state + ", " + pincode;
 		session.removeAttribute(addressValue);
 		session.setAttribute(addressValue, deliveryAddress);
-		return "addressedit.jsp";
+		return "payment";
 	}
 
 	@GetMapping("/payment")

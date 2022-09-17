@@ -11,24 +11,48 @@
 <link rel="stylesheet" href="styles/dropdown.css">
 </head>
 <body>
-	<jsp:include page="adminheader.jsp"></jsp:include>
+	<header>
+		<ul>
+			<li class="left"><img alt="logo" src="images/Mars.png" height="95px"
+				width="150px"></li>
+			<li class="profile"><img alt="profile" src="images/profile.png" width="70px" height="70px"></li>
+			<li class="admin">Administrator</li>
+		</ul>
+	</header>
+	
+	<nav id = "nav">
+		<div class="menu">
+			<ul>
+				<li><a href="home.jsp">Home</a></li>
+				<li class="dropdown"><a href="Books" class="dropbtn">Books</a>
+					<div class="dropdown-content">
+    					<a href=getBookByCategoryAdmin?category=Novel>Novels</a>
+    					<a href="getBookByCategoryAdmin?category=Poetry">Poetry</a>
+    					<a href="getBookByCategoryAdmin?category=History">History</a>
+    					<a href="getBookByCategoryAdmin?category=Education">Education</a>
+    					<a href="getBookByCategoryAdmin?category=Biography">Biography</a>
+    					<a href="Books">All Books</a>
+  					</div>
+				</li>
+				<li><a href="Orders">Orders</a></li>
+				<li><a href="Users">Users</a></li>
+				<li><a href="addbooks.jsp">Add Books</a></li>
+			</ul>
+		</div>
+	</nav>
 	<main>
 		<c:if test="${not empty lowQtyBooks}">
 		<div><h1>Low Quantity Books</h1></div>
 		<div class="books-container">
 			<c:forEach var="book" items="${lowQtyBooks}" varStatus="loop">
-					<div class="book-info">
-							<div class="img">
-								<img alt="${book.bookName }" src="data:image/jpg;base64,${book.imagesPath}" width="100%" height="270px">
-								<h3>${book.bookName }</h3>
-							</div>
-							<div class="details">
-								<h4>Rs.${book.actualPrice }</h4>
-							</div>
-							<div class="view-btn">
-								<a href="Books#${book.bookId }"><button>View</button></a>
-							</div>
-						</div>
+					<jsp:include page="bookdiv.jsp">
+					<jsp:param value="${book.imagesPath }" name="bookImage"/>
+					<jsp:param value="${book.bookName }" name="bookName"/>
+					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
+					<jsp:param value="${book.rate }" name="rate"/>
+					<jsp:param value="${book.bookId }" name="bookId"/>
+					<jsp:param value="${book.category }" name="category"/>
+				</jsp:include>
 			</c:forEach>
 		</div>
 	</c:if>
@@ -36,18 +60,14 @@
 	<div><h1>Top Searched Books</h1></div>
 		<div class="books-container">
 			<c:forEach var="book" items="${topBooks}" varStatus="loop">
-					<div class="book-info">
-							<div class="img">
-								<img alt="${book.bookName }" src="data:image/jpg;base64,${book.imagesPath}" width="100%" height="270px">
-								<h3>${book.bookName }</h3>
-							</div>
-							<div class="details">
-								<h4>Rs.${book.actualPrice }</h4>
-							</div>
-							<div class="view-btn">
-								<a href="Books#${book.bookId }"><button>View</button></a>
-							</div>
-						</div>
+					<jsp:include page="bookdiv.jsp">
+					<jsp:param value="${book.imagesPath }" name="bookImage"/>
+					<jsp:param value="${book.bookName }" name="bookName"/>
+					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
+					<jsp:param value="${book.rate }" name="rate"/>
+					<jsp:param value="${book.bookId }" name="bookId"/>
+					<jsp:param value="${book.category }" name="category"/>
+				</jsp:include>
 			</c:forEach>
 		</div>
 		
@@ -57,7 +77,7 @@
 				
 					<div class="user-info">
 							<div class="avatar">
-								<img alt="avatar image" src="images/avatar.png" width="100%" height="270px">
+								<img alt="avatar image" src="images/profile.png" width="100%" height="270px">
 							</div>
 							<div class="info">
 								<div><span>User name :</span>${user.userName }</div>
@@ -66,7 +86,7 @@
 								<div><span>Phone no :</span>${user.phoneno }</div>
 							</div>
 							<div><a href="getUserDetailsById?username=${user.userName }">See</a></div>
-						</div>
+					</div>
 					
 			</c:forEach>
 		</div>

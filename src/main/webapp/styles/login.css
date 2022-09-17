@@ -178,3 +178,9 @@ a > em{
 	font-size: 15px;
 	margin-top: 18px;
 }
+
+.msg{
+	color: red;
+	font-size: 18px;
+	font-weight: bolder;
+}

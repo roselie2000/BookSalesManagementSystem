@@ -105,8 +105,8 @@ public class UserDao {
 	}
 
 	public List<Users> getTopBuyers() {
-		String selectTopUser = "select username from(select username, sum(price) "
-				+ "from orders GROUP BY username ORDER by username desc)where ROWNUM <= 4";
+		String selectTopUser = "select username from(select username, sum(price) as total_price from orders "
+				+ "GROUP BY username ORDER by total_price desc)where ROWNUM <= 4";
 		List<String> userList = null;
 		List<Users> topUserList = null;
 		try {

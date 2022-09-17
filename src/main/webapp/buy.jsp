@@ -12,12 +12,7 @@
 </head>
 <body>
 	<header>
-		<ul>
-			<li class="left"><img alt="logo" src="images/Mars.png" height="80px"
-				width="150px"></li>
-			<li class="profile"><a href="profile.jsp" class="right"><img
-					alt="profile" src="images/profile.png" width="50px" height="50px"></a></li>
-		</ul>
+		<a href="userBooks"><span>&#8249;</span></a>
 	</header>
 <main>
 <div class="buy-form-container">
@@ -34,12 +29,13 @@
 <label>Price</label>
 <input type="text" name="price" value="${book.actualPrice }" id="price" required readonly>
 <label>Quantity</label>
-<input type="text" name="quantity" value="1" pattern="[0-9]*" id="qty" required onkeyup="calculatePriceAmount()">
+<input type="text" name="quantity" value="1" pattern="[1-9]*" id="qty"
+	title="The quantity should be atleast 1!" required onkeyup="calculatePriceAmount()">
 <div></div>
 <div id="alert-msg"></div>
 <label>Total Price</label>
 <input type="text" name="total" pattern="[0-9]*" value="${book.actualPrice }" id="totalPrice" required readonly>
-<a href="cancel"><button>Cancel</button> </a>
+<a href="cancel" class="cancel">Cancel</a>
 <input type="submit" name="submit" value="Buy" id="submit">
 </form>
 </div>
@@ -52,18 +48,22 @@ function calculatePriceAmount() {
 	let availableQuantity = parseInt(document.getElementById("avl_qty").value);
 	let qty = parseInt(document.getElementById("qty").value);
 	let quantity = document.getElementById("qty").value;
+	console.log(typeof(quantity));
 	if(availableQuantity < qty){
 		console.log(qty + " " + availableQuantity);
 		document.getElementById("qty").value = "";
 		document.getElementById("totalPrice").value = 0;
-		window.alert("We only have" + availableQuantity + "books. Please Order less than" + availableQuantity + "or Order later");
+		window.alert("We only have" + availableQuantity + " books. Please Order less than " + availableQuantity + " or Order later!"); 
 	}
 	else{
-		if(Number.isNaN(quantity)){
+		if(quantity === ""){
 			document.getElementById("totalPrice").value = 0;
 		}
-		let totalPrice = qty * price;
-		document.getElementById("totalPrice").value = totalPrice;
+		else{
+			let totalPrice = qty * price;
+			document.getElementById("totalPrice").value = totalPrice;
+		}
+		
 	}
 	
 }

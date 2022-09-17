@@ -13,7 +13,7 @@
 	<header>
 		<img alt="logo" src="images/Mars.png">
 	</header>
-	<p style="color: red; text-align: center;">${msg}</p>
+	<p class="msg">${msg}</p>
 	<main>
 		<div class="staff">
 			<fieldset class="login-panel">

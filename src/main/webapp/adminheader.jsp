@@ -20,7 +20,7 @@
 	<nav id = "nav">
 		<div class="menu">
 			<ul>
-				<li><a href="home.jsp">Home</a></li>
+				<li><a href="adminHome">Home</a></li>
 				<li class="dropdown"><a href="Books" class="dropbtn">Books</a>
 					<div class="dropdown-content">
     					<a href=getBookByCategoryAdmin?category=Novel>Novels</a>
