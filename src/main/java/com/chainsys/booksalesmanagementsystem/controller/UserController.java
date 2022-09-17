@@ -414,11 +414,11 @@ public class UserController {
 
 	@GetMapping("/getBookByPrice")
 	public String getBookByPrice(@RequestParam("from") int from, @RequestParam("to") int to, Model model) {
-		List<Books> booksList;
+		List<Books> PriceWiseBookList;
 		try {
-			booksList = userService.getBooksByPrice(from, to);
-			if (booksList != null) {
-				model.addAttribute(booksPage, booksList);
+			PriceWiseBookList = userService.getBooksByPrice(from, to);
+			if (PriceWiseBookList != null) {
+				model.addAttribute(booksPage, PriceWiseBookList);
 				return allBookPath;
 			} else {
 				model.addAttribute("msg", "No books");
@@ -433,11 +433,11 @@ public class UserController {
 
 	@GetMapping("/language")
 	public String getBooksByLanguage(@RequestParam("lang") String language, Model model) {
-		List<Books> booksList;
+		List<Books> LangWiseBookList;
 		try {
-			booksList = userService.getBooksByLanguage(language);
-			if (booksList != null) {
-				model.addAttribute(booksPage, booksList);
+			LangWiseBookList = userService.getBooksByLanguage(language);
+			if (LangWiseBookList != null) {
+				model.addAttribute(booksPage, LangWiseBookList);
 				return allBookPath;
 			} else {
 				model.addAttribute("msg", "No Books");
