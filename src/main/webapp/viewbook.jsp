@@ -58,62 +58,14 @@
 		
 		<div class="books-container">
 			<c:forEach var="books" items="${relatedBook}" varStatus="loop">
-				<div class="book-info">
-						<div class="img">
-							<img alt="${books.bookName }" src="data:image/jpg;base64,${books.imagesPath}" width="100%" height="270px">
-							<h3>${books.bookName }</h3>
-						</div>
-						<div class="details">
-							<h4>Rs.${books.actualPrice }</h4>
-							<c:choose>
-								<c:when test="${book.rate == 1 }">
-									<div><span class="fa fa-star checked"></span></div>
-								</c:when>
-								<c:when test="${book.rate == 2 }">
-									<div>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</div>
-								</c:when>
-								<c:when test="${book.rate == 3 }">
-									<div>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</div>
-								</c:when>
-								<c:when test="${book.rate == 4 }">
-									<div>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</div>
-								</c:when>
-								<c:when test="${book.rate == 5 }">
-									<div>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</div>
-								</c:when>
-								<c:when test="${book.rate == 0 }">
-									<div>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</c:when>
-							</c:choose>
-						</div>
-						<div class="view-btn">
-							<a href="/getBooks?id=${books.bookId }&cat=${books.category}"><button>View</button></a>
-						</div>
-					</div>
+				<jsp:include page="bookdiv.jsp">
+					<jsp:param value="${book.imagesPath }" name="bookImage"/>
+					<jsp:param value="${book.bookName }" name="bookName"/>
+					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
+					<jsp:param value="${book.rate }" name="rate"/>
+					<jsp:param value="${book.bookId }" name="bookId"/>
+					<jsp:param value="${book.category }" name="category"/>
+				</jsp:include>
 			</c:forEach>
 		</div>
 		
@@ -123,64 +75,14 @@
 		
 		<div class="books-container">
 			<c:forEach var="books" items="${topBooks}" varStatus="loop">
-				<div class="book-info">
-						<div class="img">
-							<img alt="${books.bookName }" src="data:image/jpg;base64,${books.imagesPath}" width="100%" height="270px">
-							<h3>${books.bookName }</h3>
-						</div>
-						<div class="details">
-							<h4>Rs.${books.actualPrice }</h4>
-							<c:choose>
-								<c:when test="${book.rate == 1 }">
-									<div><span class="fa fa-star checked"></span></div>
-								</c:when>
-								<c:when test="${book.rate == 2 }">
-									<div>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</div>
-								</c:when>
-								<c:when test="${book.rate == 3 }">
-									<div>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</div>
-								</c:when>
-								<c:when test="${book.rate == 4 }">
-									<div>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</div>
-								</c:when>
-								<c:when test="${book.rate == 5 }">
-									<div>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-										<span class="fa fa-star checked"></span>
-									</div>
-								</c:when>
-								
-								<c:when test="${book.rate == 0 }">
-									<div>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-										<span class="fa fa-star"></span>
-									</div>
-								</c:when>
-								
-							</c:choose>
-						</div>
-						<div class="view-btn">
-							<a href="/getBooks?id=${books.bookId }&cat=${books.category}"><button>View</button></a>
-						</div>
-					</div>
+				<jsp:include page="bookdiv.jsp">
+					<jsp:param value="${book.imagesPath }" name="bookImage"/>
+					<jsp:param value="${book.bookName }" name="bookName"/>
+					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
+					<jsp:param value="${book.rate }" name="rate"/>
+					<jsp:param value="${book.bookId }" name="bookId"/>
+					<jsp:param value="${book.category }" name="category"/>
+				</jsp:include>
 			</c:forEach>
 		</div>
 		
