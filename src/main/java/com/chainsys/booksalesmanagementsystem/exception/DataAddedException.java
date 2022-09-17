@@ -6,6 +6,9 @@ public class DataAddedException extends Exception{
 
 	public DataAddedException() {
 		
-		super();
+		super("Some internal problem may occur. The data of book is not added!. Please try again later");
+	}
+   public DataAddedException(String errmsg) {
+		super(errmsg);
 	}
 }

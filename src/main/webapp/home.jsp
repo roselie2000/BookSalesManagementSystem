@@ -15,7 +15,7 @@
 
 
 			<li><a href="login.jsp">Login</a></li>
-			<li><a href="Contactus.jsp">Contact us</a></li>
+			<li><a href="contactus.jsp">Contact us</a></li>
 			<li><a href="home.jsp">Home</a></li>
 		</ul>
 	</nav>
@@ -27,7 +27,7 @@
 				A massive collection of Books with affordable price in various
 				categories<br> <span>Buy! and Enjoy!</span>
 			</p>
-			<a href="user"><button>Discover</button></a>
+			<a href="userBooks"><button>Discover</button></a>
 		</div>
 	</div>
 

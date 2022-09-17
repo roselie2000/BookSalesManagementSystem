@@ -102,4 +102,14 @@ public class AdminService {
 	public List<OrderHistory> getOrdersByUserName(String userName) throws SQLException{
 		return orderDao.getOrdersById(userName);
 	}
+
+	public boolean getBookById(String bookId) {
+		Books book = bookDoa.getBookById(bookId);
+		System.out.println(book);
+		if(book!=null) {
+			return true;
+		}else {
+		return false;
+		}
+	}
 }

@@ -23,3 +23,10 @@ th {
 tr:nth-child(odd) {
 	background-color: #ecc0c0;
 }
+
+caption{
+	font-size: 25px;
+	font-weight: bolder;
+	color: maroon;
+	margin-bottom: 20px;
+}

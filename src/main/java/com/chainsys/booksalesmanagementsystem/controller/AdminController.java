@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +28,10 @@ import com.chainsys.booksalesmanagementsystem.service.AdminService;
 
 @Controller
 public class AdminController {
-	
+
 	@Autowired
 	AdminService adminService;
-	
+
 	String listName = "books";
 	String booksPage = "books.jsp";
 	String message = "There is no Books are available now";
@@ -39,59 +41,75 @@ public class AdminController {
 	String addBooks = "addbooks.jsp";
 	String orders = "orders.jsp";
 	String topUser = "topuser.jsp";
+
+	@GetMapping("/")
+	public String homePage(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session.getAttribute("user") != null) {
+			session.removeAttribute("user");
+		}
+		return "home.jsp";
+	}
+
 	@PostMapping("/adminlogin")
-	public String adminLogin(@RequestParam("username") String userName, @RequestParam("pwd") String password, Model model) throws InternalException {
+	public String adminLogin(@RequestParam("username") String userName, @RequestParam("pwd") String password,
+			Model model, HttpServletRequest request) throws InternalException {
 		try {
 			adminService.checkIdentity(userName, password);
+			HttpSession session = request.getSession();
+			session.setAttribute("user", userName);
 			return "/adminHome";
-		}catch (InvalidCredentialException e) {
+		} catch (InvalidCredentialException e) {
 			model.addAttribute(msg, "Please enter valid Username and Password");
 			return login;
-		}catch (InternalException e) {
+		} catch (InternalException e) {
 			model.addAttribute(msg, "Some Internal problem! Please try again later!");
 			return login;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			model.addAttribute(msg, "Some Internal problem! Please try again later!");
 			return login;
 		}
-		
+
 	}
-	
+
 	@RequestMapping("/adminHome")
-		public String adminHome(Model model) {
-			try {
-				List<Books> topBooks = adminService.getTopSearchedBooks();
-				model.addAttribute("topBooks", topBooks);
-			}catch (SQLException e) {
-				model.addAttribute(msg, "Some Internal problem may occur! Can't get the top searched books!");
-			}
-			try {
-				List<Books> lowQtyBooks = adminService.getLowQuantityBooks();
-				model.addAttribute("lowQtyBooks", lowQtyBooks);
-			}catch (SQLException e) {
-				model.addAttribute(msg, "Some Internal problem may occur! Can't get the book list which have low quantity");
-			}
-				
-				List<Users> topUsers = adminService.getTopBuyers();
-				
-				
-				model.addAttribute("topUsers", topUsers);
-				return "adminlanding.jsp";
-			
+	public String adminHome(Model model, HttpServletRequest request) {
+		try {
+			List<Books> topBooks = adminService.getTopSearchedBooks();
+			model.addAttribute("topBooks", topBooks);
+		} catch (SQLException e) {
+			model.addAttribute(msg, "Some Internal problem may occur! Can't get the top searched books!");
 		}
-	
+		try {
+			List<Books> lowQtyBooks = adminService.getLowQuantityBooks();
+			model.addAttribute("lowQtyBooks", lowQtyBooks);
+		} catch (SQLException e) {
+			model.addAttribute(msg, "Some Internal problem may occur! Can't get the book list which have low quantity");
+		}
+
+		List<Users> topUsers = adminService.getTopBuyers();
+		model.addAttribute("topUsers", topUsers);
+		return "adminlanding.jsp";
+	}
+
 	@PostMapping("/addBooks")
 	public String insertBooks(@RequestParam("bkid") String bookId, @RequestParam("bkname") String bookName,
 			@RequestParam("authorname") String author, @RequestParam("publisher") String publisher,
 			@RequestParam("category") String category, @RequestParam("lang") String language,
-			@RequestParam("edition") int edition, @RequestParam("quantity") int quantity,@RequestParam("price") int price, 
-			@RequestParam("mrpRate") int mrpRate, @RequestParam("file") MultipartFile img, Model model) throws IOException {
+			@RequestParam("edition") int edition, @RequestParam("quantity") int quantity,
+			@RequestParam("price") int price, @RequestParam("mrpRate") int mrpRate,
+			@RequestParam("file") MultipartFile img, Model model) throws IOException {	
+	
 		
-			int actPrice = mrpRate - 5;// calculate the actual rate of the book
-			String path = "C:\\eclipse\\BookSalesMgmtSystem\\src\\main\\webapp\\images\\";
-			String filename = img.getOriginalFilename();
-			try {
-			FileInputStream fin = new FileInputStream(path+filename);
+		if(adminService.getBookById(bookId)) {
+			model.addAttribute(msg, "The book ID is already exist. Please give new book ID");
+			return addBooks;
+		}else {
+		int actPrice = mrpRate - 5;// calculate the actual rate of the book
+		String path = "C:\\eclipse\\BookSalesMgmtSystem\\src\\main\\webapp\\images\\";
+		String filename = img.getOriginalFilename();
+		try {
+			FileInputStream fin = new FileInputStream(path + filename);
 			byte[] images = fin.readAllBytes();
 //			set all data of the book model
 			Books books = new Books();
@@ -108,39 +126,43 @@ public class AdminController {
 			books.setAvailableQuantity(quantity);
 			books.setBookImage(images);
 			// check whether the data are inserted or not
-			
-				adminService.addBooks(books);
-				model.addAttribute(msg, "Successfully Added!");
-				return addBooks;
-			} catch (DataAddedException e) {
-				model.addAttribute(msg, "Some internal problem may occur. The data of book is not added!. Please try again later");
-				return addBooks;
-			} catch (SQLException e) {
-				model.addAttribute(msg, "Some internal problem may occur. The data of book is not added!. Please try again later");
-				return addBooks;
-			}catch (IOException e) {
-				model.addAttribute(msg, "The file name of the Image is invalid. Please give valid filename");
-				return addBooks;
-			}
-	}	
-	
+			adminService.addBooks(books);
+			model.addAttribute(msg, "Successfully Added!");
+			return addBooks;
+		}
+		 catch (DataAddedException e) {
+			model.addAttribute(msg,"Some internal problem may occur. The data of book is not added!. Please try again later");
+			return addBooks;
+		} catch (SQLException e) {
+			model.addAttribute(msg,
+					"Some internal problem may occur. The data of book is not added!. Please try again later");
+			return addBooks;
+		} catch (IOException e) {
+			model.addAttribute(msg, "The file name of the Image is invalid. Please give valid filename");
+			return addBooks;
+		}
+		}
+	}
+
+
+
+
 	@GetMapping("/Users")
 	public String getUserList(Model model) {
 		List<Users> userList = adminService.getUser();
 		model.addAttribute("users", userList);
 		return "users.jsp";
 	}
-	
+
 	@GetMapping("/Books")
 	public String getBookList(Model model) {
 		List<Books> bookList;
 		try {
 			bookList = adminService.getBooks();
-			if(bookList != null) {
+			if (bookList != null) {
 				model.addAttribute(listName, bookList);
 				return booksPage;
-			}
-			else {
+			} else {
 				model.addAttribute("msg", message);
 				return booksPage;
 			}
@@ -148,19 +170,18 @@ public class AdminController {
 			model.addAttribute(msg, "Some internal problem may occur. Can't get the Book list!");
 			return booksPage;
 		}
-		
+
 	}
-	
+
 	@GetMapping("getBookByCategoryAdmin")
 	public String getBookByCategory(@RequestParam("category") String category, Model model) {
 		List<Books> bookList;
 		try {
 			bookList = adminService.getBookBycategory(category);
-			if(bookList != null) {
+			if (bookList != null) {
 				model.addAttribute(listName, bookList);
 				return booksPage;
-			}
-			else {
+			} else {
 				model.addAttribute(msg, "There is no Books are available now");
 				return booksPage;
 			}
@@ -169,11 +190,13 @@ public class AdminController {
 			return booksPage;
 		}
 	}
-	
+
 	@GetMapping("/update")
-	public String updateBook(@RequestParam("bookid") String id, @RequestParam("bookname") String name, @RequestParam("author") String author,
-			@RequestParam("publisher") String publisher, @RequestParam("edition") int edition,
-			@RequestParam("quantity") int quantity, @RequestParam("price") int price, @RequestParam("actualPrice") int actualPrice, @RequestParam("mrpRate") int mrp, Model model) {
+	public String updateBook(@RequestParam("bookid") String id, @RequestParam("bookname") String name,
+			@RequestParam("author") String author, @RequestParam("publisher") String publisher,
+			@RequestParam("edition") int edition, @RequestParam("quantity") int quantity,
+			@RequestParam("price") int price, @RequestParam("actualPrice") int actualPrice,
+			@RequestParam("mrpRate") int mrp, Model model) {
 		Books books = new Books();
 		books.setBookId(id);
 		books.setBookName(name);
@@ -189,24 +212,25 @@ public class AdminController {
 			model.addAttribute(msg, "The book Details are Successfully Updated!");
 			return bookPath;
 		} catch (DataAddedException e) {
-			model.addAttribute(msg, "Some Internal problem may occur. The book details are not updated!. Please try again later!");
+			model.addAttribute(msg,
+					"Some Internal problem may occur. The book details are not updated!. Please try again later!");
 			return bookPath;
 		} catch (SQLException e) {
-			model.addAttribute(msg, "Some Internal problem may occur. The book details are not updated!. Please try again later!");
+			model.addAttribute(msg,
+					"Some Internal problem may occur. The book details are not updated!. Please try again later!");
 			return bookPath;
 		}
 	}
-	
+
 	@GetMapping("/Orders")
 	public String getOrdersList(Model model) {
 		List<OrdersDetails> orderList;
 		try {
 			orderList = adminService.getOrders();
-			if(orderList != null) {
+			if (orderList != null) {
 				model.addAttribute("orderList", orderList);
 				return orders;
-			}
-			else {
+			} else {
 				model.addAttribute(msg, "No Orders available");
 				return orders;
 			}
@@ -214,8 +238,20 @@ public class AdminController {
 			model.addAttribute(msg, "Some internal problem may occur. Can't get the List of Orders!");
 			return orders;
 		}
-		
+
 	}
-	
-	
+
+	@GetMapping("getUserDetailsById")
+	public String getTopUserById(@RequestParam("username") String userName, Model model) {
+		Users user = adminService.getUserByUserName(userName);
+		try {
+			List<OrderHistory> orderList = adminService.getOrdersByUserName(userName);
+			model.addAttribute("user", user);
+			model.addAttribute("orders", orderList);
+			return topUser;
+		} catch (SQLException e) {
+			model.addAttribute("msg", "Some internal problem may occur! Can't get the list of orders of this user");
+			return topUser;
+		}
+	}
 }

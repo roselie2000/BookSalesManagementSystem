@@ -48,8 +48,13 @@ public class BookDao {
 	public Books getBookById(String bkId) {
 		String selectBookById = "select * from bookdetails where booksid = ?";
 		Books books = null;
-		books = jdbcTemplate.queryForObject(selectBookById, new BookMapper(), bkId);
-		return books;
+		try {
+			books = jdbcTemplate.queryForObject(selectBookById, new BookMapper(), bkId);
+			return books;
+		}catch (Exception e) {
+			return books;
+		}
+		
 	}
 
 	public int updateBookDetails(Books books) throws SQLException {

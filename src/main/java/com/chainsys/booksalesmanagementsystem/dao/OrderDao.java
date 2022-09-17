@@ -77,9 +77,9 @@ public class OrderDao {
 	}
 
 	public List<OrderHistory> getOrdersById(String userName) throws SQLException {
-		String selectOrders = "select od.orderid, od.booksid, od.username, od.ordereddate, od.quantity, od.price, od.status,"
+		String selectOrders = "select od.orderid, od.cartid, od.booksid, od.username, od.ordereddate, od.quantity, od.price, od.status,"
 				+ "bk.booksname, bk.book_image from orders od inner join bookdetails bk on od.booksid = bk.booksid "
-				+ "WHERE od.username = ?";
+				+ "WHERE od.username = ? and od.status='Ordered'";
 		List<OrderHistory> orderList = null;
 		orderList = jdbcTemplate.query(selectOrders, new OrderHistoryMapper(), userName);
 		return orderList;
