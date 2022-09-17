@@ -1,5 +1,8 @@
 @charset "ISO-8859-1";
-
+body{
+	margin: 0;
+	padding: 0;
+}
 .user-details{
 	background-color: beige;
 	border: 1px solid maroon;

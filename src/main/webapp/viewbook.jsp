@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="styles/footer.css"> 
 <link rel="stylesheet" href="styles/user.css">
 <link rel="stylesheet" href="styles/views.css">
+<link rel="stylesheet" href="styles/review.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -180,6 +181,16 @@
 							<a href="/getBooks?id=${books.bookId }&cat=${books.category}"><button>View</button></a>
 						</div>
 					</div>
+			</c:forEach>
+		</div>
+		
+		<h1 class="review-head">Reviews</h1>
+		<div class="reviews">
+			<c:forEach var="review" items="${reviews }">
+				<div>
+					<h4>${review.userName }</h4>
+					<p>${review.review }</p>
+				</div>
 			</c:forEach>
 		</div>
 		

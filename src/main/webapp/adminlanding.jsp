@@ -44,6 +44,9 @@
 							<div class="details">
 								<h4>Rs.${book.actualPrice }</h4>
 							</div>
+							<div class="view-btn">
+								<a href="Books#${book.bookId }"><button>View</button></a>
+							</div>
 						</div>
 			</c:forEach>
 		</div>

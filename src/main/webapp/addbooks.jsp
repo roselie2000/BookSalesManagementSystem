@@ -39,7 +39,7 @@
 				<option disabled selected>Select a category</option>
 				<option>Biography</option>
 				<option>Education</option>
-				<option>Novels</option>
+				<option>Novel</option>
 				<option>Poetry</option>
 				<option>History</option>
 			</select>

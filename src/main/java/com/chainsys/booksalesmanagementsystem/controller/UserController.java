@@ -174,7 +174,7 @@ public class UserController {
 	}
 
 	@GetMapping("/getBooks")
-	public String getBuys(@RequestParam("id") String bkId, @RequestParam("cat") String category, Model model) {
+	public String getBuys(@RequestParam("id") String bkId, @RequestParam("cat") String category, Model model) throws SQLException {
 		Books books = userService.getBookById(bkId);
 		List<Books> relatedBooks;
 		try {
@@ -191,6 +191,8 @@ public class UserController {
 			model.addAttribute("msg", "Some internal problem may occur. Can't get the top searched book list!");
 		}
 		model.addAttribute("book", books);
+		List<Rating> ratings = orderService.getReviewsById(bkId);
+		model.addAttribute("reviews", ratings);
 		return "viewbook.jsp";
 	}
 

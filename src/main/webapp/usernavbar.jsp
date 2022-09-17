@@ -10,10 +10,10 @@
 <nav id="nav">
 		<div class="catgry">
 			<ul>
-			<li><a href="home.jsp">Home</a></li>
+			<li><a href="userBooks">Home</a></li>
 				<li><a href="getBookByCategory?category=Biography">Biography</a></li>
 				<li><a href="getBookByCategory?category=Education">Education</a></li>
-				<li><a href="getBookByCategory?category=Novels">Novels</a></li>
+				<li><a href="getBookByCategory?category=Novel">Novels</a></li>
 				<li><a href="getBookByCategory?category=Poetry">Poetry</a></li>
 				<li><a href="getBookByCategory?category=History">History</a></li>
 				<li><a href="getAllBooks">All</a></li>

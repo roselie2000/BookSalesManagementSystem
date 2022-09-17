@@ -5,6 +5,8 @@ body{
 		no-repeat, url(../images/bg-pattern-bottom.svg) bottom -600px right
 		-150px no-repeat;
 	background-color: rgb(211, 246, 248);
+	padding: 0;
+	margin: 0;
 }
 
 .logout-panel{

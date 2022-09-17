@@ -95,26 +95,6 @@
 	text-align: center;
 }
 
-.review-panel {
-	display: flex;
-	flex-direction: column;
-	margin-bottom: 20px;
-	margin-left: auto;
-	margin-right: auto;
-	line-height: 50px;
-	width: 50%;
-}
-
-.review-panel>a>button {
-	background-color: blue;
-	border: none;
-	color: white;
-	cursor: pointer;
-	height: 30px;
-	outline: none;
-	width: 100px;
-}
-
 .head-div {
 	display: flex;
 	flex-direction: column;
@@ -179,4 +159,65 @@ input[type="text"]{
 .qty-button{
 	height: 30px;
 	width: 30px;
+}
+
+.reviews{
+	border-bottom: 1px solid black;
+	border-top: 1px solid black;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 50px;
+	padding-bottom: 30px;
+	padding-left: 30px;
+	padding-top: 30px;
+	width: 70%;
+}
+
+.reviews>div>h4{
+	color: rgb(0, 0, 153);
+	font-style: italic;
+}
+
+.review-head{
+	color: maroon;
+	margin-left: 200px;
+}
+
+.review-panel{
+	background-color: rgb(211, 248, 220);
+	border: 1px solid rgb(0, 153, 51);
+	border-radius: 10px;
+	height: 270px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px 20px 20px 20px;
+	width: 50%;
+}
+.review-panel>h3 {
+	color: maroon;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+textarea {
+	border: 1px solid rgb(0, 153, 51);
+	max-height: 100px;
+	max-width: 100%;
+	outline: none;
+	width: 100%;
+}
+
+input[type="submit"]{
+	background-color: rgb(0, 153, 51);
+	border: none;
+	color: white;
+	cursor: pointer;
+	font-family: serif;
+	height: 30px;
+	outline: none;
+	width: 100px;
+}
+
+input[type="submit"]:hover{
+	border: 2px solid green;
 }

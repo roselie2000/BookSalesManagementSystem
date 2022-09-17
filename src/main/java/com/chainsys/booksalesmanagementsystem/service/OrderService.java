@@ -84,6 +84,9 @@ public class OrderService {
 		} else {
 			return false;
 		}
-
+	}
+	
+	public List<Rating> getReviewsById(String bookId) throws SQLException{
+		return orderDao.getReviewById(bookId);
 	}
 }

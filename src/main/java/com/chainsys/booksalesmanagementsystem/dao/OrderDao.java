@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chainsys.booksalesmanagementsystem.mapper.CartDetailsMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.OrderHistoryMapper;
+import com.chainsys.booksalesmanagementsystem.mapper.RatingMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.CartMapper;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
 import com.chainsys.booksalesmanagementsystem.model.CartDetails;
@@ -122,5 +123,12 @@ public class OrderDao {
 		List<Cart> QuantityList = null;
 		QuantityList = jdbcTemplate.query(selectQuantity, new CartMapper(), userName);
 		return QuantityList;
+	}
+
+	public List<Rating> getReviewById(String bookId) throws SQLException {
+		String selectReview = "select bookid, username, review, rating from bookreviews where bookid = ?";
+		List<Rating> bookReviews = null;
+		bookReviews = jdbcTemplate.query(selectReview, new RatingMapper(), bookId);
+		return bookReviews;
 	}
 }

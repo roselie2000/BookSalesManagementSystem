@@ -19,7 +19,7 @@
 	<c:choose>
 		<c:when test="${empty carts }">
 			<div><p class="msg">${msg }</p></div> 
-			<div class="order-button"><a href="getBunchOrder"><button>Order</button></a></div>
+			<div class="order-button"><a href="getAllBooks"><button>View</button></a></div>
 		</c:when>
 		
 		<c:when test="${not empty carts }">
