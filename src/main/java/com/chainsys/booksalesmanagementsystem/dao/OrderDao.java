@@ -34,8 +34,7 @@ public class OrderDao {
 		// create the object for execute the query
 		Object[] cartData = { cart.getUserName(), cart.getBookId(), cart.getQuantity(), cart.getPrice(),
 				cart.getStatus() };
-		int noOfRowsAffected = jdbcTemplate.update(insertCart, cartData);// execute the query
-		return noOfRowsAffected;
+		return jdbcTemplate.update(insertCart, cartData);
 	}
 
 	public List<CartDetails> getCart(String userName, String status) throws SQLException {
@@ -49,8 +48,7 @@ public class OrderDao {
 
 	public int deleteCart(int cartId) throws SQLException {
 		String deleteCart = "DELETE FROM orders WHERE cartid = ?";
-		int noOfRowsAffected = jdbcTemplate.update(deleteCart, cartId);
-		return noOfRowsAffected;
+		return jdbcTemplate.update(deleteCart, cartId);
 	}
 
 	public int getNumberOfREviewers(String bookId) throws SQLException {
@@ -67,15 +65,13 @@ public class OrderDao {
 
 	public int updateBookRating(String bookId, int rating) throws SQLException {
 		String updateRating = "update bookdetails SET rating = ? where booksid = ?";
-		int noOfRowsAffected = jdbcTemplate.update(updateRating, rating, bookId);
-		return noOfRowsAffected;
+		return jdbcTemplate.update(updateRating, rating, bookId);
 	}
 
 	public int addRating(Rating rating) throws SQLException {
 		String insertRating = "insert into bookreviews(bookid, username, review, rating)values(?, ?, ?, ?)";
 		Object[] ratingInfo = { rating.getBookId(), rating.getUserName(), rating.getReview(), rating.getRating() };
-		int noOfRowsAffected = jdbcTemplate.update(insertRating, ratingInfo);
-		return noOfRowsAffected;
+		return jdbcTemplate.update(insertRating, ratingInfo);
 	}
 
 	public List<OrderHistory> getOrdersById(String userName) throws SQLException {
@@ -90,8 +86,7 @@ public class OrderDao {
 	public int updateCart(int cartId, int quantity, int price) throws SQLException {
 		String updateCart = "update orders SET quantity = ?, price = ? where cartid = ?";
 		Object[] values = { quantity, price, cartId };
-		int noOfRowsAffected = jdbcTemplate.update(updateCart, values);
-		return noOfRowsAffected;
+		return jdbcTemplate.update(updateCart, values);
 	}
 
 	public int addOrder(Cart cart) throws SQLException {
@@ -101,8 +96,7 @@ public class OrderDao {
 		Object[] cartValues = { cart.getUserName(), cart.getBookId(), cart.getQuantity(), cart.getPrice(), orderId,
 				cart.getOrderedDate(), cart.getStatus(), cart.getAddress() };
 		try {
-			int noOfRowsAffected1 = jdbcTemplate.update(insertOrder, cartValues);
-			return noOfRowsAffected1;
+			return jdbcTemplate.update(insertOrder, cartValues);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,8 +109,7 @@ public class OrderDao {
 		int orderId = getOrderId();
 		Object[] cartValues = { orderId, cart.getOrderedDate(), cart.getStatus(), cart.getAddress(),
 				cart.getUserName() };
-		int noOfRowsAffected = jdbcTemplate.update(updateCartStatus, cartValues);
-		return noOfRowsAffected;
+		return jdbcTemplate.update(updateCartStatus, cartValues);
 	}
 
 	public List<Cart> getQunatityFromCart(String userName) throws SQLException {

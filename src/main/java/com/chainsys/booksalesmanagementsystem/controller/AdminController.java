@@ -137,11 +137,10 @@ public class AdminController {
 			model.addAttribute(msg,
 					"Some internal problem may occur. The data of book is not added!. Please try again later");
 			return addBooks;
+		} catch (IOException e) {
+			model.addAttribute(msg, "The file name of the Image is invalid. Please give valid filename");
+			return addBooks;
 		}
-//		} catch (IOException e) {
-//			model.addAttribute(msg, "The file name of the Image is invalid. Please give valid filename");
-//			return addBooks;
-//		}
 		}
 	}
 

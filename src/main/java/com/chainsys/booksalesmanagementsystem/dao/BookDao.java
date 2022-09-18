@@ -24,8 +24,7 @@ public class BookDao {
 				books.getEdition(), books.getCategory(), books.getLanguage(), books.getPrice(), books.getMrp(),
 				books.getActualPrice(), books.getAvailableQuantity(), books.getBookImage() };// create the object for
 																								// execute the query
-		int noOfRowsAffected = jdbcTemplate.update(insertBook, bookData);// execute the query
-		return noOfRowsAffected;
+		return jdbcTemplate.update(insertBook, bookData);
 	}
 
 	public List<Books> getBookList() throws SQLException {
@@ -62,8 +61,7 @@ public class BookDao {
 				+ "avl_quantity = ? where booksid = ?";
 		Object[] bookData = { books.getBookId(), books.getBookName(), books.getAuthor(), books.getPublisher(),
 				books.getEdition(), books.getPrice(), books.getMrp(), books.getAvailableQuantity(), books.getBookId() };
-		int noOfRowsAffected = jdbcTemplate.update(updateBooks, bookData);
-		return noOfRowsAffected;
+		return jdbcTemplate.update(updateBooks, bookData);
 	}
 
 	public List<Books> searchBooks(String keyword) throws SQLException {
@@ -78,8 +76,7 @@ public class BookDao {
 		String updatequantity = "update bookdetails set avl_quantity = ? where booksid = ?";
 		int availableQuantity = getQuantityById(bookId);
 		int updatedQuantity = availableQuantity - quantity;
-		int noOfAffectedRows = jdbcTemplate.update(updatequantity, updatedQuantity, bookId);
-		return noOfAffectedRows;
+		return jdbcTemplate.update(updatequantity, updatedQuantity, bookId);
 	}
 
 	public int getQuantityById(String bookId) throws SQLException {

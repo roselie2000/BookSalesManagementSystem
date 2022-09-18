@@ -20,8 +20,7 @@ public class UserDao {
 		String insertUser = "insert into userDetails(username, password, emailid) values (?, ?, ?)";
 		Object[] data = { us.getUserName(), us.getPassword(), us.getEmailId() };// create the object for execute the
 																				// query
-		int noOfRowsAffected = jdbcTemplate.update(insertUser, data);// execute the query
-		return noOfRowsAffected;
+		return jdbcTemplate.update(insertUser, data);
 	}
 
 	public boolean login(String userName, String password) {
@@ -83,8 +82,7 @@ public class UserDao {
 		String updatePassword = "update userdetails set password = ? WHERE username = ?";
 		Object[] userData = { password, username };
 		try {
-			int noOfRowsAffected = jdbcTemplate.update(updatePassword, userData);
-			return noOfRowsAffected;
+			return jdbcTemplate.update(updatePassword, userData);
 		} catch (Exception e) {
 			return 0;
 		}
@@ -97,8 +95,7 @@ public class UserDao {
 		Object[] userData = { user.getName(), user.getPhoneno(), user.getAddress(), user.getDistrict(), user.getState(),
 				user.getPincode(), user.getUserName() };
 		try {
-			int noOfRowsAffected = jdbcTemplate.update(updateUser, userData);
-			return noOfRowsAffected;
+			return jdbcTemplate.update(updateUser, userData);
 		} catch (Exception e) {
 			return 0;
 		}

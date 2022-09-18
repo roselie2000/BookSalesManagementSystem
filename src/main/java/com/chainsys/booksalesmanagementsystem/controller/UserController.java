@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,6 +56,7 @@ public class UserController {
 	String quantityValue = "quantity";
 	String addressValue = "address";
 	String paymentPage = "payment.jsp";
+	String payment = "payment";
 	String signup = "signup.jsp";
 	Users user = null;
 
@@ -425,11 +425,11 @@ public class UserController {
 
 	@GetMapping("/getBookByPrice")
 	public String getBookByPrice(@RequestParam("from") int from, @RequestParam("to") int to, Model model) {
-		List<Books> PriceWiseBookList;
+		List<Books> priceWiseBookList;
 		try {
-			PriceWiseBookList = userService.getBooksByPrice(from, to);
-			if (PriceWiseBookList != null) {
-				model.addAttribute(booksPage, PriceWiseBookList);
+			priceWiseBookList = userService.getBooksByPrice(from, to);
+			if (priceWiseBookList != null) {
+				model.addAttribute(booksPage, priceWiseBookList);
 				return allBookPath;
 			} else {
 				model.addAttribute("msg", "No books");
@@ -444,11 +444,11 @@ public class UserController {
 
 	@GetMapping("/language")
 	public String getBooksByLanguage(@RequestParam("lang") String language, Model model) {
-		List<Books> LangWiseBookList;
+		List<Books> langWiseBookList;
 		try {
-			LangWiseBookList = userService.getBooksByLanguage(language);
-			if (LangWiseBookList != null) {
-				model.addAttribute(booksPage, LangWiseBookList);
+			langWiseBookList = userService.getBooksByLanguage(language);
+			if (langWiseBookList != null) {
+				model.addAttribute(booksPage, langWiseBookList);
 				return allBookPath;
 			} else {
 				model.addAttribute("msg", "No Books");
@@ -498,7 +498,7 @@ public class UserController {
 		String deliveryAddress = address + ", " + district + ", " + state + ", " + pincode;
 		session.removeAttribute(addressValue);
 		session.setAttribute(addressValue, deliveryAddress);
-		return "payment";
+		return payment;
 	}
 	
 	@GetMapping("/editAddress")
@@ -565,7 +565,7 @@ public class UserController {
 			return bookPath;
 		} else {
 			model.addAttribute("msg", "Some Unexpected error may occur");
-			return "payment";
+			return payment;
 		}
 	}
 
@@ -628,7 +628,7 @@ public class UserController {
 			return bookPath;
 		} else {
 			model.addAttribute("msg", "Some Unexpected error may occur");
-			return "payment";
+			return payment;
 		}
 	}
 
