@@ -1,5 +1,5 @@
 function member(msg,clk) {
-   var confirmBox = $("#container");
+   let confirmBox = $("#container");
    confirmBox.find(".msg").text(msg);
    confirmBox.find(".yes").unbind().click(function()
    {
