@@ -67,7 +67,7 @@ public class OrderService {
 	}
 
 	public List<CartDetails> getCart(String userName, String status) throws SQLException {
-		return orderDao.getCart(userName, userName);
+		return orderDao.getCart(userName, status);
 	}
 
 	public boolean updateCartStatus(Cart cart) throws SQLException {

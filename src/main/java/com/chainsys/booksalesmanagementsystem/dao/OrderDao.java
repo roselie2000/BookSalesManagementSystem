@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.chainsys.booksalesmanagementsystem.mapper.CartDetailsMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.OrderHistoryMapper;
+import com.chainsys.booksalesmanagementsystem.mapper.QuantityMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.RatingMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.CartMapper;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
@@ -121,7 +122,7 @@ public class OrderDao {
 	public List<Cart> getQunatityFromCart(String userName) throws SQLException {
 		String selectQuantity = "select booksid, quantity from orders where username = ? and status = 'Add to Cart'";
 		List<Cart> QuantityList = null;
-		QuantityList = jdbcTemplate.query(selectQuantity, new CartMapper(), userName);
+		QuantityList = jdbcTemplate.query(selectQuantity, new QuantityMapper(), userName);
 		return QuantityList;
 	}
 

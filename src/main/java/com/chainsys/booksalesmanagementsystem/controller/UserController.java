@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +56,7 @@ public class UserController {
 	String priceValue = "price";
 	String quantityValue = "quantity";
 	String addressValue = "address";
-	String payment = "payment.jsp";
+	String paymentPage = "payment.jsp";
 	String signup = "signup.jsp";
 	Users user = null;
 
@@ -126,20 +127,28 @@ public class UserController {
 	}
 
 	@RequestMapping("/userBooks")
-	public String getTopBooks(Model model) {
-		try {
-			List<Books> bookList = userService.getBooks();
-			model.addAttribute(booksPage, bookList);
-		} catch (SQLException e) {
-			model.addAttribute("msg", "Some internal problem may occur!. The can't get the list of books!");
-		}
-		try {
-			List<Books> topBooks = userService.getTopBooks();
-			model.addAttribute("topBooks", topBooks);
-		} catch (SQLException e) {
-			model.addAttribute("msg", "Some internal problem may occur!. The can't get the list of top books!");
+	public String getTopBooks(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if((session.getAttribute(priceValue) != null) && (session.getAttribute(quantityValue) != null) && (session.getAttribute("id") != null)) {
+			session.removeAttribute(priceValue);
+			session.removeAttribute(quantityValue);
+			session.removeAttribute("id");
+		}else {
+			try {
+				List<Books> bookList = userService.getBooks();
+				model.addAttribute(booksPage, bookList);
+			} catch (SQLException e) {
+				model.addAttribute("msg", "Some internal problem may occur!. The can't get the list of books!");
+			}
+			try {
+				List<Books> topBooks = userService.getTopBooks();
+				model.addAttribute("topBooks", topBooks);
+			} catch (SQLException e) {
+				model.addAttribute("msg", "Some internal problem may occur!. The can't get the list of top books!");
+			}
 		}
 		return "userlanding.jsp";
+		
 	}
 
 	@GetMapping("/getAllBooks")
@@ -366,6 +375,8 @@ public class UserController {
 	public String cancelBook(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("id");
+		session.removeAttribute("price");
+		session.removeAttribute("quantity");
 		return bookPath;
 	}
 
@@ -479,15 +490,6 @@ public class UserController {
 
 	}
 
-	@GetMapping("/editAddress")
-	public String editAddress(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String userName = (String) session.getAttribute("user");
-		user = userDao.getUserById(userName);
-		model.addAttribute(userdata, user);
-		return "addressedit.jsp";
-	}
-
 	@GetMapping("/addDeliveryAddress")
 	public String updateAddress(Model model, @RequestParam("addr") String address,
 			@RequestParam("dist") String district, @RequestParam("state") String state,
@@ -498,10 +500,20 @@ public class UserController {
 		session.setAttribute(addressValue, deliveryAddress);
 		return "payment";
 	}
+	
+	@GetMapping("/editAddress")
+	public String editAddress(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userName = (String) session.getAttribute("user");
+		user = userDao.getUserById(userName);
+		model.addAttribute(userdata, user);
+		return "addressedit.jsp";
+	}
 
 	@GetMapping("/payment")
 	public String payment(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		String userName = (String) session.getAttribute("user");
 		if ((session.getAttribute(priceValue) != null) && (session.getAttribute(quantityValue) != null)
 				&& (session.getAttribute("id") != null)) {
 			int price = (int) session.getAttribute(priceValue);
@@ -511,9 +523,17 @@ public class UserController {
 			model.addAttribute("book", book);
 			model.addAttribute(priceValue, price);
 			model.addAttribute(quantityValue, quantity);
-			return payment;
+			return paymentPage;
 		} else {
-			return payment;
+			List<CartDetails> cartList;
+			try {
+				cartList = orderService.getCart(userName, addToCart);
+				model.addAttribute("cart", cartList);
+				return paymentPage;
+			} catch (SQLException e) {
+				model.addAttribute("msg", "Some internal problem may occur. Can't load your product details. Please try again later!");
+				return paymentPage;
+			}
 		}
 
 	}
@@ -588,15 +608,6 @@ public class UserController {
 			model.addAttribute("msg", "Some Internal problem may occur. please try again later");
 			return "userprofile.jsp";
 		}
-	}
-
-	@GetMapping("/multiplePayment")
-	public String multiplePayment(HttpServletRequest request, Model model) throws SQLException {
-		HttpSession session = request.getSession();
-		String userNmae = (String) session.getAttribute("user");
-		List<CartDetails> cartList = orderService.getCart(userNmae, addToCart);
-		model.addAttribute("cart", cartList);
-		return payment;
 	}
 
 	@GetMapping("/addMultipleOrders")
