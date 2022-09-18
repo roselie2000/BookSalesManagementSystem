@@ -45,7 +45,7 @@
 		<div><h1>Low Quantity Books</h1></div>
 		<div class="books-container">
 			<c:forEach var="book" items="${lowQtyBooks}" varStatus="loop">
-					<jsp:include page="bookdiv.jsp">
+					<jsp:include page="adminbookdiv.jsp">
 					<jsp:param value="${book.imagesPath }" name="bookImage"/>
 					<jsp:param value="${book.bookName }" name="bookName"/>
 					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
@@ -60,7 +60,7 @@
 	<div><h1>Top Searched Books</h1></div>
 		<div class="books-container">
 			<c:forEach var="book" items="${topBooks}" varStatus="loop">
-					<jsp:include page="bookdiv.jsp">
+					<jsp:include page="adminbookdiv.jsp">
 					<jsp:param value="${book.imagesPath }" name="bookImage"/>
 					<jsp:param value="${book.bookName }" name="bookName"/>
 					<jsp:param value="${book.actualPrice }" name="actualPrice"/>

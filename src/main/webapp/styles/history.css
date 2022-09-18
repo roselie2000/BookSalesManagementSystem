@@ -1,24 +1,13 @@
 @charset "ISO-8859-1";
 
-body{
+body {
 	margin: 0;
 	padding: 0;
 }
-.order-history {
-	border-radius: 20px;
-	display: grid;
-	margin-right: auto;
-	margin-left: auto;
-	margin-top: 50px;
-	padding: 10px 10px 10px 10px;
-	grid-template-columns: 35% 60%;
-	gap: 5%;
-	width: 65%;
-}
 
-.order-info {
-	display: flex;
-	flex-direction: column;
+.info {
+	display: grid;
+	grid-template-columns: 35% 65%;
 }
 
 .bookname {
@@ -30,17 +19,27 @@ body{
 .order-details {
 	display: grid;
 	grid-template-columns: 45% 40%;
-	gap: 15%; 
+	gap: 15%;
 	margin-left: auto;
-	margin-right: auto; 
-	margin-bottom: 50px; 
+	margin-right: auto;
+	margin-bottom: 50px;
 	width: 35%;
 	padding: 10px 10px 10px 10px;
 }
 
-.info {
+.order-info {
 	display: grid;
 	grid-template-columns: 50% 50%;
 	font-size: 25px;
+	margin-top: 70px;
 }
 
+.order-info>label{
+	color: maroon;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.order-info>div{
+	font-size: 18px;
+}

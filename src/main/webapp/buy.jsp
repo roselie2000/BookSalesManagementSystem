@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta content="text/html; charset=utf-8" />
-<title>user landing page</title>
+<title>Buy</title>
 <link rel="stylesheet" href="styles/navbar.css">
 <link rel="stylesheet" href="styles/buy.css">
 <link rel="stylesheet"
@@ -29,7 +29,7 @@
 <label>Price</label>
 <input type="text" name="price" value="${book.actualPrice }" id="price" required readonly>
 <label>Quantity</label>
-<input type="text" name="quantity" value="1" pattern="[1-9]*" id="qty"
+<input type="text" name="quantity" value="1" pattern="[0-9]*" id="qty"
 	title="The quantity should be atleast 1!" required onkeyup="calculatePriceAmount()">
 <div></div>
 <div id="alert-msg"></div>

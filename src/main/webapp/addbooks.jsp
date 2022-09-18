@@ -23,7 +23,7 @@
 				title="The book id should contain 1 to 4 alphabets and 3 numbers (e.g AB736)" required>
 				
 			<label>Book Name</label>
-			<input type="text" name="bkname" placeholder="Enter the name of the book" required pattern="[A-Za-z\s.]{4,50}"
+			<input type="text" name="bkname" placeholder="Enter the name of the book" required pattern="[A-Za-z\s.]{4,70}"
 				title="Please enter a proper book name (e.g Wings of Fire)" >
 				
 			<label>Author Name</label>

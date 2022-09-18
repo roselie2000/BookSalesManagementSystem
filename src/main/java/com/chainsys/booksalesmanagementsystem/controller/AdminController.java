@@ -106,7 +106,7 @@ public class AdminController {
 			return addBooks;
 		}else {
 		int actPrice = mrpRate - 5;// calculate the actual rate of the book
-		String path = "C:\\eclipse\\BookSalesMgmtSystem\\src\\main\\webapp\\images\\";
+		String path = "C:\\eclipse\\booksalesmanagementsystem\\src\\main\\webapp\\images\\";
 		String filename = img.getOriginalFilename();
 		try {
 			FileInputStream fin = new FileInputStream(path + filename);
@@ -137,10 +137,11 @@ public class AdminController {
 			model.addAttribute(msg,
 					"Some internal problem may occur. The data of book is not added!. Please try again later");
 			return addBooks;
-		} catch (IOException e) {
-			model.addAttribute(msg, "The file name of the Image is invalid. Please give valid filename");
-			return addBooks;
 		}
+//		} catch (IOException e) {
+//			model.addAttribute(msg, "The file name of the Image is invalid. Please give valid filename");
+//			return addBooks;
+//		}
 		}
 	}
 

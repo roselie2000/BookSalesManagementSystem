@@ -3,6 +3,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	overflow-x: hidden; 
 }
 
 header {
@@ -93,7 +94,7 @@ input {
 	outline: none;
 }
 
-input[type="submit"] {
+input[type="button"] {
 	background-color: rgb(24, 70, 115);
 	border: none;
 	border-radius: 10px;
@@ -119,4 +120,31 @@ input[type="submit"] {
 .totalPrice {
 	font-size: 25px;
 	font-weight: 600px;
+}
+
+#container {
+	align-content: center;
+	background-color: rgb(211, 248, 220);
+	border: 1px solid maroon;
+	color: black;
+	position: absolute;
+	width: 400px;
+	height: 200px;
+	border-radius: 5px;
+	left: 50%;
+	margin-left: -160px;
+	padding: 16px 8px 8px;
+	box-sizing: border-box;
+	display: none;
+}
+
+.yes {
+	float: right;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#container .msg {
+	text-align: left;
+	padding: 10px 30px;
 }

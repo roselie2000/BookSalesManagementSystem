@@ -538,7 +538,7 @@ public class UserController {
 
 	}
 
-	@GetMapping("/addOrder")
+	@PostMapping("/addOrder")
 	public String addOrder(HttpServletRequest request, Model model) throws SQLException {
 		HttpSession session = request.getSession();
 		int price = (int) session.getAttribute(priceValue);
@@ -610,7 +610,7 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/addMultipleOrders")
+	@PostMapping("/addMultipleOrders")
 	public String addMultipleOrders(HttpServletRequest request, Model model) throws SQLException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
