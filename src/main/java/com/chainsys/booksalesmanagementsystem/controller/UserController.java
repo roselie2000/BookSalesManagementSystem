@@ -402,7 +402,7 @@ public class UserController {
 						"Some Internal problem may occur. Your rating is not added! Please try again later");
 				return bookPath;
 			} catch (UpdateRatingException e) {
-				e.printStackTrace();
+				model.addAttribute("msg", "Some Internal problem may occur!. Can't update the review!");
 				return bookPath;
 			}
 		}

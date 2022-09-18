@@ -94,9 +94,8 @@ public class OrderDao {
 		try {
 			return jdbcTemplate.update(insertOrder, cartValues);
 		} catch (Exception e) {
-			e.printStackTrace();
+			return 0;
 		}
-		return 0;
 	}
 
 	public int updateCartStatus(Cart cart) throws SQLException {
