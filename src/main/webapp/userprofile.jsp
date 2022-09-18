@@ -9,6 +9,10 @@
 <link rel="stylesheet" href="styles/profile.css">
 </head>
 <body>
+<header>
+	<a href="userBooks"><span>&#8249;</span></a>
+	<h1>Profile</h1>	
+</header>
 <div class="msg"><p>${msg }</p></div>
 <fieldset>
 	<legend>
