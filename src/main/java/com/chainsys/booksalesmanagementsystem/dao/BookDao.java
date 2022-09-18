@@ -81,8 +81,7 @@ public class BookDao {
 
 	public int getQuantityById(String bookId) throws SQLException {
 		String selectQuantity = "select avl_quantity from bookdetails where booksid = ?";
-		int quantity = jdbcTemplate.queryForObject(selectQuantity, int.class, bookId);
-		return quantity;
+		return jdbcTemplate.queryForObject(selectQuantity, int.class, bookId);
 	}
 
 	public List<Books> getBookByLanguage(String language) throws SQLException {

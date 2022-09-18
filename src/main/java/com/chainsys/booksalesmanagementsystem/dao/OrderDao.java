@@ -11,7 +11,6 @@ import com.chainsys.booksalesmanagementsystem.mapper.CartDetailsMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.OrderHistoryMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.QuantityMapper;
 import com.chainsys.booksalesmanagementsystem.mapper.RatingMapper;
-import com.chainsys.booksalesmanagementsystem.mapper.CartMapper;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
 import com.chainsys.booksalesmanagementsystem.model.CartDetails;
 import com.chainsys.booksalesmanagementsystem.model.OrderHistory;
@@ -25,8 +24,7 @@ public class OrderDao {
 
 	public int getOrderId() throws SQLException {
 		String sqlIdentifier = "select ordersId.NEXTVAL from dual";
-		int orderId = jdbcTemplate.queryForObject(sqlIdentifier, int.class);
-		return orderId;
+		return jdbcTemplate.queryForObject(sqlIdentifier, int.class);
 	}
 
 	public int addcart(Cart cart) throws SQLException {
@@ -53,14 +51,12 @@ public class OrderDao {
 
 	public int getNumberOfREviewers(String bookId) throws SQLException {
 		String getReviewerCount = "Select count(username)From bookreviews Where bookid = ? Group by bookid";
-		int reviewerCount = jdbcTemplate.queryForObject(getReviewerCount, int.class, bookId);
-		return reviewerCount;
+		return jdbcTemplate.queryForObject(getReviewerCount, int.class, bookId);
 	}
 
 	public int getSumOfRating(String bookId) throws SQLException {
 		String sumRatings = "select sum(rating) from bookreviews where bookid = ?";
-		int sumOfRating = jdbcTemplate.queryForObject(sumRatings, int.class, bookId);
-		return sumOfRating;
+		return jdbcTemplate.queryForObject(sumRatings, int.class, bookId);
 	}
 
 	public int updateBookRating(String bookId, int rating) throws SQLException {
@@ -114,9 +110,9 @@ public class OrderDao {
 
 	public List<Cart> getQunatityFromCart(String userName) throws SQLException {
 		String selectQuantity = "select booksid, quantity from orders where username = ? and status = 'Add to Cart'";
-		List<Cart> QuantityList = null;
-		QuantityList = jdbcTemplate.query(selectQuantity, new QuantityMapper(), userName);
-		return QuantityList;
+		List<Cart> quantityList = null;
+		quantityList = jdbcTemplate.query(selectQuantity, new QuantityMapper(), userName);
+		return quantityList;
 	}
 
 	public List<Rating> getReviewById(String bookId) throws SQLException {

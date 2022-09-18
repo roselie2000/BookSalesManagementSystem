@@ -32,12 +32,8 @@ public class UserDao {
 			if (queryObject == null) {
 				return false;
 			} else {
-				if (queryObject.equals(password)) {
-					return true;
-				} else {
-					return false;
+				return queryObject.equals(password) ? true : false;
 				}
-			}
 		} catch (Exception e) {
 			return false;
 		}
@@ -49,11 +45,7 @@ public class UserDao {
 		String queryObject = null;
 		try {
 			queryObject = jdbcTemplate.queryForObject(selectPasswordByUserName, String.class, userName);
-			if (queryObject == null) {
-				return true;
-			} else {
-				return false;
-			}
+			return queryObject == null ? true : false;
 		} catch (Exception e) {
 			return true;
 		}

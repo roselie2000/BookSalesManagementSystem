@@ -50,6 +50,8 @@ h3 {
 
 .order-list>div>img {
 	border-radius: 10px;
+	height: 100px;
+	width: 100px;
 }
 
 .order-list>span {
@@ -60,11 +62,6 @@ h3 {
 .order-list>div {
 	height: 100%;
 	width: 100%;
-}
-
-.order-list>div>img {
-	height: 100px;
-	width: 100px;
 }
 
 form {

@@ -105,11 +105,6 @@ public class AdminService {
 
 	public boolean getBookById(String bookId) {
 		Books book = bookDoa.getBookById(bookId);
-		System.out.println(book);
-		if(book!=null) {
-			return true;
-		}else {
-		return false;
-		}
+		return book!=null ? true : false;
 	}
 }
