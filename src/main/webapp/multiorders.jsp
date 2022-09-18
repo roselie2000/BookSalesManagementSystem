@@ -12,7 +12,10 @@
 </head>
 <body onload="sumAllPrice()">
 
-<jsp:include page="userheader.jsp"></jsp:include>
+<header>
+	<a href="userBooks"><span>&#8249;</span></a>
+	<h1>Orders</h1>	
+</header>
 	<c:forEach var="ct" items="${cart}">
 		<div class="viewed-book">
 			<div class="imgdiv">
@@ -43,10 +46,6 @@
 							<div class="label">Category</div>
 							<div>${ct.category}</div>
 						</div>
-						<%-- <div>
-							<div class="label">Quantity</div>
-							<div>${ct.cartQuantity}</div>
-						</div> --%>
 					</div>
 
 					<div class="price-container">
@@ -79,75 +78,7 @@
 	
 	<div id="totalPrice"></div>
 	<div class="order-button"><a href="getAddressFromcart"><button>Order</button></a></div>
-	<script type="text/javascript" src="script/profilemenu.js"></script>
-	<script type="text/javascript">
-	
-	function setPrice(trigger){
-		let container = document.getElementById(trigger);
-		let qty = container.querySelector('.qty').value;
-		let price = container.querySelector('.price');
-		let defaultPrice = document.getElementById("price").value;
-		if(qty <= 0){
-			price.value = defaultPrice;
-		}
-		else{
-			let total = defaultPrice * qty;
-			price.value = total;
-		}
-	}
-	
-	function sumAllPrice(){
-		let allPrice = document.querySelectorAll('.price');
-		let sum = 0;
-		for(let i=0; i<allPrice.length; i++){
-			let num = parseInt(allPrice[i].value);
-			sum += num;
-		}
-		document.getElementById('totalPrice').innerHTML = sum;
-	}
-	
-		function increaseQuantity(trigger){
-			let container = document.getElementById(trigger);
-			let qty = parseInt(container.querySelector('.qty').value);
-			const price = document.getElementById("price").value
-			if(Number.isNaN(qty)){
-				qty = 1;
-				container.querySelector('.qty').value = qty;
-				let total = price * qty;
-				container.querySelector('.price').value = total;
-				sumAllPrice();
-			}
-			else{
-				qty++;
-				container.querySelector('.qty').value = qty;
-				let total = price * qty;
-				container.querySelector('.price').value = total;
-				sumAllPrice();
-			}
-			
-		}
-		
-		function decreaseQuantity(trigger){
-			let container = document.getElementById(trigger);
-			let qty = parseInt(container.querySelector('.qty').value);
-			const price = document.getElementById("price").value;
-			qty--;
-			if(qty <= 1){
-				qty = 1;
-				container.querySelector('.qty').value = qty;
-				let total = price * qty;
-				container.querySelector('.price').value = total;
-				sumAllPrice();
-				
-			}
-			else{
-				container.querySelector('.qty').value = qty;
-				let total = price * qty;
-				container.querySelector('.price').value = total;
-				sumAllPrice();
-			}
-			
-		}
-	</script>
+	<script src="script/profilemenu.js"></script>
+	<script src="script/multiplepricecalculation.js"></script>
 </body>
 </html>
