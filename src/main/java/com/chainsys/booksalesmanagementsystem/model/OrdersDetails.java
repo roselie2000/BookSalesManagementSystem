@@ -2,85 +2,75 @@ package com.chainsys.booksalesmanagementsystem.model;
 
 import java.sql.Date;
 
-import org.springframework.stereotype.Repository;
-
-@Repository
 public class OrdersDetails {
 
-	private int cartId;
-	private int orderId;
-	private String bookId;
-	private String userName;
-	private Date orderDate;
-	private int quantity;
-	private int totalPrice;
-	private String status;
+	Orders order = new Orders();
 	private String emailId;
 	private String phoneno;
 	private String orderedAddress;
 	
 	public int getCartId() {
-		return cartId;
+		 return order.getCartId();
 	}
 
 	public void setCartId(int cartId) {
-		this.cartId = cartId;
+		order.setCartId(cartId);
 	}
 
 	public int getOrderId() {
-		return orderId;
+		return order.getOrderId();
 	}
 
 	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+		order.setOrderId(orderId);
 	}
 
 	public String getBookId() {
-		return bookId;
+		return order.getBookId();
 	}
 
 	public void setBookId(String bookId) {
-		this.bookId = bookId;
+		order.setBookId(bookId);
 	}
 
 	public String getUserName() {
-		return userName;
+		return order.getUserName();
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		order.setUserName(userName);
 	}
 
 	public Date getOrderDate() {
-		return orderDate;
+		return order.getOrderDate();
 	}
 
 	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
+		order.setOrderDate(orderDate);
 	}
 
 	public int getQuantity() {
-		return quantity;
+		return order.getQuantity();
 	}
 
 	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+		order.setQuantity(quantity);
 	}
 
 	public int getTotalPrice() {
-		return totalPrice;
+		return order.getTotalPrice();
 	}
 
 	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
+		order.setTotalPrice(totalPrice);
 	}
 	
 	public String getStatus() {
-		return status;
+		return order.getStatus();
 	}
 
 	public void setStatus(String status) {
-		this.status = status;
+		order.setStatus(status);
 	}
 
 	public String getEmailId() {
