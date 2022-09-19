@@ -52,7 +52,8 @@ public class UserDao {
 	}
 
 	public List<Users> getUserList() {
-		String selectUserList = "select * from userDetails";
+		String selectUserList = "select username, password, emailid, name, phoneno, "
+				+ "address, district, state, pincode from userDetails";
 		List<Users> users = null;
 		try {
 			users = jdbcTemplate.query(selectUserList, new UserMapper());
@@ -64,7 +65,9 @@ public class UserDao {
 	}
 
 	public Users getUserById(String userName) {
-		String selectUserByUserName = "select * from userdetails where username = ?";
+		String selectUserByUserName = "select username, password, emailid, name, phoneno, "
+				+ "address, district, state, pincode"
+				+ " from userdetails where username = ?";
 		Users queryObj = null;
 		queryObj = jdbcTemplate.queryForObject(selectUserByUserName, new UserMapper(), userName);
 		return queryObj;

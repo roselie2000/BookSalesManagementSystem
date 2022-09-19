@@ -28,7 +28,9 @@ public class BookDao {
 	}
 
 	public List<Books> getBookList() throws SQLException {
-		String selectBooks = "select * from bookdetails";
+		String selectBooks = "select booksid, booksname, authors, publishers, edition,"
+				+ " category, price, mrp_rate, act_rate, avl_quantity, language, "
+				+ "book_image from bookdetails";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBooks, new BookMapper());
 		return bookList;
@@ -45,7 +47,9 @@ public class BookDao {
 	}
 
 	public Books getBookById(String bkId) {
-		String selectBookById = "select * from bookdetails where booksid = ?";
+		String selectBookById = "select booksid, booksname, authors, publishers, edition,"
+				+ " category, price, mrp_rate, act_rate, avl_quantity, language, "
+				+ "book_image from bookdetails where booksid = ?";
 		Books books = null;
 		try {
 			books = jdbcTemplate.queryForObject(selectBookById, new BookMapper(), bkId);
@@ -65,7 +69,9 @@ public class BookDao {
 	}
 
 	public List<Books> searchBooks(String keyword) throws SQLException {
-		String selectByKeyword = "select * from bookdetails where booksname like ? or authors like ? or publishers like ?";
+		String selectByKeyword = "select booksid, booksname, authors, publishers, edition, "
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ " from bookdetails where booksname like ? or authors like ? or publishers like ?";
 		List<Books> searchedBooks = null;
 		String value = "%" + keyword + "%";
 		searchedBooks = jdbcTemplate.query(selectByKeyword, new BookMapper(), value, value, value);
@@ -85,35 +91,45 @@ public class BookDao {
 	}
 
 	public List<Books> getBookByLanguage(String language) throws SQLException {
-		String selectBookByLang = "select * from bookdetails where language = ?";
+		String selectBookByLang = "select booksid, booksname, authors, publishers, edition, "
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ " from bookdetails where language = ?";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByLang, new BookMapper(), language);
 		return bookList;
 	}
 
 	public List<Books> getBookByAuthor(String author) throws SQLException {
-		String selectBookByAuthor = "slect * from bookdetails where author = ?";
+		String selectBookByAuthor = "slect booksid, booksname, authors, publishers, edition, "
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ " from bookdetails where author = ?";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByAuthor, new BookMapper(), author);
 		return bookList;
 	}
 
 	public List<Books> getBookByPrice(int fromRate, int toRate) throws SQLException {
-		String selectBookByPrice = "select * from bookdetails where act_rate BETWEEN ? and ?";
+		String selectBookByPrice = "select booksid, booksname, authors, publishers, edition, "
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ " from bookdetails where act_rate BETWEEN ? and ?";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByPrice, new BookMapper(), fromRate, toRate);
 		return bookList;
 	}
 
 	public List<Books> getBookByCategory(String category) throws SQLException {
-		String selectBookByCategory = "select * from bookdetails where category = ?";
+		String selectBookByCategory = "select booksid, booksname, authors, publishers, edition, "
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ " from bookdetails where category = ?";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByCategory, new BookMapper(), category);
 		return bookList;
 	}
 
 	public List<Books> getLowQuantityBooks() throws SQLException {
-		String selectBookByQuantity = "select * from bookdetails where avl_quantity < 15";
+		String selectBookByQuantity = "select booksid, booksname, authors, publishers, edition, "
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ " from bookdetails where avl_quantity < 15";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByQuantity, new BookMapper());
 		return bookList;
