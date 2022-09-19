@@ -2,75 +2,83 @@ package com.chainsys.booksalesmanagementsystem.model;
 
 import java.sql.Date;
 
+
 public class OrdersDetails {
 
-	Orders order = new Orders();
+	private int cartId;
+	private int orderId;
+	private String bookId;
+	private String userName;
+	private Date orderDate;
+	private int quantity;
+	private int totalPrice;
+	private String status;
 	private String emailId;
 	private String phoneno;
 	private String orderedAddress;
 	
 	public int getCartId() {
-		 return order.getCartId();
+		return cartId;
 	}
 
 	public void setCartId(int cartId) {
-		order.setCartId(cartId);
+		this.cartId = cartId;
 	}
 
 	public int getOrderId() {
-		return order.getOrderId();
+		return orderId;
 	}
 
 	public void setOrderId(int orderId) {
-		order.setOrderId(orderId);
+		this.orderId = orderId;
 	}
 
 	public String getBookId() {
-		return order.getBookId();
+		return bookId;
 	}
 
 	public void setBookId(String bookId) {
-		order.setBookId(bookId);
+		this.bookId = bookId;
 	}
 
 	public String getUserName() {
-		return order.getUserName();
+		return userName;
 	}
 
 	public void setUserName(String userName) {
-		order.setUserName(userName);
+		this.userName = userName;
 	}
 
 	public Date getOrderDate() {
-		return order.getOrderDate();
+		return orderDate;
 	}
 
 	public void setOrderDate(Date orderDate) {
-		order.setOrderDate(orderDate);
+		this.orderDate = orderDate;
 	}
 
 	public int getQuantity() {
-		return order.getQuantity();
+		return quantity;
 	}
 
 	public void setQuantity(int quantity) {
-		order.setQuantity(quantity);
+		this.quantity = quantity;
 	}
 
 	public int getTotalPrice() {
-		return order.getTotalPrice();
+		return totalPrice;
 	}
 
 	public void setTotalPrice(int totalPrice) {
-		order.setTotalPrice(totalPrice);
+		this.totalPrice = totalPrice;
 	}
 	
 	public String getStatus() {
-		return order.getStatus();
+		return status;
 	}
 
 	public void setStatus(String status) {
-		order.setStatus(status);
+		this.status = status;
 	}
 
 	public String getEmailId() {
