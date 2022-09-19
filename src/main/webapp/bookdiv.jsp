@@ -57,7 +57,7 @@
 			</c:choose>
 		</div>
 		<div class="view-btn">
-			<a href="/getBooks?id=${param.bookId }&cat=${param.category}"><button>View</button></a>
+			<a href="${param.link }"><button>View</button></a>
 		</div>
 	</div>
 

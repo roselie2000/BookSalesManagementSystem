@@ -17,13 +17,14 @@
 		<div><h1>Low Quantity Books</h1></div>
 		<div class="books-container">
 			<c:forEach var="book" items="${lowQtyBooks}" varStatus="loop">
-					<jsp:include page="adminbookdiv.jsp">
+					<jsp:include page="bookdiv.jsp">
 					<jsp:param value="${book.imagesPath }" name="bookImage"/>
 					<jsp:param value="${book.bookName }" name="bookName"/>
 					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
 					<jsp:param value="${book.rate }" name="rate"/>
 					<jsp:param value="${book.bookId }" name="bookId"/>
 					<jsp:param value="${book.category }" name="category"/>
+					<jsp:param value="Books#${book.bookId }" name="link"/>
 				</jsp:include>
 			</c:forEach>
 		</div>
@@ -32,13 +33,14 @@
 	<div><h1>Top Searched Books</h1></div>
 		<div class="books-container">
 			<c:forEach var="book" items="${topBooks}" varStatus="loop">
-					<jsp:include page="adminbookdiv.jsp">
+					<jsp:include page="bookdiv.jsp">
 					<jsp:param value="${book.imagesPath }" name="bookImage"/>
 					<jsp:param value="${book.bookName }" name="bookName"/>
 					<jsp:param value="${book.actualPrice }" name="actualPrice"/>
 					<jsp:param value="${book.rate }" name="rate"/>
 					<jsp:param value="${book.bookId }" name="bookId"/>
 					<jsp:param value="${book.category }" name="category"/>
+					<jsp:param value="Books#${book.bookId }" name="link"/>
 				</jsp:include>
 			</c:forEach>
 		</div>
