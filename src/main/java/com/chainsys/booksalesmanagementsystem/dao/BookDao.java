@@ -18,8 +18,9 @@ public class BookDao {
 	JdbcTemplate jdbcTemplate;
 
 	public int addBooks(Books books) throws SQLException {
-		String insertBook = "insert into bookDetails(booksId, booksName, authors, publishers, edition, category, language, price, mrp_rate, "
-				+ "act_rate, avl_quantity, book_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String insertBook = "insert into bookDetails(booksId, booksName, authors, publishers, edition, category, "
+				+ "language, price, mrp_rate, act_rate, avl_quantity, book_image) "
+				+ "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Object[] bookData = { books.getBookId(), books.getBookName(), books.getAuthor(), books.getPublisher(),
 				books.getEdition(), books.getCategory(), books.getLanguage(), books.getPrice(), books.getMrp(),
 				books.getActualPrice(), books.getAvailableQuantity(), books.getBookImage() };// create the object for
@@ -28,9 +29,7 @@ public class BookDao {
 	}
 
 	public List<Books> getBookList() throws SQLException {
-		String selectBooks = "select booksid, booksname, authors, publishers, edition,"
-				+ " category, price, mrp_rate, act_rate, avl_quantity, language, "
-				+ "book_image from bookdetails";
+		String selectBooks = "select booksid, booksname, authors, publishers, edition, category, price, mrp_rate, act_rate, avl_quantity, language, book_image, rating from bookdetails";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBooks, new BookMapper());
 		return bookList;
@@ -49,7 +48,7 @@ public class BookDao {
 	public Books getBookById(String bkId) {
 		String selectBookById = "select booksid, booksname, authors, publishers, edition,"
 				+ " category, price, mrp_rate, act_rate, avl_quantity, language, "
-				+ "book_image from bookdetails where booksid = ?";
+				+ "book_image, rating from bookdetails where booksid = ?";
 		Books books = null;
 		try {
 			books = jdbcTemplate.queryForObject(selectBookById, new BookMapper(), bkId);
@@ -70,7 +69,7 @@ public class BookDao {
 
 	public List<Books> searchBooks(String keyword) throws SQLException {
 		String selectByKeyword = "select booksid, booksname, authors, publishers, edition, "
-				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image, rating"
 				+ " from bookdetails where booksname like ? or authors like ? or publishers like ?";
 		List<Books> searchedBooks = null;
 		String value = "%" + keyword + "%";
@@ -92,7 +91,7 @@ public class BookDao {
 
 	public List<Books> getBookByLanguage(String language) throws SQLException {
 		String selectBookByLang = "select booksid, booksname, authors, publishers, edition, "
-				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image, rating"
 				+ " from bookdetails where language = ?";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByLang, new BookMapper(), language);
@@ -101,7 +100,7 @@ public class BookDao {
 
 	public List<Books> getBookByAuthor(String author) throws SQLException {
 		String selectBookByAuthor = "slect booksid, booksname, authors, publishers, edition, "
-				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image, rating"
 				+ " from bookdetails where author = ?";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByAuthor, new BookMapper(), author);
@@ -110,7 +109,7 @@ public class BookDao {
 
 	public List<Books> getBookByPrice(int fromRate, int toRate) throws SQLException {
 		String selectBookByPrice = "select booksid, booksname, authors, publishers, edition, "
-				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image, rating"
 				+ " from bookdetails where act_rate BETWEEN ? and ?";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByPrice, new BookMapper(), fromRate, toRate);
@@ -119,7 +118,7 @@ public class BookDao {
 
 	public List<Books> getBookByCategory(String category) throws SQLException {
 		String selectBookByCategory = "select booksid, booksname, authors, publishers, edition, "
-				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image, rating"
 				+ " from bookdetails where category = ?";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByCategory, new BookMapper(), category);
@@ -128,7 +127,7 @@ public class BookDao {
 
 	public List<Books> getLowQuantityBooks() throws SQLException {
 		String selectBookByQuantity = "select booksid, booksname, authors, publishers, edition, "
-				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image"
+				+ "category, price, mrp_rate, act_rate, avl_quantity, language, book_image, rating"
 				+ " from bookdetails where avl_quantity < 15";
 		List<Books> bookList = null;
 		bookList = jdbcTemplate.query(selectBookByQuantity, new BookMapper());

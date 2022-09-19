@@ -305,9 +305,8 @@ public class UserController {
 	public String getOrder(HttpServletResponse response, HttpServletRequest request, Model model,
 			@RequestParam("id") String bookId) {
 		HttpSession session = request.getSession();
-		String uname = (String) session.getAttribute("user");
 		session.setAttribute("id", bookId);
-		if (uname.equals(null)) {
+		if (session.getAttribute("user") == null) {
 			model.addAttribute("msg", "Please login our system to order the books");
 			return loginPath;
 		} else {
@@ -385,11 +384,11 @@ public class UserController {
 	public String addBookReview(@RequestParam("id") String bookId, @RequestParam("rate") int rate,
 			@RequestParam("review") String review, HttpServletRequest request, Model model) throws SQLException {
 		HttpSession session = request.getSession();
-		String userName = (String) session.getAttribute("user");
-		if (userName.equals(null)) {
+		if (session.getAttribute("user") == null) {
 			model.addAttribute("msg", "Please login into the system for review the book");
 			return loginPath;
 		} else {
+			String userName = (String) session.getAttribute("user");
 			Rating rating = new Rating();
 			rating.setBookId(bookId);
 			rating.setRating(rate);
