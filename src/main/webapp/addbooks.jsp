@@ -55,7 +55,7 @@
 				<option>Tamil</option>
 				<option>Hindi</option>
 				<option>Malayalam</option>
-				<option>Kanadam</option>
+				<option>Kanada</option>
 				<option>Telugu</option>
 			</select>
 			
@@ -67,7 +67,7 @@
 				title="Please enter a valid price (e.g 543)">
 			
 			<label>MRP</label>
-			<input type="text" name="mrpRate" placeholder="Enter the MRP price of the book" pattern="[0-9]*"
+			<input type="text" name="mrp" placeholder="Enter the MRP price of the book" pattern="[0-9]*"
 				title="Please enter a valid MRP (e.g 269)" required>
 			
 			<label>Book Cover Page</label>

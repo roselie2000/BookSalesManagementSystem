@@ -97,7 +97,7 @@ public class AdminController {
 			@RequestParam("authorname") String author, @RequestParam("publisher") String publisher,
 			@RequestParam("category") String category, @RequestParam("lang") String language,
 			@RequestParam("edition") int edition, @RequestParam("quantity") int quantity,
-			@RequestParam("price") int price, @RequestParam("mrpRate") int mrpRate,
+			@RequestParam("price") int price, @RequestParam("mrp") int mrp,
 			@RequestParam("file") MultipartFile img, Model model) throws IOException {	
 	
 		
@@ -105,7 +105,7 @@ public class AdminController {
 			model.addAttribute(msg, "The book ID is already exist. Please give new book ID");
 			return addBooks;
 		}else {
-		int actPrice = mrpRate - 5;// calculate the actual rate of the book
+		int actPrice = mrp - 5;// calculate the actual rate of the book
 		String path = "C:\\eclipse\\booksalesmanagementsystem\\src\\main\\webapp\\images\\";
 		String filename = img.getOriginalFilename();
 		try {
@@ -121,7 +121,7 @@ public class AdminController {
 			books.setCategory(category);
 			books.setLanguage(language);
 			books.setPrice(price);
-			books.setMrp(mrpRate);
+			books.setMrp(mrp);
 			books.setActualPrice(actPrice);
 			books.setAvailableQuantity(quantity);
 			books.setBookImage(images);
