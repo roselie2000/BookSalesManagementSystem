@@ -1,6 +1,5 @@
 package com.chainsys.booksalesmanagementsystem.controller;
 
-import java.io.Console;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -59,6 +58,7 @@ public class UserController {
 	String paymentPage = "payment.jsp";
 	String payment = "payment";
 	String signup = "signup.jsp";
+	String userProfile = "userprofile.jsp";
 	Users user = null;
 
 	@PostMapping("/signup")
@@ -337,13 +337,12 @@ public class UserController {
 		HttpSession session = request.getSession();
 		String uname = (String) session.getAttribute("user");
 		session.setAttribute(priceValue, price);
-		System.out.println(price);
 		session.setAttribute(quantityValue, quantity);
 		user = userDao.getUserById(uname);
 		if (user.getAddress() == null) {
 			model.addAttribute("msg", "Please fill your address");
 			model.addAttribute(userdata, user);
-			return "userprofile.jsp";
+			return userProfile;
 		} else {
 			model.addAttribute(userdata, user);
 			String address = user.getAddress() + ", " + user.getDistrict() + ", " + user.getState() + "- "
@@ -579,7 +578,7 @@ public class UserController {
 		if(userService.checkUserAddress(userName)) {
 			model.addAttribute("msg", "Please fill your address");
 			model.addAttribute(userdata, users);
-			return "userprofile.jsp";
+			return userProfile;
 		} else {
 			model.addAttribute(userdata, users);
 			String address = users.getAddress() + ", " + users.getDistrict() + ", " + users.getState() + "- "
@@ -610,7 +609,7 @@ public class UserController {
 			return payment;
 		} else {
 			model.addAttribute("msg", "Some Internal problem may occur. please try again later");
-			return "userprofile.jsp";
+			return userProfile;
 		}
 	}
 
