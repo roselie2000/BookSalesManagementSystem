@@ -341,7 +341,7 @@ public class UserController {
 		if (user.getAddress() == null) {
 			model.addAttribute("msg", "Please fill your address");
 			model.addAttribute(userdata, user);
-			return "profile.jsp";
+			return "userprofile.jsp";
 		} else {
 			model.addAttribute(userdata, user);
 			String address = user.getAddress() + ", " + user.getDistrict() + ", " + user.getState() + "- "
@@ -569,41 +569,24 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/getAddressFromcart")
-	public String getAddressFromCart(HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		String uname = (String) session.getAttribute("user");
-		user = userDao.getUserById(uname);
-		if (user.getAddress() == null) {
-			model.addAttribute("msg", "Please fill your address");
-			model.addAttribute(userdata, user);
-			return "userprofile.jsp";
-		} else {
-			model.addAttribute(userdata, user);
-			String address = user.getAddress() + ", " + user.getDistrict() + ", " + user.getState() + "- "
-					+ user.getPincode();
-			session.setAttribute(addressValue, address);
-			return "address.jsp";
-		}
-	}
-
 	@GetMapping("/addAddress")
-	public String addAddress(@RequestParam("name") String name, @RequestParam("username") String userName,
-			@RequestParam("emailid") String email, @RequestParam("phno") String phoneno,
+	public String addAddress(@RequestParam("name") String name, @RequestParam("phno") String phoneno,
 			@RequestParam("addr") String address, @RequestParam("dist") String district,
-			@RequestParam("state") String state, @RequestParam("pincode") int pincode, Model model) {
+			@RequestParam("state") String state, @RequestParam("pincode") int pincode, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userName = (String) session.getAttribute("user");
+		System.out.println("Inside controller");
 		Users users = new Users();
 		users.setName(name);
 		users.setUserName(userName);
-		users.setEmailId(email);
 		users.setPhoneno(phoneno);
 		users.setAddress(address);
 		users.setDistrict(district);
 		users.setState(state);
 		users.setPincode(pincode);
-		int noOfRowsAffected = userDao.upadteUser(user);
+		int noOfRowsAffected = userDao.upadteUser(users);
 		if (noOfRowsAffected > 0) {
-			return "getMultipleOrders";
+			return "getAddress";
 		} else {
 			model.addAttribute("msg", "Some Internal problem may occur. please try again later");
 			return "userprofile.jsp";
