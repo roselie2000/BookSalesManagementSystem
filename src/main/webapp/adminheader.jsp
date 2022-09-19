@@ -10,8 +10,8 @@
 <body>
 	<header>
 		<ul>
-			<li class="left"><img alt="logo" src="images/Mars.png" height="95px"
-				width="150px"></li>
+			<li class="left"><a href="/"><img alt="logo" src="images/Mars.png" height="95px"
+				width="150px"></a></li>
 			<li class="profile"><img alt="profile" src="images/profile.png" width="70px" height="70px"></li>
 			<li class="admin">Administrator</li>
 		</ul>

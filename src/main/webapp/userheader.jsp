@@ -10,8 +10,8 @@
 <body>
 <header>
 		<ul>
-			<li class="left"><img alt="logo" src="images/Mars.png" height="95px"
-				width="150px"></li>
+			<li class="left"><a href="user"><img alt="logo" src="images/Mars.png" height="95px"
+				width="150px"></a></li>
 			<li>
 				<form class="search" action="/searchBooks">
 					<input type="search"
