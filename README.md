@@ -1,5 +1,4 @@
-# Title
-Book Sales Management System
+# Book Sales Management System
 
 ## Description
 The objective of the system is to allow the user to purchase the books online and the administrator to manage the orders and maintain the book stocks.
