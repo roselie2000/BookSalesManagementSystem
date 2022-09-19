@@ -6,8 +6,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Orders</title>
-<link rel="stylesheet" href="styles/navbar.css">
 <link rel="stylesheet" href="styles/views.css">
+<link rel="stylesheet" href="styles/multipleorders.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
 <body onload="sumAllPrice()">
@@ -77,7 +77,7 @@
 	</c:forEach>
 	
 	<div id="totalPrice"></div>
-	<div class="order-button"><a href="getAddressFromcart"><button>Order</button></a></div>
+	<div class="order-button"><a href="getAddressFromCart"><button>Order</button></a></div>
 	<script src="script/profilemenu.js"></script>
 	<script src="script/multiplepricecalculation.js"></script>
 </body>

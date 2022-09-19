@@ -26,6 +26,7 @@
 					<jsp:param value="${book.rate }" name="rate"/>
 					<jsp:param value="${book.bookId }" name="bookId"/>
 					<jsp:param value="${book.category }" name="category"/>
+					<jsp:param value="/getBooks?id=${book.bookId }&cat=${book.category}" name="link"/>
 				</jsp:include>
 			</c:forEach>
 		</div>

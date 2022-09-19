@@ -19,8 +19,9 @@
 		<form action="/signup" method="post">
 			<div class="input-icon">
 				<em class="fa fa-user icon"></em> <input type="text"
-					placeholder="Enter Username" name="username" class="input-field" pattern="[A-Za-z0-9]{5,15}"
-					title="Please enter a valid username. The username should contain 5 to 10 alpha numeric letters" required>
+					placeholder="Enter Username" name="username" class="input-field" pattern="[A-Z]{1}[A-Za-z0-9]{5,15}"
+					title="Please enter a valid username. The username should contain 5 to 10 alpha numeric letters (e.g Roselie1234)" 
+					required>
 				<em class="fa fa-envelope icon"></em> <input type="email"
 					placeholder="Enter your email id" name="email" class="input-field" required pattern="[a-z0-9._%+-]+@gmail+\.com"> <em
 					class="fa fa-lock icon"></em> <input type="password"

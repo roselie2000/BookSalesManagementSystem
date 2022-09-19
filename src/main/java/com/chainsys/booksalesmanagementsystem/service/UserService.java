@@ -14,6 +14,7 @@ import com.chainsys.booksalesmanagementsystem.exception.DataDeletedException;
 import com.chainsys.booksalesmanagementsystem.model.Books;
 import com.chainsys.booksalesmanagementsystem.model.Cart;
 import com.chainsys.booksalesmanagementsystem.model.CartDetails;
+import com.chainsys.booksalesmanagementsystem.model.Users;
 
 @Service
 
@@ -97,5 +98,10 @@ public class UserService {
 	
 	public List<Books> getBooksByAuthor(String author) throws SQLException{
 		return bookDao.getBookByAuthor(author);
+	}
+	
+	public boolean checkUserAddress(String userName) {
+		Users users = userDao.getUserById(userName);
+		return users.getAddress() == null ? true : false;
 	}
 }

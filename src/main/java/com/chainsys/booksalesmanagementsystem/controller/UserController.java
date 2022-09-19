@@ -1,5 +1,6 @@
 package com.chainsys.booksalesmanagementsystem.controller;
 
+import java.io.Console;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -336,6 +337,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		String uname = (String) session.getAttribute("user");
 		session.setAttribute(priceValue, price);
+		System.out.println(price);
 		session.setAttribute(quantityValue, quantity);
 		user = userDao.getUserById(uname);
 		if (user.getAddress() == null) {
@@ -568,6 +570,24 @@ public class UserController {
 			return payment;
 		}
 	}
+	
+	@GetMapping("/getAddressFromCart")
+	public String getCartById(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userName = (String) session.getAttribute("user");
+		Users users = userDao.getUserById(userName);
+		if(userService.checkUserAddress(userName)) {
+			model.addAttribute("msg", "Please fill your address");
+			model.addAttribute(userdata, users);
+			return "userprofile.jsp";
+		} else {
+			model.addAttribute(userdata, users);
+			String address = users.getAddress() + ", " + users.getDistrict() + ", " + users.getState() + "- "
+					+ users.getPincode();
+			session.setAttribute(addressValue, address);
+			return "address.jsp";
+		}
+	}
 
 	@GetMapping("/addAddress")
 	public String addAddress(@RequestParam("name") String name, @RequestParam("phno") String phoneno,
@@ -575,7 +595,6 @@ public class UserController {
 			@RequestParam("state") String state, @RequestParam("pincode") int pincode, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("user");
-		System.out.println("Inside controller");
 		Users users = new Users();
 		users.setName(name);
 		users.setUserName(userName);
@@ -585,8 +604,10 @@ public class UserController {
 		users.setState(state);
 		users.setPincode(pincode);
 		int noOfRowsAffected = userDao.upadteUser(users);
+		String userAddress = address + "," + district + "," + state + "-" + pincode;
+		session.setAttribute(addressValue, userAddress);
 		if (noOfRowsAffected > 0) {
-			return "getAddress";
+			return payment;
 		} else {
 			model.addAttribute("msg", "Some Internal problem may occur. please try again later");
 			return "userprofile.jsp";

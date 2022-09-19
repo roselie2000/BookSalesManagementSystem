@@ -30,7 +30,7 @@
 		<input type="tel" name="phno" required pattern="[0-9]{10}"
 		title="Please enter a correct phone number">
 		<label>Address</label>
-		<input type="text" name="addr" required>
+		<input type="text" name="addr" required pattern="[A-Za-z0-9\s\,]" title="Enter a proper address (e.g 12, North Street, Anna Nagar)">
 		<label>District</label>
 		<input type="text" name="dist" required pattern="[A-Za-z]{4,20}"
 		title="Please enter a valid district name">

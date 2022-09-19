@@ -21,7 +21,7 @@
 	</legend>
 	<form action="updateUser" class="container">
 		<label>Name</label>
-		<input type="text" value="${userdata.name }" name="name" required pattern="[A-Z]{1}[A-Za-z\s\,]{4,18}"
+		<input type="text" value="${userdata.name }" name="name" required pattern="[A-Z]{1}[A-Za-z\s]{4,18}"
 		title="Please enter a valid name eg.M Roselie">
 		<label>User name</label>
 		<input type="text" value="${userdata.userName }" name="username" disabled="disabled">
@@ -31,7 +31,8 @@
 		<input type="tel" value="${userdata.phoneno }" name="phno" required pattern="[0-9]{10}"
 		title="Please enter a correct phone number">
 		<label>Address</label>
-		<input type="text" value="${userdata.address }" name="addr" required>
+		<input type="text" value="${userdata.address }" name="addr" pattern="[A-Za-z0-9\s\,]" required
+		title="Enter a proper address (e.g 12, North Street, Anna Nagar)">
 		<label>District</label>
 		<input type="text" value="${userdata.district }" name="dist" required pattern="[A-Za-z]{4,20}"
 		title="Please enter a valid district name">
